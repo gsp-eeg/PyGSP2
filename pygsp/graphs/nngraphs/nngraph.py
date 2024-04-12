@@ -148,8 +148,19 @@ class NNGraph(Graph):
         elif self.NNtype == 'radius':
 
             kdt = spatial.KDTree(Xout)
-            D, NN = kdt.query(Xout, k=None, distance_upper_bound=epsilon,
+            D, NN = kdt.query(Xout,k=len(Xout),distance_upper_bound=epsilon,
                               p=dist_translation[dist_type])
+            # Added to keep legacy functionality
+            D2 = []
+            NN2 = []
+            for d,nn in zip(D,NN):
+                keep_idx = np.where(d != np.inf)
+                NN2.append(nn[:len(keep_idx[0])])
+                D2.append(d[keep_idx])
+            NN = NN2
+            D = D2
+            del D2, NN2
+
             if self.sigma is None:
                 # Discard distance to self.
                 self.sigma = np.mean([np.mean(d[1:]) for d in D])
