@@ -395,8 +395,13 @@ def graph_log_degree(Z,a=1,b=1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,g
     -------
     W: array, weighted adjacency matrix
 
+    References
+    ----------
+    Kalofolias, V. (2016). How to learn a graph from smooth signals (Version 1). arXiv. https://doi.org/10.48550/ARXIV.1601.02513
+
     Examples
     -------
+
     Create a graph
     
     >>> G = graphs.Graph([[0, 0, 0, 0],
