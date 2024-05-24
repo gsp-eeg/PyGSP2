@@ -371,7 +371,7 @@ def regression_tikhonov(G, y, M, tau=0):
 
         return sol
 
-def log_degree_learning(Z,a=.1,b=.1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,gamma=0.01):
+def graph_log_degree(Z,a=.1,b=.1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,gamma=0.01):
 
     # Transform to vector space
     z = squareform(Z)
