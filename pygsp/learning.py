@@ -372,6 +372,67 @@ def regression_tikhonov(G, y, M, tau=0):
         return sol
 
 def graph_log_degree(Z,a=1,b=1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,gamma=0.04):
+    r""" Learn graph from pairwise distances using negative log prior on nodes degrees
+
+    The minimization problem solved is:
+
+    ..math:: 
+    minimize_W sum(sum(W * Z)) - a * sum(log(sum(W))) + b * ||W||_F^2/2 + c * ||W-W_0||_F^2/2
+
+    Parameters
+    ----------
+    Z: array, matrix with squared pairwise distances of nodes
+    a: float, Log prior constant (bigger a -> bigger weiights in W)
+    b: float, W||_F^2 prior constant (bigger b -> more dense W)
+    w_0: string or matrix, string 'zeroes' will set the w priors to be a 0 vector. 
+         Otherwise a matrix with the priors can be passed.
+    w_max: int or float, Maximum value for the estimated W matrix.
+    tol: float, tolerance to end the iteration.
+    maxiter: int, maximum number of iterations.
+    gamma: float, step size. Number between (0,1)
+
+    Returns
+    -------
+    W: array, weighted adjacency matrix
+
+    Examples
+    -------
+    Create a graph
+    
+    >>> G = graphs.Graph([[0, 0, 0, 0],
+                  [0, 0, 1, 1],
+                  [0, 1, 0, 1],
+                  [0, 1, 1, 0]])
+    >>> signal = np.array([0, 1, 1, 1])
+    
+    Compute distance
+
+    >>> kdt = spatial.KDTree(signal[:, None])
+    >>> D, NN = kdt.query(signal[:, None], k=len(signal))
+
+    Allocate distance array
+    >>> Z = np.zeros((G.N, G.N))
+    >>> for i, n in enumerate(NN):
+    >>>    Z[i, n] = D[i]
+
+    Learn graph
+    >>> A = 0.2
+    >>> B = 0.01
+
+    >>> W = learning.graph_log_degree(Z, A, B, w_max=1)
+    
+    Threshold adjacency matrix
+    >>> W[W < 1e-1] = 0
+
+    >>> plt.subplot(121)
+    >>> plt.imshow(G.W.toarray())
+    >>> plt.colorbar()
+
+    >>> plt.subplot(122)
+    >>> plt.imshow(W)
+    >>> plt.colorbar()
+
+    """
 
     # Transform to vector space
     z = squareform(Z)
