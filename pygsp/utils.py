@@ -342,3 +342,50 @@ def compute_log_scales(lmin, lmax, Nscales, t1=1, t2=2):
     scale_min = t1 / lmax
     scale_max = t2 / lmin
     return np.exp(np.linspace(np.log(scale_max), np.log(scale_min), Nscales))
+
+def to_sparse(i, j, v, m, n):
+    """
+    Create and compressing a matrix that have many zeros
+    Parameters:
+        i: 1-D array representing the index 1 values 
+            Size n1
+        j: 1-D array representing the index 2 values 
+            Size n1
+        v: 1-D array representing the values 
+            Size n1
+        m: integer representing x size of the matrix >= n1
+        n: integer representing y size of the matrix >= n1
+    Returns:
+        s: 2-D array
+            Matrix full of zeros excepting values v at indexes i, j
+    """
+    return sparse.csr_matrix((v, (i, j)), shape=(m, n))
+
+def sum_squareform(n):
+    # number of columns is the length of w given size of W
+    ncols = int((n-1)*(n)/2)
+
+    I = np.zeros([ncols])
+    J = np.zeros([ncols])
+
+    # offset
+    k = 0
+    for i in np.arange(1, n):
+        I[k: k + (n-i)] = np.arange(i,n)
+        k = k + (n-i)
+
+    k = 0
+    for i in np.arange(1,n):
+        J[k: k + (n-i)] = i-1
+        k = k + (n-i)
+
+    i = np.array(np.hstack([np.arange(0,ncols),np.arange(0,ncols)]))
+    j = np.hstack([I, J]).squeeze().T.ravel()
+    s = np.ones(len(i))
+    m = ncols
+
+    St = to_sparse(i,j,s,m,n)
+    
+    S = St.T
+
+    return (S,St)
