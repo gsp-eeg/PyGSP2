@@ -20,6 +20,8 @@ be inferred.
 
 import numpy as np
 from scipy import sparse
+from scipy.spatial.distance import squareform
+from utils import sum_squareform
 
 
 def _import_pyunlocbox():
@@ -368,3 +370,45 @@ def regression_tikhonov(G, y, M, tau=0):
         sol[indu] = sol_part
 
         return sol
+
+def log_degree_learning(Z,a=.1,b=.1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,gamma=0.01):
+
+    # Transform to vector space
+    z = squareform(Z)
+    z = z / np.amax(z)
+
+    N = len(Z)
+    S,St = sum_squareform(N)
+
+    if w_0 == 'zeroes':
+        w_0 = squareform(np.zeros(Z.shape))
+
+    w = w_0.copy()
+    v_n = S@w
+
+    for i in np.arange(maxiter):
+    
+        Y = w - gamma*(2*b*w + St@v_n)
+        y = v_n + gamma * (S @ w)
+
+        P = np.minimum(w_max,np.maximum(0,Y - 2*gamma*z))
+        p = y - gamma*a*((y/(gamma*a)) + np.sqrt(((y/(gamma*a))**2) + (4 / (gamma*a))))/2 
+
+        Q = P - gamma * (2*b*P + St@p)
+        q = p + gamma * (S@P)
+
+        w_new = w - Y + Q
+        v_new = v_n - y + q
+
+        w = w_new.copy()
+        v_n = v_new.copy()
+
+        if (np.linalg.norm(- Y + Q) / np.linalg.norm(w) < tol) and (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
+            break
+
+
+    print(f'Found solution after {i} iterations')
+    
+    return squareform(w)
+
+
