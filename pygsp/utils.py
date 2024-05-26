@@ -361,7 +361,25 @@ def to_sparse(i, j, v, m, n):
     """
     return sparse.csr_matrix((v, (i, j)), shape=(m, n))
 
+
 def sum_squareform(n):
+    """" Returns sparse matrix that sums the squareform of a vector. Reference
+    from the unlocbox toolbox function for matlab.
+
+    Parameters
+    ----------
+
+    n: int, number of nodes in the spare matrix.
+
+    Returns
+    -------
+    S:    matrix so that S*w = sum(W) for vector w = squareform(W)
+    St:   the adjoint of S
+
+    Reference:
+    https://epfl-lts2.github.io/gspbox-html/doc/learn_graph/gsp_learn_graph_log_degrees.html
+    
+    """
     # number of columns is the length of w given size of W
     ncols = int((n-1)*(n)/2)
 
