@@ -157,14 +157,14 @@ class TestCase(unittest.TestCase):
         signal = np.array([0, 1, 1, 1])
 
         # Compute the distance matrix
-        kdt = spatial.KDTree(signal[:,None])
+        kdt = spatial.KDTree(signal[:, None])
 
-        D,NN = kdt.query(signal[:,None],k=len(signal))
+        D, NN = kdt.query(signal[:, None], k=len(signal))
 
-        Z = np.zeros((G.N,G.N))
+        Z = np.zeros((G.N, G.N))
 
-        for i,n in enumerate(NN):
-            Z[i,n] = D[i]
+        for i, n in enumerate(NN):
+            Z[i, n] = D[i]
 
         # Learn graph
         A = 0.2
@@ -173,6 +173,7 @@ class TestCase(unittest.TestCase):
         W = learning.graph_log_degree(Z, A, B, w_max=1)
         W[W < 1e-1] = 0
 
-        np.testing.assert_allclose(W,G.W.toarray())
-        
+        np.testing.assert_allclose(W, G.W.toarray())
+
+
 suite = unittest.TestLoader().loadTestsFromTestCase(TestCase)
