@@ -42,7 +42,6 @@ def filterbank_handler(func):
 
     # Preserve documentation of func.
     @functools.wraps(func)
-
     def inner(f, *args, **kwargs):
 
         if 'i' in kwargs:
@@ -343,6 +342,7 @@ def compute_log_scales(lmin, lmax, Nscales, t1=1, t2=2):
     scale_max = t2 / lmin
     return np.exp(np.linspace(np.log(scale_max), np.log(scale_min), Nscales))
 
+
 def to_sparse(i, j, v, m, n):
     """
     Create and compressing a matrix that have many zeros
@@ -363,7 +363,7 @@ def to_sparse(i, j, v, m, n):
 
 
 def sum_squareform(n):
-    """" Returns sparse matrix that sums the squareform of a vector. Reference
+    """ Returns sparse matrix that sums the squareform of a vector. Reference
     from the unlocbox toolbox function for matlab.
 
     Parameters
@@ -378,7 +378,7 @@ def sum_squareform(n):
 
     Reference:
     https://epfl-lts2.github.io/gspbox-html/doc/learn_graph/gsp_learn_graph_log_degrees.html
-    
+
     """
     # number of columns is the length of w given size of W
     ncols = int((n-1)*(n)/2)
@@ -389,21 +389,21 @@ def sum_squareform(n):
     # offset
     k = 0
     for i in np.arange(1, n):
-        I[k: k + (n-i)] = np.arange(i,n)
+        I[k: k + (n-i)] = np.arange(i, n)
         k = k + (n-i)
 
     k = 0
-    for i in np.arange(1,n):
+    for i in np.arange(1, n):
         J[k: k + (n-i)] = i-1
         k = k + (n-i)
 
-    i = np.array(np.hstack([np.arange(0,ncols),np.arange(0,ncols)]))
+    i = np.array(np.hstack([np.arange(0, ncols), np.arange(0, ncols)]))
     j = np.hstack([I, J]).squeeze().T.ravel()
     s = np.ones(len(i))
     m = ncols
 
-    St = to_sparse(i,j,s,m,n)
-    
+    St = to_sparse(i, j, s, m, n)
+
     S = St.T
 
-    return (S,St)
+    return (S, St)

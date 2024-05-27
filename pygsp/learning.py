@@ -371,7 +371,8 @@ def regression_tikhonov(G, y, M, tau=0):
 
         return sol
 
-def graph_log_degree(Z,a=1,b=1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,gamma=0.04):
+
+def graph_log_degree(Z, a=1, b=1, w_0='zeroes', w_max=np.inf, tol=1e-5, maxiter=1000, gamma=0.04):
     r""" Learn graph from pairwise distances using negative log prior on nodes degrees
 
     The minimization problem solved is:
@@ -403,13 +404,13 @@ def graph_log_degree(Z,a=1,b=1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,g
     -------
 
     Create a graph
-    
+
     >>> G = graphs.Graph([[0, 0, 0, 0],
                   [0, 0, 1, 1],
                   [0, 1, 0, 1],
                   [0, 1, 1, 0]])
     >>> signal = np.array([0, 1, 1, 1])
-    
+
     Compute distance
 
     >>> kdt = spatial.KDTree(signal[:, None])
@@ -425,7 +426,7 @@ def graph_log_degree(Z,a=1,b=1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,g
     >>> B = 0.01
 
     >>> W = learning.graph_log_degree(Z, A, B, w_max=1)
-    
+
     Threshold adjacency matrix
     >>> W[W < 1e-1] = 0
 
@@ -444,7 +445,7 @@ def graph_log_degree(Z,a=1,b=1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,g
     z = z / np.amax(z)
 
     N = len(Z)
-    S,St = sum_squareform(N)
+    S, St = sum_squareform(N)
 
     if w_0 == 'zeroes':
         w_0 = squareform(np.zeros(Z.shape))
@@ -453,12 +454,13 @@ def graph_log_degree(Z,a=1,b=1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,g
     v_n = S@w
 
     for i in np.arange(maxiter):
-    
+
         Y = w - gamma*(2*b*w + St@v_n)
         y = v_n + gamma * (S @ w)
 
-        P = np.minimum(w_max,np.maximum(0,Y - 2*gamma*z))
-        p = y - gamma*a*((y/(gamma*a)) + np.sqrt(((y/(gamma*a))**2) + (4 / (gamma*a))))/2 
+        P = np.minimum(w_max, np.maximum(0, Y - 2*gamma*z))
+        p = y - gamma*a * \
+            ((y/(gamma*a)) + np.sqrt(((y/(gamma*a))**2) + (4 / (gamma*a))))/2
 
         Q = P - gamma * (2*b*P + St@p)
         q = p + gamma * (S@P)
@@ -472,9 +474,6 @@ def graph_log_degree(Z,a=1,b=1,w_0='zeroes',w_max=np.inf,tol=1e-5,maxiter=1000,g
         if (np.linalg.norm(- Y + Q) / np.linalg.norm(w) < tol) and (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
             break
 
-
     print(f'Found solution after {i} iterations')
-    
+
     return squareform(w)
-
-
