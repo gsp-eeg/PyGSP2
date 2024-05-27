@@ -20,8 +20,6 @@ be inferred.
 
 import numpy as np
 from scipy import sparse
-from scipy.spatial.distance import squareform
-from pygsp.utils import sum_squareform
 
 
 def _import_pyunlocbox():
