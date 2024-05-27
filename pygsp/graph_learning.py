@@ -92,7 +92,7 @@ def graph_log_degree(Z, a=1, b=1, w_0='zeros', w_max=np.inf, tol=1e-5, maxiter=1
     elif isinstance(w_0, np.ndarray) and len(w_0.shape) == 2:
         w_0 = squareform(w_0)
     else:
-        raise Exception(
+        raise TypeError(
             'w_0 is not \'zeros\' or a 2d numpy array. Check parameter type.')
 
     w = w_0.copy()
