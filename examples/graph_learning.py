@@ -8,7 +8,7 @@ but the euclidean distance between each node signal would work in the same style
 """
 # %% Import Libraries
 import numpy as np
-from pygsp import graphs, learning
+from pygsp import graphs, graph_learning
 from scipy import spatial
 import matplotlib.pyplot as plt
 
@@ -34,7 +34,7 @@ for i, n in enumerate(NN):
 A = 0.8
 B = 0.1
 
-W = learning.graph_log_degree(Z, A, B)
+W = graph_learning.graph_log_degree(Z, A, B)
 W[W < 1e-5] = 0
 
 plt.figure(figsize=(10, 4))
