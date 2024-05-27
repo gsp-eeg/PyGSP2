@@ -116,7 +116,8 @@ def graph_log_degree(Z, a=1, b=1, w_0='zeros', w_max=np.inf, tol=1e-5, maxiter=1
         w = w_new.copy()
         v_n = v_new.copy()
 
-        if (np.linalg.norm(- Y + Q) / np.linalg.norm(w) < tol) and (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
+        if (np.linalg.norm(- Y + Q) / np.linalg.norm(w) < tol) and \
+                (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
             break
 
     print(f'Found solution after {i+1} iterations')
