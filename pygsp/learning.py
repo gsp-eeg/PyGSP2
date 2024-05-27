@@ -398,7 +398,8 @@ def graph_log_degree(Z, a=1, b=1, w_0='zeroes', w_max=np.inf, tol=1e-5, maxiter=
 
     References
     ----------
-    Kalofolias, V. (2016). How to learn a graph from smooth signals (Version 1). arXiv. https://doi.org/10.48550/ARXIV.1601.02513
+    Vassilis Kalofolias Proceedings of the 19th International 
+    Conference on Artificial Intelligence and Statistics, PMLR 51:920-929, 2016.
 
     Examples
     -------
@@ -448,7 +449,7 @@ def graph_log_degree(Z, a=1, b=1, w_0='zeroes', w_max=np.inf, tol=1e-5, maxiter=
     S, St = sum_squareform(N)
 
     if w_0 == 'zeroes':
-        w_0 = squareform(np.zeros(Z.shape))
+        w_0 = squareform(np.zeros_like(Z))
 
     w = w_0.copy()
     v_n = S@w

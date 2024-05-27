@@ -368,7 +368,6 @@ def sum_squareform(n):
 
     Parameters
     ----------
-
     n: int, number of nodes in the spare matrix.
 
     Returns
