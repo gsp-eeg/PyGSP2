@@ -8,9 +8,10 @@ but the euclidean distance between each node signal would work in the same style
 """
 # %% Import Libraries
 import numpy as np
-from pygsp import graphs, graph_learning
 from scipy import spatial
 import matplotlib.pyplot as plt
+from pygsp import graphs, graph_learning
+
 
 # %% Create a ring graph
 G = graphs.ring.Ring(10)

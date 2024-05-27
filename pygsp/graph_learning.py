@@ -1,5 +1,6 @@
 r"""
-The :mod:`pygsp.graph_learning` module provides functions to estimate a graph based on a distance matrix Z.
+The :mod:`pygsp.graph_learning` module provides functions
+to estimate a graph based on a distance matrix Z.
 
 .. autosummary::
 
@@ -65,7 +66,7 @@ def graph_log_degree(Z, a=1, b=1, w_0='zeros', w_max=np.inf, tol=1e-5, maxiter=1
     >>> A = 0.2
     >>> B = 0.01
 
-    >>> W = learning.graph_log_degree(Z, A, B, w_max=1)
+    >>> W = graph_learning.graph_log_degree(Z, A, B, w_max=1)
 
     Threshold adjacency matrix
     >>> W[W < 1e-1] = 0
@@ -118,8 +119,9 @@ def graph_log_degree(Z, a=1, b=1, w_0='zeros', w_max=np.inf, tol=1e-5, maxiter=1
 
         if (np.linalg.norm(- Y + Q) / np.linalg.norm(w) < tol) and \
                 (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
+            it = i + 1
             break
 
-    print(f'Found solution after {i+1} iterations')
+    print(f'Found solution after {it} iterations')
 
     return squareform(w)
