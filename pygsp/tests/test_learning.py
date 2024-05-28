@@ -10,6 +10,7 @@ import unittest
 import numpy as np
 
 from pygsp import graphs, filters, learning
+from scipy import spatial
 
 
 class TestCase(unittest.TestCase):
@@ -142,6 +143,37 @@ class TestCase(unittest.TestCase):
         recovery = np.argmax(recovery, axis=1)
         np.testing.assert_allclose(signal, recovery)
         np.testing.assert_allclose(measures_bak, measures)
+
+    def test_graph_log_degree(self):
+        "Solve graph learning from signal"
+
+        # Make graph
+        G = graphs.Graph([[0, 0, 0, 0],
+                          [0, 0, 1, 1],
+                          [0, 1, 0, 1],
+                          [0, 1, 1, 0]])
+
+        # Signal
+        signal = np.array([0, 1, 1, 1])
+
+        # Compute the distance matrix
+        kdt = spatial.KDTree(signal[:, None])
+
+        D, NN = kdt.query(signal[:, None], k=len(signal))
+
+        Z = np.zeros((G.N, G.N))
+
+        for i, n in enumerate(NN):
+            Z[i, n] = D[i]
+
+        # Learn graph
+        A = 0.2
+        B = 0.01
+
+        W = learning.graph_log_degree(Z, A, B, w_max=1)
+        W[W < 1e-1] = 0
+
+        np.testing.assert_allclose(W, G.W.toarray())
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestCase)
