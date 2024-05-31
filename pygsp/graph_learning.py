@@ -99,6 +99,7 @@ def graph_log_degree(Z, a=1, b=1, w_0='zeros', w_max=np.inf, tol=1e-5, maxiter=1
     w = w_0.copy()
     v_n = S@w
 
+    it = 0
     for i in np.arange(maxiter):
 
         Y = w - gamma*(2*b*w + St@v_n)
@@ -121,7 +122,8 @@ def graph_log_degree(Z, a=1, b=1, w_0='zeros', w_max=np.inf, tol=1e-5, maxiter=1
                 (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
             it = i + 1
             break
-
+    if it == 0:
+        it = maxiter
     print(f'Found solution after {it} iterations')
 
     return squareform(w)
