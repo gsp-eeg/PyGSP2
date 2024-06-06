@@ -13,7 +13,7 @@ from pygsp.utils import sum_squareform
 
 
 def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
-                     maxiter=1000, gamma=0.04):
+                     maxiter=1000, gamma=0.04, verbose=True):
     r"""Learn graph from pairwise distances using negative log prior on nodes
     degrees.
 
@@ -33,6 +33,8 @@ def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
     tol: float, tolerance to end the iteration.
     maxiter: int, maximum number of iterations.
     gamma: float, step size. Number between (0,1)
+    verbose: bool. Choose if the number of iterations
+    is to be printed in console.
 
     Returns
     -------
@@ -123,7 +125,7 @@ def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
                 (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
             it = i + 1
             break
-
-    print(f'Found solution after {it} iterations')
+    if verbose:
+        print(f'Found solution after {it} iterations')
 
     return squareform(w)
