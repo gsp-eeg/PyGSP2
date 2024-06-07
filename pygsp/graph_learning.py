@@ -13,7 +13,7 @@ from pygsp.utils import sum_squareform
 
 
 def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
-                     maxiter=1000, gamma=0.04):
+                     maxiter=1000, gamma=0.04, verbose=True):
     r"""Learn graph from pairwise distances using negative log prior on nodes
     degrees.
 
@@ -24,19 +24,30 @@ def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
 
     Parameters
     ----------
-    Z: array, matrix with squared pairwise distances of nodes
-    a: float, Log prior constant (bigger a -> bigger weiights in W)
-    b: float, W||_F^2 prior constant (bigger b -> more dense W)
-    w_0: string or matrix, string 'zeros' will set the w priors to be a 0
-         vector.  Otherwise a matrix with the priors can be passed.
-    w_max: int or float, Maximum value for the estimated W matrix.
-    tol: float, tolerance to end the iteration.
-    maxiter: int, maximum number of iterations.
-    gamma: float, step size. Number between (0,1)
+    Z : array
+        Matrix with squared pairwise distances of nodes.
+    a : float
+        Log prior constant (larger a -> bigger weiights in W).
+    b : float
+        W||_F^2 prior constant (larger b -> W denser).
+    w_0 : string or matrix
+        String 'zeros' will set the w priors to be a 0 vector.  Otherwise a
+        matrix with the priors can be passed.
+    w_max : int or float
+        Maximum value for the estimated W matrix.
+    tol : float
+        Tolerance to end the iteration.
+    maxiter : int
+        Maximum number of iterations.
+    gamma : float
+        Step size. Number between (0,1).
+    verbose : bool
+        If `True` print the number of iterations.
 
     Returns
     -------
-    W: array, weighted adjacency matrix
+    W: array
+        Weighted adjacency matrix.
 
     References
     ----------
@@ -123,7 +134,7 @@ def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
                 (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
             it = i + 1
             break
-
-    print(f'Found solution after {it} iterations')
+    if verbose:
+        print(f'Found solution after {it} iterations')
 
     return squareform(w)
