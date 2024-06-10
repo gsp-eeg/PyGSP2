@@ -132,9 +132,9 @@ def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
 
         if (np.linalg.norm(- Y + Q) / np.linalg.norm(w) < tol) and \
                 (np.linalg.norm(- y + q) / np.linalg.norm(v_n) < tol):
-            it = i + 1
             break
+
     if verbose:
-        print(f'Found solution after {it} iterations')
+        print(f'Found solution after {i+1} iterations')
 
     return squareform(w)
