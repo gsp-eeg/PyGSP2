@@ -42,6 +42,7 @@ setup(
             'json',
             'utm',
             'geopy',
+            'pyxlsb',
             # 'graph-tool', cannot be installed by pip
             # Construct patch graphs from images.
             'scikit-image',
