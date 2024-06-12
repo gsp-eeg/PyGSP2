@@ -1,13 +1,12 @@
-"""
-Using the data available in
-https://www.dtpm.cl/index.php/documentos/matrices-de-viaje. The specific file is
-able to be downloaded in the following link:
+"""This example imputes missing data in a Santiago Metro station. The data
+consists of the daily average of people leaving each station.
+
+Download the file `Tablas de subidas y bajadas nov23.zip` from this link:
 
 https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip
 
-This example also uses the edges defined in edges.txt
-Plot the number of average exits in each metro station in
-a working day.
+Then, uncompress the zip file and copy `2023.11 Matriz_baj_SS_MH.xlsb` to the
+same location as this script.
 """
 # %%
 import os
