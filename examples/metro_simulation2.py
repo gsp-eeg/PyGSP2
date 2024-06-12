@@ -37,10 +37,6 @@ except FileExistsError:
     print(
         'Warning: It seems like this folder already exists. Overwritting...')
 
-# If set to true make animation,
-# otherwise store each frame as png
-MAKE_ANIMATION = True
-
 # %% Load graph and compute adjacency and node degree
 G = make_metro_graph()
 stations = list(G)
