@@ -1,5 +1,9 @@
-"""This example imputes missing data in a Santiago Metro station. The data
-consists of the daily average of people leaving each station.
+"""Example of a graph signal for the Santiago Metro
+
+This example shows a graph signal defined over a graph induced by the Santiago
+Metro (https://en.wikipedia.org/wiki/Santiago_Metro). Each station is a
+node. Two nodes are connected if the corresponding stations are connected. The
+data for each node is the daily average of people leaving each station.
 
 Download the file `Tablas de subidas y bajadas nov23.zip` from this link:
 
@@ -7,6 +11,7 @@ https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20baj
 
 Then, uncompress the zip file and copy `2023.11 Matriz_baj_SS_MH.xlsb` to the
 same location as this script.
+
 """
 # %%
 import os
