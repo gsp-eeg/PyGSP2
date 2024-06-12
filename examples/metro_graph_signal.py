@@ -1,8 +1,11 @@
 """
 Using the data available in
-https://www.dtpm.cl/index.php/documentos/matrices-de-viaje.
-This example also uses the edges defined in edges.txt
+https://www.dtpm.cl/index.php/documentos/matrices-de-viaje. The specific file is
+able to be downloaded in the following link:
 
+https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip
+
+This example also uses the edges defined in edges.txt
 Plot the number of average exits in each metro station in
 a working day.
 """
@@ -16,7 +19,7 @@ import matplotlib
 from examples.utils import make_metro_graph
 
 # Change the name to the file you downloaded
-commutes = pd.read_excel('viajes_bajada.xlsb',
+commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb',
                          sheet_name='bajadas_prom_laboral')
 
 # %% Load graph
