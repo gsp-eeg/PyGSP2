@@ -15,6 +15,7 @@ import pandas as pd
 from unidecode import unidecode
 import matplotlib.pyplot as plt
 from utils import make_metro_graph, metro_database_preprocessing, plot_signal_in_graph
+os.chdir(os.path.dirname(__file__))
 
 # Change the name to the file you downloaded
 try:
