@@ -10,6 +10,8 @@ Plot the number of average exits in each metro station in
 a working day.
 """
 # %%
+import os
+import sys
 import pandas as pd
 import numpy as np
 from unidecode import unidecode
@@ -19,8 +21,14 @@ import matplotlib
 from examples.utils import make_metro_graph
 
 # Change the name to the file you downloaded
-commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb',
-                         sheet_name='bajadas_prom_laboral')
+try:
+    commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb',
+                             sheet_name='bajadas_prom_laboral')
+except FileNotFoundError:
+    print(f'Data file was not found in:\n {os.getcwd()}')
+    print('Download it from:\n' +
+          r'https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip')
+    sys.exit(-1)
 
 # %% Load graph
 
