@@ -17,7 +17,7 @@ import numpy as np
 from unidecode import unidecode
 import networkx as nx
 import matplotlib.pyplot as plt
-from examples.utils import make_metro_graph, plot_signal_in_graph, metro_database_preprocessing
+from utils import make_metro_graph, plot_signal_in_graph, metro_database_preprocessing
 from pygsp import graphs, learning
 
 try:

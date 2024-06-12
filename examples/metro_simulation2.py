@@ -29,7 +29,7 @@ import os
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
-from examples.utils import make_metro_graph
+from utils import make_metro_graph
 
 try:
     os.mkdir('metro_simulation2/')

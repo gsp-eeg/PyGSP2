@@ -12,7 +12,7 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib import animation
-from examples.utils import make_metro_graph
+from utils import make_metro_graph
 
 # If set to true make animation,
 # otherwise store each frame as png
