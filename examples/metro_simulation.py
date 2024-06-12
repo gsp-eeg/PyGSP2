@@ -23,7 +23,7 @@ G = make_metro_graph()
 pos = {node: (G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes}
 
 W = nx.adjacency_matrix(G).toarray()
-D = np.diag(W@np.ones(len(W)))
+D = np.diag(W.sum(1))
 D_inv = np.linalg.inv(D)
 
 # %% Initialize parameters

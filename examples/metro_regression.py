@@ -10,94 +10,45 @@ Lastly, the average of neighboring nodes is also used to
 compare the error of the regression.
 """
 # %%
+import sys
+import os
 import pandas as pd
 import numpy as np
 from unidecode import unidecode
 import networkx as nx
 import matplotlib.pyplot as plt
-import matplotlib
-from examples.utils import make_metro_graph
+from examples.utils import make_metro_graph, plot_signal_in_graph, metro_database_preprocessing
 from pygsp import graphs, learning
 
-
-def plot_signal_in_graph(G, signal, label='Signal'):
-    """Function to plot signal in graph using networkx.
-    Parameters:
-    G: Networkx Graph.
-    signal: 1d array. Should have the same length as number of nodes 
-    in G.
-    label: String. Lables to be displayed in colorbar.
-    """
-
-    # Map signal to a color
-    cmap = matplotlib.colormaps.get_cmap('viridis')
-
-    normalized_signal = signal / np.max(signal)
-    colors = cmap(normalized_signal)
-
-    # Initialize figure
-    fig, ax = plt.subplots(figsize=(10, 7))
-    # Draw edges and nodes
-    nx.draw_networkx_edges(G, pos, node_size=20, ax=ax)
-    im = nx.draw_networkx_nodes(G, pos, node_color=colors, node_size=20, ax=ax)
-
-    # Add Colorbar
-    cbar = fig.add_axes([0.92, 0.12, 0.05, 0.75])
-    cbar = plt.colorbar(im, cax=cbar, ax=ax,
-                        label=label, ticks=[0, 0.5, 1])
-    # Set labels to adjust original signal
-    cbar.set_ticklabels([f'{label:.0f}' for label in [
-                        0, np.amax(signal)/2, np.amax(signal)]])
-
-    return fig, ax
-
-
-commutes = pd.read_excel('viajes_bajada.xlsb',
-                         sheet_name='bajadas_prom_laboral')
+try:
+    commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb', header=1,
+                             sheet_name='bajadas_prom_laboral')
+except FileNotFoundError:
+    print(f'Data file was not found in:\n {os.getcwd()}')
+    print('Download it from:\n' +
+          r'https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip')
+    sys.exit(-1)
 
 # %% Load graph
 G = make_metro_graph()
 pos = {node: (G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes}
+pos_list = [(G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes]
 
 # Extract adjacency matrix
 W = nx.adjacency_matrix(G).toarray()
 G_pygsp = graphs.Graph(W)
+
 # Node degree matrix
-D = np.diag(W@np.ones(len(W)))
+D = np.diag(G_pygsp.d)
 # Compute inverse for later
 D_inv = np.linalg.inv(D)
-
 
 # Convert to uppercase
 stations = [name.upper() for name in list(G.nodes)]
 stations = [unidecode(station) for station in stations]
 
 # %% Use only metro commutes in database
-idx = ['L' in servicio for servicio in commutes['servicio Sonda']]
-metro = commutes[idx]
-
-# Change some names to coincide with node names
-metro.loc[metro['paradero'] == 'CAL Y CANTO',
-          'paradero'] = 'PUENTE CAL Y CANTO'
-metro.loc[metro['paradero'] == 'PARQUE OHIGGINS',
-          'paradero'] = 'PARQUE O\'HIGGINS'
-metro.loc[metro['paradero'] == 'PDTE PEDRO AGUIRRE CERDA',
-          'paradero'] = 'PRESIDENTE PEDRO AGUIRRE CERDA'
-metro.loc[metro['paradero'] == 'PLAZA MAIPU',
-          'paradero'] = 'PLAZA DE MAIPU'
-metro.loc[metro['paradero'] == 'RONDIZONNI',
-          'paradero'] = 'RONDIZZONI'
-metro.loc[metro['paradero'] == 'UNION LATINO AMERICANA',
-          'paradero'] = 'UNION LATINOAMERICANA'
-
-# %% Define te graph signal as a vector with length nodes
-
-signal = np.zeros_like(stations, dtype=float)
-
-for value, station in zip(metro['TOTAL'], metro['paradero']):
-    graph_idx = [station == station_graph for station_graph in stations]
-
-    signal[graph_idx] = float(value)
+metro_commutes, signal = metro_database_preprocessing(commutes, stations)
 
 # %% Choose a point in the network and delete its value to regress it
 
