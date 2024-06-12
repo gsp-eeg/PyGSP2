@@ -1,8 +1,8 @@
 """ Simulation of the distribution of a signal over the
 metro network. The starting conditions is a graph signal
-with only one positive integer value bigger than zero.
-The plots or animation show how this signal distributes
-over the network using:
+with only one positive integer value bigger.The plots 
+or animation show how this signal distributes over the
+network using:
 .. math:: y = AD^-1x
 
 """

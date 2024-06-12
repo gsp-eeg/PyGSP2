@@ -20,6 +20,7 @@ develop-eggs
 
 # Results from examples
 examples/metro_simulation
+examples/metro_simulation2
 examples/metro_simulation.gif
 
 # Installer logs
