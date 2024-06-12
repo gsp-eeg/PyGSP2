@@ -62,7 +62,7 @@ if MAKE_ANIMATION:
 
         idxs = ((np.where(signal[frame, :] > 0)[0]).astype(int))
         nodelist = list(np.array(G)[idxs])
-        colors = cmap(signal[frame, idxs] / 1000)
+        colors = cmap(signal[frame, idxs] / INIT_VALUE)
 
         nx.draw_networkx_nodes(
             G, pos, node_color='gray', node_size=20, ax=ax)
