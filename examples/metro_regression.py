@@ -8,6 +8,30 @@ compute the regression over the whole network and plot the
 error of the regression. Here, Tikhonov regession is used.
 Lastly, the average of neighboring nodes is also used to
 compare the error of the regression.
+
+An additional requirement is to have the file `metroCoords.geojson`
+which was obtained from OpenStreetMap data, using the
+service https://overpass-turbo.eu/, with the query
+
+node
+[public_transport=station]
+[station=subway]
+({{bbox}});
+out;
+
+Not that you need to have the city of Santiago in the map to use it as the
+bounding box.
+
+We can use this to get the lines, but is not clear at the moment how to
+programatically get the stations that are connected:
+
+[out:json][timeout:25];
+// gather results
+way["railway"="subway"]
+["name"="Línea 5"]
+({{bbox}});
+// print results
+out geom;
 """
 # %%
 import sys
