@@ -174,7 +174,6 @@ for it in np.arange(1, NSTEPS):
     plt.close()
     # fig.clf()
 
-    if ((np.sum(signal) == 0) or (np.sum(left) == INIT_VALUE) or
-            (np.sum([left, signal])-INIT_VALUE) > OUT_CONSTANT):
+    if (np.sum(signal) == 0) or (np.sum(left) == INIT_VALUE):
         print(f'It {it}: Finished...')
         break
