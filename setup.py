@@ -43,6 +43,7 @@ setup(
             'utm',
             'geopy',
             'pyxlsb',
+            'unidecode',
             # 'graph-tool', cannot be installed by pip
             # Construct patch graphs from images.
             'scikit-image',
