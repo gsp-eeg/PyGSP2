@@ -1,3 +1,7 @@
+""" This script contains functions to run examples of graph
+signal processing. To avoid excesive repetition of loading,
+plotting and database management, the functions below are used.
+"""
 import json
 import utm
 import networkx as nx
