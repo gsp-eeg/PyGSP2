@@ -39,7 +39,7 @@ except FileNotFoundError:
     print(f'Data file was not found in:\n {os.getcwd()}')
     print('Download it from:\n' +
           r'https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip')
-    sys.exit(-1)
+    sys.exit(1)
 
 # %% Load graph
 
