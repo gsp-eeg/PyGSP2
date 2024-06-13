@@ -11,7 +11,6 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
                      coordsfile='santiago_metro_stations_coords.geojson'):
     """Create a NetworkX graph corresponding to Santiago Metro network.
 
-
     Parameters
     ----------
     edgesfile: String. Name of the file that contains the edges of the connections.
@@ -87,7 +86,6 @@ def metro_database_preprocessing(commutes, stations):
     given database that correspond to metro commutes.
     stations: numpy array. One dimensional array with the values in the
     TOTAL column. The length of the array is the number of stations.
-
     """
     # %% Use only metro commutes in database
     idx = ['L' in servicio for servicio in commutes['servicio Sonda']]
