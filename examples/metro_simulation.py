@@ -92,7 +92,7 @@ if MAKE_ANIMATION:
                                    frames=np.arange(0, len(signal)),
                                    interval=50)
 
-    # saving to m4 using ffmpeg writer
+    # saving to gif using ffmpeg writer
     writervideo = animation.FFMpegWriter(fps=5)
 
     anim.save('metro_simulation.gif', writer=writervideo)
