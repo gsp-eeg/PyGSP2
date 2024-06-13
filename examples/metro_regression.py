@@ -119,15 +119,16 @@ for i, s in enumerate(signal):
 abs_err = np.abs(tikhonov_estimation - signal)
 
 # %% Plot Tikhonov error in graph
-fig1, ax = plot_signal_in_graph(G, abs_err, label='Error absoluto')
-ax.set_title('Error of Tikhonov Regression')
+plot_signal_in_graph(G, abs_err,
+                     title='Error of Tikhonov Regression',
+                     label='Error absoluto')
 
-# %% Plot Average errorr in graph
+# %% Plot Average error in graph
 # Change variable to error with average estimation
 abs_err = np.abs(average_estimation - signal)
 
-fig2, ax = plot_signal_in_graph(G, abs_err, label='Error absoluto')
-ax.set_title(r'Error of $y = AD^{-1}x$')
-
+plot_signal_in_graph(G, abs_err,
+                     title=r'Error of $y = AD^{-1}x$',
+                     label='Error absoluto')
 
 plt.show()
