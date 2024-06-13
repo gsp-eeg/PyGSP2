@@ -117,7 +117,7 @@ def plot_signal_in_graph(G, signal, label='Signal'):
     Parameters:
     -----------
     G: Networkx Graph.
-    signal: 1d array. Should have the same length as number of nodes 
+    signal: 1d array. Should have the same length as number of nodes
     in G.
     label: String. Lables to be displayed in colorbar.
     Returns:
@@ -136,14 +136,11 @@ def plot_signal_in_graph(G, signal, label='Signal'):
     fig, ax = plt.subplots(figsize=(10, 7))
     # Draw edges and nodes
     nx.draw_networkx_edges(G, pos, node_size=20, ax=ax)
-    im = nx.draw_networkx_nodes(G, pos, node_color=colors, node_size=20, ax=ax)
+    pc = nx.draw_networkx_nodes(G, pos, node_color=colors, node_size=20, ax=ax)
+    cbar = plt.colorbar(pc, ticks=[0, 0.5, 1])
 
-    # Add Colorbar
-    cbar = fig.add_axes([0.92, 0.12, 0.05, 0.75])
-    cbar = plt.colorbar(im, cax=cbar, ax=ax,
-                        label=label, ticks=[0, 0.5, 1])
-    # Set labels to adjust original signal
     cbar.set_ticklabels([f'{label:.0f}' for label in [
                         0, np.amax(signal)/2, np.amax(signal)]])
+    plt.tight_layout()
 
     return fig, ax
