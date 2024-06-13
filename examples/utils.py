@@ -1,10 +1,10 @@
-"""
-This module contains functions to run examples of graph
-signal processing. 
+"""Utils functions used in the examples.
 
-Functions are made to avoid excesive repetition of loading,
-plotting and database management. Bleow there is a list of
-the examples that use these functions:
+This module contains functions to run examples of graph signal processing.
+
+Functions are made to avoid excesive repetition of loading, plotting and
+database management. Bleow there is a list of the examples that use these
+functions:
 
 * metro_graph_signal.py
 * metro_graph_regression.py
@@ -22,30 +22,28 @@ import numpy as np
 
 def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
                      coordsfile='santiago_metro_stations_coords.geojson'):
-    """
-    Create a NetworkX graph corresponding to Santiago Metro network.
+    """Create a NetworkX graph corresponding to Santiago Metro network.
 
     Parameters
     ----------
     edgesfile : str, optional.
-        Name of the file that contains the edges of the connections.
-        See notes for the link to download the file.
+        File name that contains the edges of the connections.  See notes for
+        the link to download the file.
+
     coordsfile : str, optional.
-        Name of the file with the coordenates of the nodes for the graph.
-        See notes for the link to download the file.
+        Name of the file with the coordenates of the nodes for the graph.  See
+        notes for the link to download the file.
 
     Returns
     -------
-    G : networkx Graph.
-        Graph structure that contains a set of nodes, vertices and other
-        properties.
+    G : Network Graph.
+        Graph data structure containing the graph and its attributes.
     pos : dict.
         Contains the coordenates of each station. Keys are the station names.
         Names can be obtained with `list(G)`.
 
     Notes
     -----
-
     * Download the file `santiago_metro_stations_coords.geojson` from this link:
 
     https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson
@@ -73,7 +71,6 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
                    distance=distance(latlong, d[ref_station]).meters,
                    x=x, y=y)
 
-    # G.add_edge('San Pablo', 'Neptuno')
     with open(edgesfile) as f:
         for e in f.readlines():
             if e[0] == '#' or len(e) < 2:
@@ -87,9 +84,10 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
 
 
 def metro_database_preprocessing(commutes, stations):
-    """
-    Preprocess commute database to be in accordance
-    with defined graph of the metro network in edges.txt.
+    """Preprocess commute database.
+
+    Preprocess commute dataframe to match with the metro network names in
+    `santiago_metro_stations_connections.txt`.
 
     Parameters
     ----------
@@ -97,7 +95,7 @@ def metro_database_preprocessing(commutes, stations):
         The `DataFrame` is loaded from https://www.dtpm.cl/index.php/documentos/matrices-de-viaje
         the files in "tablas de Subidas y Bajadas" have to be downloaded.
     stations : list of strings.
-        `stations` should contain the name of metro stations 
+        `stations` should contain the name of metro stations
         in the graph ordered by the node index. In a networkx
         graph this can be obtained through `list(G)`.
 
@@ -106,8 +104,8 @@ def metro_database_preprocessing(commutes, stations):
     metro_commutes : pandas DataFrame.
         Rows in the given database that correspond to metro commutes.
     stations : numpy array.
-        One dimensional array with the values in the
-        TOTAL column. The length of the array is the number of stations.
+        One dimensional array with the values in the `TOTAL` column. The length
+        of the array is the number of stations.
     """
     # %% Use only metro commutes in database
     idx = ['L' in servicio for servicio in commutes['servicio Sonda']]
@@ -138,22 +136,21 @@ def metro_database_preprocessing(commutes, stations):
 
 
 def plot_signal_in_graph(G, signal, title='Graph Signal', label=''):
-    """
-    Function to plot signal in graph using networkx.
+    """Function to plot signal in graph using networkx.
 
     Parameters
-    -----------
+    ----------
     G : networkx Graph.
     signal: numpy array.
-        Vector with signal values for each node. Should have
-        the same length as number of nodes in `G`.
+        Vector with signal values for each node. Must have the same length as
+        number of nodes in `G`.
     title : str, optional.
         Title in the graph.
     label : str, optional.
         Lables to be displayed in colorbar.
 
     Returns
-    --------
+    -------
     fig : matplotlib figure.
     ax : matplotlib.pyplot axes.
     """
