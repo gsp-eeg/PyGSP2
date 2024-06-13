@@ -7,31 +7,31 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def make_metro_graph(edgesfile='edges.txt', coordsfile='metroCoords.geojson'):
-    """Create a NetworkX graph corresponding to the Metro de Santiago Network.
+def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
+                     coordsfile='santiago_metro_stations_coords.geojson'):
+    """Create a NetworkX graph corresponding to Santiago Metro network.
 
-    The file `metroCoords.geojson` was obtained from OpenStreetMap data, using the
-    service https://overpass-turbo.eu/, with the query
 
-    node
-    [public_transport=station]
-    [station=subway]
-    ({{bbox}});
-    out;
+    Parameters
+    ----------
 
-    Not that you need to have the city of Santiago in the map to use it as the
-    bounding box.
+    # TODO
 
-    We can use this to get the lines, but is not clear at the moment how to
-    programatically get the stations that are connected:
+    Returns
+    -------
 
-    [out:json][timeout:25];
-    // gather results
-    way["railway"="subway"]
-    ["name"="Línea 5"]
-    ({{bbox}});
-    // print results
-    out geom;
+    # TODO
+
+    Notes
+    -----
+
+    * Download the file `santiago_metro_stations_coords.geojson` from this link:
+
+    https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson
+
+    * Download the file `santiago_metro_stations_connections.txt` from this link:
+
+    https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt
     """
 
     with open(coordsfile) as f:

@@ -1,53 +1,53 @@
-""" Simulation of the distribution of a signal over the
-metro network. The starting conditions is a graph signal
-with only one positive integer value bigger.The plots 
-or animation show how this signal distributes over the
-network using:
+"""Example of a simulation of the evolution of a graph signal over the Santiago Metro
+network.
+
+Simulation of the distribution of a signal over the metro network. The starting
+conditions is a graph signal with only one positive integer value bigger.The
+plots or animation show how this signal distributes over the network using:
+
 .. math:: y = AD^-1x
 
-This example adds some constraints to the previous metro 
-simulation example. Some of them are:
-    1. Eliminates the backward connections on the
-    simulation and substracts 1 to every node 
-    degree to avoid dilution of the signal by going
-    backwards.
-    2. If the 2 wagons arrive at the same metro station,
-    there is no other way but out. All the people in
-    those wagons will exit the sations.
-    3. In terminal stations, the people will not travel
-    backwards this will also force an exit to everyone that
-    reaches the terminal station.
-    4. If there are less than the number of people that is set
-    to get out in every station then then wagon is emptyed.
+This example adds some constraints to the previous metro simulation
+example. Some of them are:
 
-The output is a folder with numerated figures. You can use
-websites such as https://gifmaker.me/ to make an animation
-with the resulting figures.
+1. Eliminates the backward connections on the simulation and substracts 1 to
+    every node degree to avoid dilution of the signal by going backwards.
 
-An additional requirement is to have the file `metroCoords.geojson`
-which was obtained from OpenStreetMap data, using the
-service https://overpass-turbo.eu/, with the query
+2. If the 2 wagons arrive at the same metro station, there is no other way but
+    out. All the people in those wagons will exit the sations.
 
-node
-[public_transport=station]
-[station=subway]
-({{bbox}});
-out;
+3. In terminal stations, the people will not travel backwards this will also
+    force an exit to everyone that reaches the terminal station.
 
-Not that you need to have the city of Santiago in the map to use it as the
-bounding box.
+4. If there are less than the number of people that is set to get out in every
+    station then then wagon is emptyed.
 
-We can use this to get the lines, but is not clear at the moment how to
-programatically get the stations that are connected:
+The output is a folder with numerated figures. You can use websites such as
+https://gifmaker.me/ to make an animation with the resulting figures.
 
-[out:json][timeout:25];
-// gather results
-way["railway"="subway"]
-["name"="Línea 5"]
-({{bbox}});
-// print results
-out geom;
+The initial condition is a graph signal with only one positive integer value
+bigger.The plots or animation show how this signal distributes over the network
+using:
 
+.. math:: y = AD^-1x
+
+To run this example, you need to download three files and place them in the
+same directory as this script.
+
+1. Download the file `Tablas de subidas y bajadas nov23.zip` from this link:
+
+https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip
+
+Then, uncompress the zip file and copy `2023.11 Matriz_baj_SS_MH.xlsb` to the
+same location as this script.
+
+2. Download the file `santiago_metro_stations_coords.geojson` from this link:
+
+https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson
+
+3. Download the file `santiago_metro_stations_connections.txt` from this link:
+
+https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt
 """
 # %%
 import os

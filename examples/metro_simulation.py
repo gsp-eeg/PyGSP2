@@ -1,34 +1,29 @@
-""" Simulation of the distribution of a signal over the
-metro network. The starting conditions is a graph signal
-with only one positive integer value bigger.The plots 
-or animation show how this signal distributes over the
-network using:
+"""Example of a simulation of the evolution of a graph signal over the Santiago Metro
+network.
+
+The initial condition is a graph signal with only one positive integer value
+bigger.The plots or animation show how this signal distributes over the network
+using:
+
 .. math:: y = AD^-1x
 
-An additional requirement is to have the file `metroCoords.geojson`
-which was obtained from OpenStreetMap data, using the
-service https://overpass-turbo.eu/, with the query
+To run this example, you need to download three files and place them in the
+same directory as this script.
 
-node
-[public_transport=station]
-[station=subway]
-({{bbox}});
-out;
+1. Download the file `Tablas de subidas y bajadas nov23.zip` from this link:
 
-Not that you need to have the city of Santiago in the map to use it as the
-bounding box.
+https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip
 
-We can use this to get the lines, but is not clear at the moment how to
-programatically get the stations that are connected:
+Then, uncompress the zip file and copy `2023.11 Matriz_baj_SS_MH.xlsb` to the
+same location as this script.
 
-[out:json][timeout:25];
-// gather results
-way["railway"="subway"]
-["name"="Línea 5"]
-({{bbox}});
-// print results
-out geom;
+2. Download the file `santiago_metro_stations_coords.geojson` from this link:
 
+https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson
+
+3. Download the file `santiago_metro_stations_connections.txt` from this link:
+
+https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt
 """
 # %%
 import os

@@ -17,6 +17,7 @@ develop-eggs
 *.geojson
 *.xlsb
 *.mp4
+santiago_metro_stations_connections.txt
 
 # Results from examples
 examples/metro_simulation

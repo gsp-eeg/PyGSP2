@@ -1,37 +1,27 @@
-"""
-Using the data available in
-https://www.dtpm.cl/index.php/documentos/matrices-de-viaje.
-This example also uses the edges defined in edges.txt
+"""Data imputing example in a  Santiago Metro station.
 
-Compute the number of exits in a random metro station. Then,
-compute the regression over the whole network and plot the
-error of the regression. Here, Tikhonov regession is used.
-Lastly, the average of neighboring nodes is also used to
-compare the error of the regression.
+Compute the number of exits in a random metro station. Then, compute the
+regression over the whole network and plot the error of the regression. Here,
+Tikhonov regession is used.  Lastly, the average of neighboring nodes is also
+used to compare the error of the regression.
 
-An additional requirement is to have the file `metroCoords.geojson`
-which was obtained from OpenStreetMap data, using the
-service https://overpass-turbo.eu/, with the query
+To run this example, you need to download three files and place them in the
+same directory as this script.
 
-node
-[public_transport=station]
-[station=subway]
-({{bbox}});
-out;
+1. Download the file `Tablas de subidas y bajadas nov23.zip` from this link:
 
-Not that you need to have the city of Santiago in the map to use it as the
-bounding box.
+https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip
 
-We can use this to get the lines, but is not clear at the moment how to
-programatically get the stations that are connected:
+Then, uncompress the zip file and copy `2023.11 Matriz_baj_SS_MH.xlsb` to the
+same location as this script.
 
-[out:json][timeout:25];
-// gather results
-way["railway"="subway"]
-["name"="Línea 5"]
-({{bbox}});
-// print results
-out geom;
+2. Download the file `santiago_metro_stations_coords.geojson` from this link:
+
+https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson
+
+3. Download the file `santiago_metro_stations_connections.txt` from this link:
+
+https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt
 """
 # %%
 import sys

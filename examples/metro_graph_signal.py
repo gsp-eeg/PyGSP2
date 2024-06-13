@@ -1,41 +1,27 @@
-"""Example of a graph signal for the Santiago Metro
+"""Example of a graph signal for the Santiago Metro.
 
 This example shows a graph signal defined over a graph induced by the Santiago
 Metro (https://en.wikipedia.org/wiki/Santiago_Metro). Each station is a
 node. Two nodes are connected if the corresponding stations are connected. The
 data for each node is the daily average of people leaving each station.
 
-Download the file `Tablas de subidas y bajadas nov23.zip` from this link:
+To run this example, you need to download three files and place them in the
+same directory as this script.
+
+1. Download the file `Tablas de subidas y bajadas nov23.zip` from this link:
 
 https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip
 
 Then, uncompress the zip file and copy `2023.11 Matriz_baj_SS_MH.xlsb` to the
 same location as this script.
 
-An additional requirement is to have the file `metroCoords.geojson`
-which was obtained from OpenStreetMap data, using the
-service https://overpass-turbo.eu/, with the query
+2. Download the file `santiago_metro_stations_coords.geojson` from this link:
 
-node
-[public_transport=station]
-[station=subway]
-({{bbox}});
-out;
+https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson
 
-Not that you need to have the city of Santiago in the map to use it as the
-bounding box.
+3. Download the file `santiago_metro_stations_connections.txt` from this link:
 
-We can use this to get the lines, but is not clear at the moment how to
-programatically get the stations that are connected:
-
-[out:json][timeout:25];
-// gather results
-way["railway"="subway"]
-["name"="Línea 5"]
-({{bbox}});
-// print results
-out geom;
-
+https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt
 """
 # %%
 import os
@@ -46,7 +32,6 @@ import matplotlib.pyplot as plt
 from utils import make_metro_graph, metro_database_preprocessing, plot_signal_in_graph
 os.chdir(os.path.dirname(__file__))
 
-# Change the name to the file you downloaded
 try:
     commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb', header=1,
                              sheet_name='bajadas_prom_laboral')
