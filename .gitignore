@@ -13,6 +13,17 @@ sdist
 develop-eggs
 .installed.cfg
 
+# Data
+*.geojson
+*.xlsb
+*.mp4
+santiago_metro_stations_connections.txt
+
+# Results from examples
+examples/metro_simulation
+examples/metro_simulation2
+examples/metro_simulation.gif
+
 # Installer logs
 pip-log.txt
 
