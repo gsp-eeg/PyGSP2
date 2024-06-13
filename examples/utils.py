@@ -22,6 +22,8 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
     Returns
     -------
     G: Networkx Graph.
+    pos: Dictionary. Contains the coordenates of each station. Keys are the station names.
+    Names can be obtained with `list(G)`.
 
     Notes
     -----
@@ -60,7 +62,10 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
                 continue
             u, v = e.split(',')
             G.add_edge(u.strip(), v.strip())
-    return G
+
+    pos = {node: (G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes}
+
+    return G, pos
 
 
 def metro_database_preprocessing(commutes, stations):

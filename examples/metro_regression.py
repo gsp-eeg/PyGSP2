@@ -45,8 +45,7 @@ except FileNotFoundError:
     sys.exit(-1)
 
 # %% Load graph
-G = make_metro_graph()
-pos = {node: (G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes}
+G, pos = make_metro_graph()
 pos_list = [(G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes]
 
 # Extract adjacency matrix

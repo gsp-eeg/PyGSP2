@@ -63,9 +63,8 @@ except FileExistsError:
         'Warning: It seems like this folder already exists. Overwritting...')
 
 # %% Load graph and compute adjacency and node degree
-G = make_metro_graph()
+G, pos = make_metro_graph()
 stations = list(G)
-pos = {node: (G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes}
 
 W0 = nx.adjacency_matrix(G).toarray()
 D = np.diag(W0@np.ones(len(W0)))

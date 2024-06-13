@@ -38,8 +38,7 @@ from utils import make_metro_graph
 MAKE_ANIMATION = True
 
 # %% Load graph and compute adjacency and node degree
-G = make_metro_graph()
-pos = {node: (G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes}
+G, pos = make_metro_graph()
 
 W = nx.adjacency_matrix(G).toarray()
 D = np.diag(W.sum(1))

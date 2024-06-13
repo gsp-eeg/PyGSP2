@@ -43,8 +43,7 @@ except FileNotFoundError:
 
 # %% Load graph
 
-G = make_metro_graph()
-pos = {node: (G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes}
+G, pos = make_metro_graph()
 
 stations = [name.upper() for name in list(G.nodes)]
 stations = [unidecode(station) for station in stations]
