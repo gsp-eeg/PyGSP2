@@ -14,13 +14,14 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
 
     Parameters
     ----------
-
-    # TODO
+    edgesfile: String. Name of the file that contains the edges of the connections.
+    See notes for the link to download the file.
+    coordsfile: String. Name of the file with the coordenates of the nodes for the graph.
+    See notes for the link to download the file.
 
     Returns
     -------
-
-    # TODO
+    G: Networkx Graph.
 
     Notes
     -----
