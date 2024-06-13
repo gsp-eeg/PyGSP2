@@ -1,4 +1,4 @@
-""" This script contains functions to run examples of graph
+""" This module contains functions to run examples of graph
 signal processing. To avoid excesive repetition of loading,
 plotting and database management, the functions below are used.
 The examples that use the functions below are:
