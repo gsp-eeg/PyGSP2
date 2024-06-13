@@ -1,6 +1,13 @@
 """ This script contains functions to run examples of graph
 signal processing. To avoid excesive repetition of loading,
 plotting and database management, the functions below are used.
+The examples that use the functions below are:
+
+* metro_graph_signal.py
+* metro_graph_regression.py
+* metro_simulation.py
+* metro_simulation2.py
+
 """
 import json
 import utm
