@@ -142,18 +142,18 @@ class NNGraph(Graph):
             for i in range(N):
                 spi[i * k:(i + 1) * k] = np.kron(np.ones((k)), i)
                 spj[i * k:(i + 1) * k] = NN[i, 1:]
-                spv[i * k:(i + 1) * k] = np.exp(-np.power(D[i, 1:], 2) /
-                                                float(self.sigma))
+                spv[i * k:(i + 1) * k] = np.exp(-np.square(D[i, 1:]) /
+                                                (2.*np.square(self.sigma)))
 
         elif self.NNtype == 'radius':
 
             kdt = spatial.KDTree(Xout)
-            D, NN = kdt.query(Xout,k=len(Xout),distance_upper_bound=epsilon,
+            D, NN = kdt.query(Xout, k=len(Xout), distance_upper_bound=epsilon,
                               p=dist_translation[dist_type])
             # Added to keep legacy functionality
             D2 = []
             NN2 = []
-            for d,nn in zip(D,NN):
+            for d, nn in zip(D, NN):
                 keep_idx = np.where(d != np.inf)
                 NN2.append(nn[:len(keep_idx[0])])
                 D2.append(d[keep_idx])
@@ -177,8 +177,8 @@ class NNGraph(Graph):
                 leng = len(NN[i]) - 1
                 spi[start:start + leng] = np.kron(np.ones((leng)), i)
                 spj[start:start + leng] = NN[i][1:]
-                spv[start:start + leng] = np.exp(-np.power(D[i][1:], 2) /
-                                                 float(self.sigma))
+                spv[start:start + leng] = np.exp(-np.square(D[i, 1:]) /
+                                                 (2.*np.square(self.sigma)))
                 start = start + leng
 
         else:
