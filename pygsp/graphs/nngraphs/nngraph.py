@@ -72,6 +72,24 @@ class NNGraph(Graph):
     >>> _ = axes[0].spy(G.W, markersize=5)
     >>> _ = G.plot(ax=axes[1])
 
+    Notes
+    -----
+    The similarity kernel used is the gaussian kernel [1]:
+
+    .. math::
+
+        W_{i,j} = 
+        \begin{cases}
+            exp(-\frac{[dist(i,j)]^2}{2\sigma^2}) & \text{if dist(i,j)} < \epsilon \\
+            0 & \text{otherwise}.
+        \end{cases}
+
+    References
+    ----------
+    .. [1] Shuman, D. I., Narang, S. K., Frossard, P., Ortega, A.,
+        & Vandergheynst, P. (2013). The emerging field of signal processing on
+        graphs: Extending high-dimensional data analysis to networks and other
+        irregular domains. IEEE signal processing magazine, 30(3), 83-98.
     """
 
     def __init__(self, Xin, NNtype='knn', use_flann=False, center=True,
