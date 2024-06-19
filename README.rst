@@ -1,6 +1,6 @@
-========================================
+=========================================
 PyGSP2: Graph Signal Processing in Python
-========================================
+=========================================
 
 The PyGSP2 is a Python package to ease
 `Signal Processing on Graphs <https://arxiv.org/abs/1211.0053>`_.
