@@ -17,6 +17,7 @@ import networkx as nx
 from geopy.distance import distance
 import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib import colormaps
 import numpy as np
 
 
@@ -135,7 +136,7 @@ def metro_database_preprocessing(commutes, stations):
     return metro_commutes, signal
 
 
-def plot_signal_in_graph(G, signal, title='Graph Signal', label=''):
+def plot_signal_in_graph(G, signal, title='Graph Signal', label='', cmap='viridis', alpha=1):
     """Function to plot signal in graph using networkx.
 
     Parameters
@@ -148,6 +149,10 @@ def plot_signal_in_graph(G, signal, title='Graph Signal', label=''):
         Title in the graph.
     label : str, optional.
         Lables to be displayed in colorbar.
+    cmap : str, optional.
+        Sets colormap
+    alpha : float, optional.
+        Sets transparency
 
     Returns
     -------
@@ -156,7 +161,13 @@ def plot_signal_in_graph(G, signal, title='Graph Signal', label=''):
     """
     pos = {node: (G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes}
     # Map signal to a color
-    cmap = matplotlib.colormaps.get_cmap('viridis')
+    if cmap in colormaps:
+        cmap = matplotlib.colormaps.get_cmap(cmap)
+    else:
+        print("Wrong colormap")
+        cmap = matplotlib.colormaps.get_cmap('viridis')
+
+    alpha = np.abs(alpha)
 
     normalized_signal = signal / np.max(signal)
     colors = cmap(normalized_signal)
@@ -165,11 +176,12 @@ def plot_signal_in_graph(G, signal, title='Graph Signal', label=''):
     fig, ax = plt.subplots(figsize=(10, 7))
     # Draw edges and nodes
     nx.draw_networkx_edges(G, pos, node_size=20, ax=ax)
-    pc = nx.draw_networkx_nodes(G, pos, node_color=colors, node_size=20, ax=ax)
+    pc = nx.draw_networkx_nodes(G, pos, node_color=colors, node_size=20, ax=ax, alpha=alpha)
     cbar = plt.colorbar(pc, ticks=[0, 0.5, 1], label=label)
     cbar.set_ticklabels([f'{label:.0f}' for label in [
                         0, np.amax(signal)/2, np.amax(signal)]])
     plt.title(title)
     plt.tight_layout()
+    plt.set_cmap(cmap) 
 
     return fig, ax
