@@ -1021,14 +1021,14 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
     def plot(self, vertex_color=None, vertex_size=None, highlight=[],
              edges=None, edge_color=None, edge_width=None,
              indices=False, colorbar=True, limits=None, ax=None,
-             title=None, backend=None):
+             title=None, backend=None, cmap=None):
         r"""Docstring overloaded at import time."""
         from pygsp.plotting import _plot_graph
         return _plot_graph(self, vertex_color=vertex_color,
                            vertex_size=vertex_size, highlight=highlight,
                            edges=edges, indices=indices, colorbar=colorbar,
                            edge_color=edge_color, edge_width=edge_width,
-                           limits=limits, ax=ax, title=title, backend=backend)
+                           limits=limits, ax=ax, title=title, backend=backend, cmap=cmap)
 
     def plot_signal(self, *args, **kwargs):
         r"""Deprecated, use plot() instead."""
