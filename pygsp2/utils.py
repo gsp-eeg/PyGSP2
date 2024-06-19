@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp.utils` module implements some utility functions used throughout
+The :mod:`pygsp2.utils` module implements some utility functions used throughout
 the package.
 """
 
@@ -82,7 +82,7 @@ def loadmat(path):
     (2503, 3)
 
     """
-    data = pkgutil.get_data('pygsp', 'data/' + path + '.mat')
+    data = pkgutil.get_data('pygsp2', 'data/' + path + '.mat')
     data = io.BytesIO(data)
     return scipy.io.loadmat(data)
 
@@ -322,7 +322,7 @@ def compute_log_scales(lmin, lmax, Nscales, t1=1, t2=2):
     lmin : float
         Smallest non-zero eigenvalue.
     lmax : float
-        Largest eigenvalue, i.e. :py:attr:`pygsp.graphs.Graph.lmax`.
+        Largest eigenvalue, i.e. :py:attr:`pygsp2.graphs.Graph.lmax`.
     Nscales : int
         Number of scales.
 

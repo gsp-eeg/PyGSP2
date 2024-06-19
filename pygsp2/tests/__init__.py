@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test suite of the PyGSP package, broken by modules.
+Test suite of the PyGSP2 package, broken by modules.
 
 """
 

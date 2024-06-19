@@ -23,7 +23,7 @@ class Abspline(Filter):
         (default = 20)
     scales : ndarray
         Vector of scales to be used.
-        By default, initialized with :func:`pygsp.utils.compute_log_scales`.
+        By default, initialized with :func:`pygsp2.utils.compute_log_scales`.
 
     Examples
     --------

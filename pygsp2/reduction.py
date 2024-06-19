@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp.reduction` module implements functionalities for the reduction
+The :mod:`pygsp2.reduction` module implements functionalities for the reduction
 of graphs' vertex set while keeping the graph structure.
 
 .. autosummary::

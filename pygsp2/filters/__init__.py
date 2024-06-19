@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp.filters` module implements methods used for filtering and
-defines commonly used filters that can be applied to :mod:`pygsp.graphs`. A
+The :mod:`pygsp2.filters` module implements methods used for filtering and
+defines commonly used filters that can be applied to :mod:`pygsp2.graphs`. A
 filter is associated to a graph and is defined with one or several functions.
 We define by filter bank a list of filters, usually centered around different
 frequencies, applied to a single graph.

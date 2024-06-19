@@ -49,11 +49,11 @@ class NNGraph(Graph):
     epsilon : float, optional
         Radius for the epsilon-neighborhood search (default is 0.01)
     plotting : dict, optional
-        Dictionary of plotting parameters. See :obj:`pygsp.plotting`.
+        Dictionary of plotting parameters. See :obj:`pygsp2.plotting`.
         (default is {})
     symmetrize_type : string, optional
         Type of symmetrization to use for the adjacency matrix. See
-        :func:`pygsp.utils.symmetrization` for the options.
+        :func:`pygsp2.utils.symmetrization` for the options.
         (default is 'average')
     dist_type : string, optional
         Type of distance to compute. See

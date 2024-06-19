@@ -13,7 +13,7 @@ class Modulation(Filter):
     The mother filter is translated to each eigenvalue of the Laplacian via
     modulation. A signal is modulated by multiplying it with an eigenvector.
     Similarly to localization, it is an element-wise multiplication of a kernel
-    with the columns of :attr:`pygsp.graphs.Graph.U`, i.e., the eigenvectors,
+    with the columns of :attr:`pygsp2.graphs.Graph.U`, i.e., the eigenvectors,
     in the vertex domain.
 
     This filter bank can be used to compute the frequency content of a signal
@@ -27,7 +27,7 @@ class Modulation(Filter):
 
     While :math:`g_{i,k}` should ideally be localized in both the spectral and
     vertex domains, that is impossible for some graphs due to the localization
-    of some eigenvectors. See :attr:`pygsp.graphs.Graph.coherence`.
+    of some eigenvectors. See :attr:`pygsp2.graphs.Graph.coherence`.
 
     As modulation and localization don't commute, one can define the frame as
     :math:`g_{i,k} = T_i M_k g` (modulation first) or :math:`g_{i,k} = M_k T_i
@@ -49,8 +49,8 @@ class Modulation(Filter):
 
     Parameters
     ----------
-    graph : :class:`pygsp.graphs.Graph`
-    kernel : :class:`pygsp.filters.Filter`
+    graph : :class:`pygsp2.graphs.Graph`
+    kernel : :class:`pygsp2.filters.Filter`
         Kernel function to be modulated.
     modulation_first : bool
         First modulate then localize the kernel if True, first localize then

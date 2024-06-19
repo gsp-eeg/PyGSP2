@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp.optimization` module provides tools to solve convex
+The :mod:`pygsp2.optimization` module provides tools to solve convex
 optimization problems on graphs.
 """
 
@@ -28,7 +28,7 @@ def prox_tv(x, gamma, G, A=None, At=None, nu=1, tol=10e-4, maxit=200, use_matrix
 
     This function computes the TV proximal operator for graphs. The TV norm
     is the one norm of the gradient. The gradient is defined in the
-    function :meth:`pygsp.graphs.Graph.grad`.
+    function :meth:`pygsp2.graphs.Graph.grad`.
     This function requires the PyUNLocBoX to be executed.
 
     This function solves:

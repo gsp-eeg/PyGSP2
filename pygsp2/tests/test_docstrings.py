@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test suite for the docstrings of the pygsp package.
+Test suite for the docstrings of the pygsp2 package.
 
 """
 
@@ -27,9 +27,9 @@ def setup(doctest):
     import numpy
     import pygsp2
     doctest.globs = {
-        'graphs': pygsp.graphs,
-        'filters': pygsp.filters,
-        'utils': pygsp.utils,
+        'graphs': pygsp2.graphs,
+        'filters': pygsp2.filters,
+        'utils': pygsp2.utils,
         'np': numpy,
     }
 
@@ -37,11 +37,11 @@ def setup(doctest):
 def teardown(doctest):
     """Close matplotlib figures to avoid warning and save memory."""
     import pygsp2
-    pygsp.plotting.close_all()
+    pygsp2.plotting.close_all()
 
 
 # Docstrings from API reference.
-suite_reference = test_docstrings('pygsp', '.py', setup)
+suite_reference = test_docstrings('pygsp2', '.py', setup)
 
 # Docstrings from tutorials. No setup to not forget imports.
 suite_tutorials = test_docstrings('.', '.rst')

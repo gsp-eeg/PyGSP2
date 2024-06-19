@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp` package is mainly organized around the following two modules:
+The :mod:`pygsp2` package is mainly organized around the following two modules:
 
 * :mod:`.graphs` to create and manipulate various kinds of graphs,
 * :mod:`.filters` to create and manipulate various graph filters.

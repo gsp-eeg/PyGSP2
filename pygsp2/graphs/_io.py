@@ -93,7 +93,7 @@ class IOMixIn(object):
         >>> # nx.draw(graph, with_labels=True)
 
         Another common goal is to use NetworkX to compute some properties to be
-        be imported back in the PyGSP as signals.
+        be imported back in the PyGSP2 as signals.
 
         >>> import networkx as nx
         >>> from matplotlib import pyplot as plt
@@ -176,7 +176,7 @@ class IOMixIn(object):
         >>> # gt.draw.graph_draw(graph, vertex_text=graph.vertex_index)
 
         Another common goal is to use graph-tool to compute some properties to
-        be imported back in the PyGSP as signals.
+        be imported back in the PyGSP2 as signals.
 
         >>> import graph_tool as gt
         >>> import graph_tool.centrality
@@ -234,8 +234,8 @@ class IOMixIn(object):
 
         Returns
         -------
-        graph : :class:`~pygsp.graphs.Graph`
-            A PyGSP graph object.
+        graph : :class:`~pygsp2.graphs.Graph`
+            A PyGSP2 graph object.
 
         Notes
         -----
@@ -315,8 +315,8 @@ class IOMixIn(object):
 
         Returns
         -------
-        graph : :class:`~pygsp.graphs.Graph`
-            A PyGSP graph object.
+        graph : :class:`~pygsp2.graphs.Graph`
+            A PyGSP2 graph object.
 
         Notes
         -----
@@ -395,8 +395,8 @@ class IOMixIn(object):
         See Also
         --------
         save : save a graph to a file
-        from_networkx : load with NetworkX then import in the PyGSP
-        from_graphtool : load with graph-tool then import in the PyGSP
+        from_networkx : load with NetworkX then import in the PyGSP2
+        from_graphtool : load with graph-tool then import in the PyGSP2
 
         Notes
         -----
@@ -405,7 +405,7 @@ class IOMixIn(object):
         is saved and loaded with the same backend.
 
         Loading from other formats is possible by loading in NetworkX or
-        graph-tool, and importing to the PyGSP.
+        graph-tool, and importing to the PyGSP2.
         The proposed formats are however tested for faithful round-trips.
 
         Examples

@@ -1,5 +1,5 @@
 r"""
-The :mod:`pygsp.graph_learning` module provides functions
+The :mod:`pygsp2.graph_learning` module provides functions
 to estimate a graph based on a distance matrix Z.
 
 .. autosummary::

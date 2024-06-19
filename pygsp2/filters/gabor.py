@@ -28,12 +28,12 @@ class Gabor(Filter):
 
     While :math:`g_{i,k}` should ideally be localized in both the spectral and
     vertex domains, that is impossible for some graphs due to the localization
-    of some eigenvectors. See :attr:`pygsp.graphs.Graph.coherence`.
+    of some eigenvectors. See :attr:`pygsp2.graphs.Graph.coherence`.
 
     Parameters
     ----------
-    graph : :class:`pygsp.graphs.Graph`
-    kernel : :class:`pygsp.filters.Filter`
+    graph : :class:`pygsp2.graphs.Graph`
+    kernel : :class:`pygsp2.filters.Filter`
         Kernel function to be centered at each graph frequency (eigenvalue of
         the graph Laplacian).
 

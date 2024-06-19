@@ -870,7 +870,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         Runs the implicitly restarted Lanczos method (as implemented in
         :func:`scipy.sparse.linalg.eigsh`) with a large tolerance, then
         increases the calculated largest eigenvalue by 1 percent. For much of
-        the PyGSP machinery, we need to approximate filter kernels on an
+        the PyGSP2 machinery, we need to approximate filter kernels on an
         interval that contains the spectrum of L. The only cost of using a
         larger interval is that the polynomial approximation over the larger
         interval may be a slightly worse approximation on the actual spectrum.

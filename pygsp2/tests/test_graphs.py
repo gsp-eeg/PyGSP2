@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test suite for the graphs module of the pygsp package.
+Test suite for the graphs module of the pygsp2 package.
 
 """
 
@@ -691,7 +691,7 @@ suite_graphs = unittest.TestLoader().loadTestsFromTestCase(TestCase)
 class TestImportExport(unittest.TestCase):
 
     def test_networkx_export_import(self):
-        # Export to networkx and reimport to PyGSP
+        # Export to networkx and reimport to PyGSP2
 
         # Exporting the Bunny graph
         g = graphs.Bunny()
@@ -708,7 +708,7 @@ class TestImportExport(unittest.TestCase):
                                       nx.adjacency_matrix(g).todense())
 
     def test_graphtool_export_import(self):
-        # Export to graph tool and reimport to PyGSP directly
+        # Export to graph tool and reimport to PyGSP2 directly
         # The exported graph is a simple one without an associated Signal
         g = graphs.Bunny()
         g_gt = g.to_graphtool()
@@ -737,7 +737,7 @@ class TestImportExport(unittest.TestCase):
         self.assertEqual(g3.W[3, 6], 9.0)
 
     def test_graphtool_import_export(self):
-        # Import to PyGSP and export again to graph tool directly
+        # Import to PyGSP2 and export again to graph tool directly
         # create a random graphTool graph that does not contain multiple edges and no signal
         rng = np.random.default_rng(42)
         graph_gt = gt.generation.random_graph(100, lambda: (rng.poisson(4), rng.poisson(4)))

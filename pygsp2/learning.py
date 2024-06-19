@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp.learning` module provides functions to solve learning problems.
+The :mod:`pygsp2.learning` module provides functions to solve learning problems.
 
 Semi-supervized learning
 ========================
@@ -52,7 +52,7 @@ def classification_tikhonov_simplex(G, y, M, tau=0.1, **kwargs):
 
     Parameters
     ----------
-    G : :class:`pygsp.graphs.Graph`
+    G : :class:`pygsp2.graphs.Graph`
     y : array, length G.n_vertices
         Measurements.
     M : array of boolean, length G.n_vertices
@@ -196,7 +196,7 @@ def classification_tikhonov(G, y, M, tau=0):
 
     Parameters
     ----------
-    G : :class:`pygsp.graphs.Graph`
+    G : :class:`pygsp2.graphs.Graph`
     y : array, length G.n_vertices
         Measurements.
     M : array of boolean, length G.n_vertices
@@ -268,7 +268,7 @@ def regression_tikhonov(G, y, M, tau=0):
 
     Parameters
     ----------
-    G : :class:`pygsp.graphs.Graph`
+    G : :class:`pygsp2.graphs.Graph`
     y : array, length G.n_vertices
         Measurements.
     M : array of boolean, length G.n_vertices

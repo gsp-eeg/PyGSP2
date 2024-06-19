@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp.graphs` module implements the graph class hierarchy. A graph
+The :mod:`pygsp2.graphs` module implements the graph class hierarchy. A graph
 object is either constructed from an adjacency matrix, or by instantiating one
 of the built-in graph models.
 
@@ -67,8 +67,8 @@ Transforms
     Graph.igft
 
 Vertex-frequency transforms are implemented as filter banks and are found in
-:mod:`pygsp.filters` (such as :class:`~pygsp.filters.Gabor` and
-:class:`~pygsp.filters.Modulation`).
+:mod:`pygsp2.filters` (such as :class:`~pygsp2.filters.Gabor` and
+:class:`~pygsp2.filters.Modulation`).
 
 Checks
 ------
@@ -93,9 +93,9 @@ Import and export (I/O)
 
 We provide import and export facility to two well-known Python packages for
 network analysis: NetworkX_ and graph-tool_.
-Those packages and the PyGSP are fundamentally different in their goals (graph
+Those packages and the PyGSP2 are fundamentally different in their goals (graph
 analysis versus graph signal analysis) and graph representations (if in the
-PyGSP everything is an ndarray, in NetworkX everything is a dictionary).
+PyGSP2 everything is an ndarray, in NetworkX everything is a dictionary).
 Those tools are complementary and good interoperability is necessary to exploit
 the strengths of each tool.
 We ourselves leverage NetworkX and graph-tool to save and load graphs.
@@ -133,7 +133,7 @@ In addition to the below graphs, useful resources are the random graph
 generators from NetworkX (see `NetworkX's documentation`_) and graph-tool (see
 :mod:`graph_tool.generation`), as well as graph-tool's assortment of standard
 networks (see :mod:`graph_tool.collection`).
-Any graph created by NetworkX or graph-tool can be imported in the PyGSP with
+Any graph created by NetworkX or graph-tool can be imported in the PyGSP2 with
 :meth:`Graph.from_networkx` and :meth:`Graph.from_graphtool`.
 
 .. _NetworkX's documentation: https://networkx.org/documentation/stable/reference/generators.html

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp.features` module implements different feature extraction
-techniques based on :mod:`pygsp.graphs` and :mod:`pygsp.filters`.
+The :mod:`pygsp2.features` module implements different feature extraction
+techniques based on :mod:`pygsp2.graphs` and :mod:`pygsp2.filters`.
 """
 
 import numpy as np
@@ -35,10 +35,10 @@ def compute_tig(g, **kwargs):
     Parameters
     ----------
     g: Filter
-        One of :mod:`pygsp.filters`.
+        One of :mod:`pygsp2.filters`.
     kwargs: dict
         Additional parameters to be passed to the
-        :func:`pygsp.filters.Filter.filter` method.
+        :func:`pygsp2.filters.Filter.filter` method.
     """
     return g.compute_frame()
 
@@ -55,7 +55,7 @@ def compute_norm_tig(g, **kwargs):
         The filter or filter bank.
     kwargs: dict
         Additional parameters to be passed to the
-        :func:`pygsp.filters.Filter.filter` method.
+        :func:`pygsp2.filters.Filter.filter` method.
     """
     tig = compute_tig(g, **kwargs)
     return np.linalg.norm(tig, axis=1, ord=2)
@@ -76,7 +76,7 @@ def compute_spectrogram(G, atom=None, M=100, **kwargs):
         Number of samples on the spectral scale. (default = 100)
     kwargs: dict
         Additional parameters to be passed to the
-        :func:`pygsp.filters.Filter.filter` method.
+        :func:`pygsp2.filters.Filter.filter` method.
     """
 
     if not atom:

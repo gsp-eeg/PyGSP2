@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp.plotting` module implements functionality to plot PyGSP objects
+The :mod:`pygsp2.plotting` module implements functionality to plot PyGSP2 objects
 with a `pyqtgraph <https://www.pyqtgraph.org>`_ or `matplotlib
 <https://matplotlib.org>`_ drawing backend (which can be controlled by the
 :data:`BACKEND` constant or individually for each plotting call).
 
 Most users won't use this module directly.
-Graphs (from :mod:`pygsp.graphs`) are to be plotted with
-:meth:`pygsp.graphs.Graph.plot` and
-:meth:`pygsp.graphs.Graph.plot_spectrogram`.
-Filters (from :mod:`pygsp.filters`) are to be plotted with
-:meth:`pygsp.filters.Filter.plot`.
+Graphs (from :mod:`pygsp2.graphs`) are to be plotted with
+:meth:`pygsp2.graphs.Graph.plot` and
+:meth:`pygsp2.graphs.Graph.plot_spectrogram`.
+Filters (from :mod:`pygsp2.filters`) are to be plotted with
+:meth:`pygsp2.filters.Filter.plot`.
 
 .. data:: BACKEND
 
@@ -190,7 +190,7 @@ def _plot_filter(filters, n, eigenvalues, sum, labels, title, ax, **kwargs):
     eigenvalues : boolean
         Whether to show the eigenvalues of the graph Laplacian.
         The eigenvalues should have been computed with
-        :meth:`~pygsp.graphs.Graph.compute_fourier_basis`.
+        :meth:`~pygsp2.graphs.Graph.compute_fourier_basis`.
         By default, the eigenvalues are shown if they are available.
     sum : boolean
         Whether to plot the sum of the squared magnitudes of the filters.
@@ -356,7 +356,7 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         Title of the figure.
     backend: {'matplotlib', 'pyqtgraph', None}
         Defines the drawing backend to use.
-        Defaults to :data:`pygsp.plotting.BACKEND`.
+        Defaults to :data:`pygsp2.plotting.BACKEND`.
 
     Returns
     -------

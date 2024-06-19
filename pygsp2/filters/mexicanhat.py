@@ -34,7 +34,7 @@ class MexicanHat(Filter):
         The scaling function will be created to fill the low-pass gap.
     scales : array_like
         Scales to be used.
-        By default, initialized with :func:`pygsp.utils.compute_log_scales`.
+        By default, initialized with :func:`pygsp2.utils.compute_log_scales`.
     normalize : bool
         Whether to normalize the wavelet by the factor ``sqrt(scales)``.
 

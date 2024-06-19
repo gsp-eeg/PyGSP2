@@ -10,7 +10,7 @@ class Torus(Graph):
     r"""Sampled torus manifold.
 
     On the torus, the graph Fourier transform (GFT) is the Kronecker product
-    between the GFT of two :class:`~pygsp.graphs.Ring` graphs.
+    between the GFT of two :class:`~pygsp2.graphs.Ring` graphs.
 
     Parameters
     ----------

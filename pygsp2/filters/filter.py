@@ -700,7 +700,7 @@ class Filter(object):
 
         Returns
         -------
-        inverse : :class:`pygsp.filters.Filter`
+        inverse : :class:`pygsp2.filters.Filter`
             The pseudo-inverse filter bank, which synthesizes (or reconstructs)
             a signal from its coefficients using the canonical dual frame.
 

@@ -11,7 +11,7 @@ class Grid2d(Graph):
     r"""2-dimensional grid graph.
 
     On the 2D grid, the graph Fourier transform (GFT) is the Kronecker product
-    between the GFT of two :class:`~pygsp.graphs.Path` graphs.
+    between the GFT of two :class:`~pygsp2.graphs.Path` graphs.
 
     Parameters
     ----------
