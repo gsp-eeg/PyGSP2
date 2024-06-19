@@ -2,4 +2,4 @@
 Reduction
 =========
 
-.. automodule:: pygsp.reduction
+.. automodule:: pygsp2.reduction

@@ -49,9 +49,9 @@ sphinx_gallery_conf = {
     'examples_dirs': '../examples',
     'gallery_dirs': 'examples',
     'filename_pattern': '/',
-    'reference_url': {'pygsp': None},
+    'reference_url': {'pygsp2': None},
     'backreferences_dir': 'backrefs',
-    'doc_module': 'pygsp',
+    'doc_module': 'pygsp2',
     'show_memory': True,
 }
 
@@ -65,9 +65,9 @@ exclude_patterns = ['_build']
 source_suffix = '.rst'
 master_doc = 'index'
 
-project = 'PyGSP'
-version = pygsp.__version__
-release = pygsp.__version__
+project = 'pygsp2'
+version = pygsp2.__version__
+release = pygsp2.__version__
 copyright = 'EPFL LTS2'
 
 pygments_style = 'sphinx'
@@ -80,6 +80,6 @@ latex_elements = {
     'pointsize': '10pt',
 }
 latex_documents = [
-    ('index', 'pygsp.tex', 'PyGSP documentation',
+    ('index', 'pygsp2.tex', 'PyGSP2 documentation',
      'EPFL LTS2', 'manual'),
 ]

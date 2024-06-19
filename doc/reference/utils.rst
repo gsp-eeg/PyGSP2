@@ -2,4 +2,4 @@
 Utilities
 =========
 
-.. automodule:: pygsp.utils
+.. automodule:: pygsp2.utils

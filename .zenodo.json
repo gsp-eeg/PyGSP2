@@ -1,6 +1,6 @@
 {
-	"title": "PyGSP: Graph Signal Processing in Python",
-	"description": "The PyGSP facilitates a wide variety of operations on graphs, like computing their Fourier basis, filtering or interpolating signals, plotting graphs, signals, and filters.",
+	"title": "PyGSP2: Graph Signal Processing in Python",
+	"description": "The PyGSP2 facilitates a wide variety of operations on graphs, like computing their Fourier basis, filtering or interpolating signals, plotting graphs, signals, and filters.",
 	"upload_type": "software",
 	"license": "BSD-3-Clause",
 	"access_right": "open",
@@ -27,7 +27,7 @@
 	"related_identifiers": [
 		{
 			"scheme": "url",
-			"identifier": "https://github.com/epfl-lts2/pygsp",
+			"identifier": "https://github.com/gsp-eeg/pygsp2",
 			"relation": "isSupplementTo"
 		},
 		{

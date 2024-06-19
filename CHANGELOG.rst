@@ -84,8 +84,8 @@ The core functionality of this package only depends on numpy and scipy.
 Dependencies which are only required for particular usages are included in the
 alldeps extra dependency list. The alldeps list allows users to install
 dependencies to enable all the features. Finally, those optional packages are
-only loaded when needed, not when the PyGSP is imported. A nice side-effect is
-that importing the PyGSP is now much faster!
+only loaded when needed, not when the PyGSP2 is imported. A nice side-effect is
+that importing the PyGSP2 is now much faster!
 
 The following packages were made optional dependencies:
 
@@ -157,7 +157,7 @@ Documentation:
 * Most filters and graphs are plotted in the API documentation.
 * List all methods and models at the top with autosummary.
 * Useful package and module-level documentation.
-* Doctests don't need to import numpy and the pygsp every time.
+* Doctests don't need to import numpy and the pygsp2 every time.
 * Figures are automatically generated when building the documentation.
 * Build on RTD with conda and matplotlib 2 (prettier plots).
 * Intro and wavelets tutorials were updated.
@@ -228,7 +228,7 @@ Tests and infrastructure:
 ------------------
 
 * Adding functionalities to match the content of the Matlab GSP Box.
-* First release of the PyGSP.
+* First release of the PyGSP2.
 
 0.1.0 (2015-07-02)
 ------------------

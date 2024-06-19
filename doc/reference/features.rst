@@ -2,4 +2,4 @@
 Features
 ========
 
-.. automodule:: pygsp.features
+.. automodule:: pygsp2.features
