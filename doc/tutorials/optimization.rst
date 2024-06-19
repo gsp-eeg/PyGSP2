@@ -13,7 +13,7 @@ This tutorial focuses on the problem of recovering a label signal on a graph fro
     :context: reset
 
     >>> import numpy as np
-    >>> from pygsp import graphs, plotting
+    >>> from pygsp2 import graphs, plotting
     >>>
     >>> # Create a random sensor graph
     >>> G = graphs.Sensor(N=256, distributed=True, seed=42)

@@ -7,7 +7,7 @@ techniques based on :mod:`pygsp.graphs` and :mod:`pygsp.filters`.
 
 import numpy as np
 
-from pygsp import filters, utils
+from pygsp2 import filters, utils
 
 
 def compute_avg_adj_deg(G):

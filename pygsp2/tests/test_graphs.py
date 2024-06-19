@@ -20,7 +20,7 @@ import graph_tool as gt
 import graph_tool.generation
 from skimage import data, img_as_float
 
-from pygsp import graphs
+from pygsp2 import graphs
 
 
 class TestCase(unittest.TestCase):

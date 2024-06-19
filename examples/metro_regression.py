@@ -32,7 +32,7 @@ from unidecode import unidecode
 import networkx as nx
 import matplotlib.pyplot as plt
 from utils import make_metro_graph, plot_signal_in_graph, metro_database_preprocessing
-from pygsp import graphs, learning
+from pygsp2 import graphs, learning
 os.chdir(os.path.dirname(__file__))
 
 try:

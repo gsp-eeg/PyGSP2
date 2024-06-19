@@ -28,7 +28,7 @@ import functools
 
 import numpy as np
 
-from pygsp import utils
+from pygsp2 import utils
 
 
 _logger = utils.build_logger(__name__)
@@ -652,7 +652,7 @@ def _plot_spectrogram(G, node_idx):
     >>> G.plot_spectrogram()
 
     """
-    from pygsp import features
+    from pygsp2 import features
 
     qtg, _, _ = _import_qtg()
 

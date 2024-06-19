@@ -5,29 +5,29 @@ from setuptools import setup
 
 
 setup(
-    name='PyGSP',
+    name='pygsp2',
     version='0.5.1',
     description='Graph Signal Processing in Python',
     long_description=open('README.rst').read(),
     long_description_content_type='text/x-rst',
     author='EPFL LTS2',
-    url='https://github.com/epfl-lts2/pygsp',
+    url='https://github.com/gsp-eeg/pygsp2',
     project_urls={
-        'Documentation': 'https://pygsp.readthedocs.io',
-        'Download': 'https://pypi.org/project/PyGSP',
-        'Source Code': 'https://github.com/epfl-lts2/pygsp',
-        'Bug Tracker': 'https://github.com/epfl-lts2/pygsp/issues',
-        'Try It Online': 'https://mybinder.org/v2/gh/epfl-lts2/pygsp/master?urlpath=lab/tree/examples/playground.ipynb',
+        'Documentation': 'https://pygsp2.readthedocs.io',
+        'Download': 'https://pypi.org/project/pygsp2',
+        'Source Code': 'https://github.com/gsp-eeg/pygsp2',
+        'Bug Tracker': 'https://github.com/gsp-eeg/pygsp2/issues',
+        'Try It Online': 'https://mybinder.org/v2/gh/epfl-lts2/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb',
     },
     packages=[
-        'pygsp',
-        'pygsp.graphs',
-        'pygsp.graphs.nngraphs',
-        'pygsp.filters',
-        'pygsp.tests',
+        'pygsp2',
+        'pygsp2.graphs',
+        'pygsp2.graphs.nngraphs',
+        'pygsp2.filters',
+        'pygsp2.tests',
     ],
-    package_data={'pygsp': ['data/pointclouds/*.mat']},
-    test_suite='pygsp.tests.suite',
+    package_data={'pygsp2': ['data/pointclouds/*.mat']},
+    test_suite='pygsp2.tests.suite',
     python_requires='>=3.7',
     install_requires=[
         'numpy',
@@ -39,7 +39,7 @@ setup(
         'dev': [
             # Import and export.
             'networkx',
-            'json',
+            #'json',
             'utm',
             'geopy',
             'pyxlsb',

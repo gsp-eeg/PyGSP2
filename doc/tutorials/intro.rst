@@ -12,7 +12,7 @@ matrices and arrays.
 
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> from pygsp import graphs, filters, plotting
+    >>> from pygsp2 import graphs, filters, plotting
 
 We then set default plotting parameters. We're using the ``matplotlib`` backend
 to embed plots in this tutorial. The ``pyqtgraph`` backend is best suited for

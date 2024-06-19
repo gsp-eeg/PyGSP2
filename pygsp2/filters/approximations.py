@@ -3,7 +3,7 @@
 import numpy as np
 from scipy import sparse
 
-from pygsp import utils
+from pygsp2 import utils
 
 
 _logger = utils.build_logger(__name__)

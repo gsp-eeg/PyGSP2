@@ -9,7 +9,7 @@ to estimate a graph based on a distance matrix Z.
 """
 import numpy as np
 from scipy.spatial.distance import squareform
-from pygsp.utils import sum_squareform
+from pygsp2.utils import sum_squareform
 
 
 def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,

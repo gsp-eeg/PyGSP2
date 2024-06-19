@@ -12,7 +12,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from skimage import data, img_as_float
 
-from pygsp import graphs, filters, plotting
+from pygsp2 import graphs, filters, plotting
 
 
 class TestGraphs(unittest.TestCase):

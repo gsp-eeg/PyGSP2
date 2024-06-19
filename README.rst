@@ -65,7 +65,7 @@ import / export facility.
 The following demonstrates how to instantiate a graph and a filter, the two
 main objects of the package.
 
->>> from pygsp import graphs, filters
+>>> from pygsp2 import graphs, filters
 >>> G = graphs.Logo()
 >>> G.compute_fourier_basis()  # Fourier to plot the eigenvalues.
 >>> # G.estimate_lmax() is otherwise sufficient.

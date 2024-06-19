@@ -10,7 +10,7 @@ import sys
 
 import numpy as np
 
-from pygsp import graphs, filters
+from pygsp2 import graphs, filters
 
 
 class TestCase(unittest.TestCase):

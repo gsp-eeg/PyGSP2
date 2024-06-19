@@ -20,7 +20,7 @@ import numpy as np
 from scipy import sparse, stats
 from scipy.sparse import linalg
 
-from pygsp import graphs, filters, utils
+from pygsp2 import graphs, filters, utils
 
 
 logger = utils.build_logger(__name__)
@@ -55,7 +55,7 @@ def graph_sparsify(M, epsilon, maxiter=10, seed=None):
 
     Examples
     --------
-    >>> from pygsp import reduction
+    >>> from pygsp2 import reduction
     >>> from matplotlib import pyplot as plt
     >>> G = graphs.Sensor(100, k=20, distributed=True, seed=1)
     >>> Gs = reduction.graph_sparsify(G, epsilon=0.4, seed=1)
@@ -240,7 +240,7 @@ def graph_multiresolution(G, levels, sparsify=True, sparsify_eps=None,
 
     Examples
     --------
-    >>> from pygsp import reduction
+    >>> from pygsp2 import reduction
     >>> levels = 5
     >>> G = graphs.Sensor(N=512)
     >>> G.compute_fourier_basis()

@@ -9,7 +9,7 @@ import unittest
 
 import numpy as np
 
-from pygsp import graphs, filters, learning
+from pygsp2 import graphs, filters, learning
 from scipy import spatial
 
 

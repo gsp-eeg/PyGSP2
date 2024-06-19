@@ -5,7 +5,7 @@ The :mod:`pygsp.optimization` module provides tools to solve convex
 optimization problems on graphs.
 """
 
-from pygsp import utils
+from pygsp2 import utils
 
 
 logger = utils.build_logger(__name__)

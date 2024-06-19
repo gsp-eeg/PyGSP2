@@ -5,7 +5,7 @@ from __future__ import division
 import numpy as np
 from scipy import sparse
 
-from pygsp import utils
+from pygsp2 import utils
 
 
 logger = utils.build_logger(__name__)

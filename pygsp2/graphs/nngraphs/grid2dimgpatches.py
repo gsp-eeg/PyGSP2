@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # prevent circular import in Python < 3.5
-from pygsp.graphs import Graph, Grid2d, ImgPatches
+from pygsp2.graphs import Graph, Grid2d, ImgPatches
 
 
 class Grid2dImgPatches(Graph):

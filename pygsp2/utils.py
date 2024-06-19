@@ -76,7 +76,7 @@ def loadmat(path):
 
     Examples
     --------
-    >>> from pygsp import utils
+    >>> from pygsp2 import utils
     >>> data = utils.loadmat('pointclouds/bunny')
     >>> data['bunny'].shape
     (2503, 3)
@@ -105,7 +105,7 @@ def distanz(x, y=None):
 
     Examples
     --------
-    >>> from pygsp import utils
+    >>> from pygsp2 import utils
     >>> x = np.arange(3)
     >>> utils.distanz(x, x)
     array([[0., 1., 2.],
@@ -213,7 +213,7 @@ def symmetrize(W, method='average'):
 
     Examples
     --------
-    >>> from pygsp import utils
+    >>> from pygsp2 import utils
     >>> W = np.array([[0, 3, 0], [3, 1, 6], [4, 2, 3]], dtype=float)
     >>> W
     array([[0., 3., 0.],
@@ -297,7 +297,7 @@ def rescale_center(x):
 
     Examples
     --------
-    >>> from pygsp import utils
+    >>> from pygsp2 import utils
     >>> x = np.array([[1, 6], [2, 5], [3, 4]])
     >>> utils.rescale_center(x)
     array([[-1. ,  1. ],
@@ -333,7 +333,7 @@ def compute_log_scales(lmin, lmax, Nscales, t1=1, t2=2):
 
     Examples
     --------
-    >>> from pygsp import utils
+    >>> from pygsp2 import utils
     >>> utils.compute_log_scales(1, 10, 3)
     array([2.       , 0.4472136, 0.1      ])
 

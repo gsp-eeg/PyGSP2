@@ -47,5 +47,5 @@ def test():  # pragma: no cover
     """Run the test suite."""
     import unittest
     # Lazy as it might be slow and require additional dependencies.
-    from pygsp.tests import suite
+    from pygsp2.tests import suite
     unittest.TextTestRunner(verbosity=2).run(suite)

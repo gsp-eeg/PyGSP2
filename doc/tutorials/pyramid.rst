@@ -6,7 +6,7 @@ In this demonstration file, we show how to reduce a graph using the PyGSP. Then 
 To start open a python shell (IPython is recommended here) and import the required packages. You would probably also import numpy as you will need it to create matrices and arrays.
 
 >>> import numpy as np
->>> from pygsp import graphs, reduction
+>>> from pygsp2 import graphs, reduction
 
 For this demo we will be using a sensor graph with 400 nodes.
 

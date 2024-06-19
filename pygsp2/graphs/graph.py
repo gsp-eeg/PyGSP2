@@ -8,7 +8,7 @@ from collections import Counter
 import numpy as np
 from scipy import sparse
 
-from pygsp import utils
+from pygsp2 import utils
 from .fourier import FourierMixIn
 from .difference import DifferenceMixIn
 from ._io import IOMixIn
@@ -1023,7 +1023,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
              indices=False, colorbar=True, limits=None, ax=None,
              title=None, backend=None):
         r"""Docstring overloaded at import time."""
-        from pygsp.plotting import _plot_graph
+        from pygsp2.plotting import _plot_graph
         return _plot_graph(self, vertex_color=vertex_color,
                            vertex_size=vertex_size, highlight=highlight,
                            edges=edges, indices=indices, colorbar=colorbar,
@@ -1036,5 +1036,5 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
     def plot_spectrogram(self, node_idx=None):
         r"""Docstring overloaded at import time."""
-        from pygsp.plotting import _plot_spectrogram
+        from pygsp2.plotting import _plot_spectrogram
         _plot_spectrogram(self, node_idx=node_idx)

@@ -69,7 +69,7 @@ def classification_tikhonov_simplex(G, y, M, tau=0.1, **kwargs):
 
     Examples
     --------
-    >>> from pygsp import graphs, learning
+    >>> from pygsp2 import graphs, learning
     >>> import matplotlib.pyplot as plt
     >>>
     >>> G = graphs.Logo()
@@ -211,7 +211,7 @@ def classification_tikhonov(G, y, M, tau=0):
 
     Examples
     --------
-    >>> from pygsp import graphs, learning
+    >>> from pygsp2 import graphs, learning
     >>> import matplotlib.pyplot as plt
     >>>
     >>> G = graphs.Logo()
@@ -283,7 +283,7 @@ def regression_tikhonov(G, y, M, tau=0):
 
     Examples
     --------
-    >>> from pygsp import graphs, filters, learning
+    >>> from pygsp2 import graphs, filters, learning
     >>> import matplotlib.pyplot as plt
     >>>
     >>> G = graphs.Sensor(N=100, seed=42)

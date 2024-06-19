@@ -4,7 +4,7 @@ from functools import partial
 
 import numpy as np
 
-from pygsp import utils
+from pygsp2 import utils
 # prevent circular import in Python < 3.5
 from . import approximations
 from ..graphs import Graph
@@ -753,6 +753,6 @@ class Filter(object):
     def plot(self, n=500, eigenvalues=None, sum=None, labels=None, title=None,
              ax=None, **kwargs):
         r"""Docstring overloaded at import time."""
-        from pygsp.plotting import _plot_filter
+        from pygsp2.plotting import _plot_filter
         return _plot_filter(self, n=n, eigenvalues=eigenvalues, sum=sum,
                             labels=labels, title=title, ax=ax, **kwargs)

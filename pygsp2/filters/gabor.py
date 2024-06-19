@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pygsp import utils
+from pygsp2 import utils
 from . import Filter  # prevent circular import in Python < 3.5
 
 

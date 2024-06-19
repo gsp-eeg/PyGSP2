@@ -5,8 +5,8 @@ import traceback
 import numpy as np
 from scipy import sparse, spatial
 
-from pygsp import utils
-from pygsp.graphs import Graph  # prevent circular import in Python < 3.5
+from pygsp2 import utils
+from pygsp2.graphs import Graph  # prevent circular import in Python < 3.5
 
 _logger = utils.build_logger(__name__)
 

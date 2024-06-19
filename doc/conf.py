@@ -41,7 +41,7 @@ plot_rcparams = {
 }
 plot_pre_code = """
 import numpy as np
-from pygsp import graphs, filters, utils, plotting
+from pygsp2 import graphs, filters, utils, plotting
 """
 
 extensions.append('sphinx_gallery.gen_gallery')

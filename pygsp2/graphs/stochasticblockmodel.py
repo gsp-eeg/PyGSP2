@@ -3,7 +3,7 @@
 import numpy as np
 from scipy import sparse
 
-from pygsp import utils
+from pygsp2 import utils
 from . import Graph  # prevent circular import in Python < 3.5
 
 
