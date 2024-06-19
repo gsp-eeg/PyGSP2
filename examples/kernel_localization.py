@@ -4,7 +4,7 @@ Kernel localization
 
 In classical signal processing, a filter can be translated in the vertex
 domain. We cannot do that on graphs. Instead, we can
-:meth:`~pygsp.filters.Filter.localize` a filter kernel. Note how on classic
+:meth:`~pygsp2.filters.Filter.localize` a filter kernel. Note how on classic
 structures (like the ring), the localized kernel is the same everywhere, while
 it changes when localized on irregular graphs.
 """

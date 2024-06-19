@@ -3,7 +3,7 @@ Wave propagation
 ================
 
 Solve the wave equation by filtering the initial conditions with the wave
-kernel :class:`pygsp.filters.Wave`.
+kernel :class:`pygsp2.filters.Wave`.
 """
 
 from os import path

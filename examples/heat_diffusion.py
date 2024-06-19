@@ -3,7 +3,7 @@ Heat diffusion
 ==============
 
 Solve the heat equation by filtering the initial conditions with the heat
-kernel :class:`pygsp.filters.Heat`.
+kernel :class:`pygsp2.filters.Heat`.
 """
 
 from os import path

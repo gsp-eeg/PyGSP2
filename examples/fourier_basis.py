@@ -9,7 +9,7 @@ measure of "frequency".
 
 In classical signal processing, Fourier modes are completely delocalized, like
 on the grid graph. For general graphs however, Fourier modes might be
-localized. See :attr:`pygsp.graphs.Graph.coherence`.
+localized. See :attr:`pygsp2.graphs.Graph.coherence`.
 """
 
 import numpy as np
