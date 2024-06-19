@@ -19,7 +19,7 @@ inverse graph Fourier transform).
 
 import numpy as np
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 G = pg.graphs.Sensor(seed=42)
 G.compute_fourier_basis()

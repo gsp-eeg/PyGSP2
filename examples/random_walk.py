@@ -11,7 +11,7 @@ of steps starting from a given distribution.
 import numpy as np
 from scipy import sparse
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 N = 7
 steps = [0, 1, 2, 3]

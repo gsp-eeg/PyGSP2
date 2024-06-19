@@ -8,7 +8,7 @@ graph becomes full.
 
 import numpy as np
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 n_neighbors = [1, 2, 5, 8]
 fig, axes = plt.subplots(3, len(n_neighbors), figsize=(15, 8))

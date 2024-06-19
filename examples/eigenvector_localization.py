@@ -22,7 +22,7 @@ See `Global and Local Uncertainty Principles for Signals on Graphs
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 fig, axes = plt.subplots(2, 2, figsize=(8, 8))
 

@@ -25,7 +25,7 @@ def test_docstrings(root, ext, setup=None):
 
 def setup(doctest):
     import numpy
-    import pygsp
+    import pygsp2
     doctest.globs = {
         'graphs': pygsp.graphs,
         'filters': pygsp.filters,
@@ -36,7 +36,7 @@ def setup(doctest):
 
 def teardown(doctest):
     """Close matplotlib figures to avoid warning and save memory."""
-    import pygsp
+    import pygsp2
     pygsp.plotting.close_all()
 
 

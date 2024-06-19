@@ -14,7 +14,7 @@ localized. See :attr:`pygsp.graphs.Graph.coherence`.
 
 import numpy as np
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 n_eigenvectors = 7
 

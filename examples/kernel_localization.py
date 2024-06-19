@@ -11,7 +11,7 @@ it changes when localized on irregular graphs.
 
 import numpy as np
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 fig, axes = plt.subplots(2, 4, figsize=(10, 4))
 

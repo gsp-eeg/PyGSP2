@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import pygsp
+import pygsp2
 
 extensions = [
     'sphinx.ext.viewcode',

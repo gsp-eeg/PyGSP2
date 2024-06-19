@@ -10,7 +10,7 @@ from os import path
 
 import numpy as np
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 n_side = 13
 G = pg.graphs.Grid2d(n_side)
