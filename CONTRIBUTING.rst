@@ -3,11 +3,11 @@ Contributing
 ============
 
 Contributions are welcome, and they are greatly appreciated! The development of
-this package takes place on `GitHub <https://github.com/epfl-lts2/pygsp2>`_.
+this package takes place on `GitHub <https://github.com/gsp-eeg/pygsp2>`_.
 Issues, bugs, and feature requests should be reported `there
-<https://github.com/epfl-lts2/pygsp2/issues>`_.
+<https://github.com/gsp-eeg/pygsp2/issues>`_.
 Code and documentation can be improved by submitting a `pull request
-<https://github.com/epfl-lts2/pygsp2/pulls>`_. Please add documentation and
+<https://github.com/gsp-eeg/pygsp2/pulls>`_. Please add documentation and
 tests for any new code.
 
 The package can be set up (ideally in a fresh virtual environment) for local
@@ -55,7 +55,7 @@ Making a release
 #. Create a git tag with ``git tag -a v0.5.0 -m "PyGSP2 v0.5.0"``.
 #. Push the tag to GitHub with ``git push github v0.5.0``. The tag should now
    appear in the releases and tags tab.
-#. `Create a release <https://github.com/epfl-lts2/pygsp2/releases/new>`_ on
+#. `Create a release <https://github.com/gsp-eeg/pygsp2/releases/new>`_ on
    GitHub and select the created tag. A DOI should then be issued by Zenodo.
 #. Go on Zenodo and fix the metadata if necessary.
 #. Build the distribution with ``make dist`` and check that the

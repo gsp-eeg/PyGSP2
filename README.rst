@@ -7,7 +7,7 @@ The PyGSP2 is a Python package to ease
 The documentation is available on
 `Read the Docs <https://pygsp2.readthedocs.io>`_
 and development takes place on
-`GitHub <https://github.com/epfl-lts2/pygsp2>`_.
+`GitHub <https://github.com/gsp-eeg/pygsp2>`_.
 A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html>`_ exists.
 
 +-----------------------------------+
@@ -25,7 +25,7 @@ A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html
 .. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1003157.svg
    :target: https://doi.org/10.5281/zenodo.1003157
 .. |license| image:: https://img.shields.io/pypi/l/pygsp2.svg
-   :target: https://github.com/epfl-lts2/pygsp2/blob/master/LICENSE.txt
+   :target: https://github.com/gsp-eeg/pygsp2/blob/master/LICENSE.txt
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/pygsp2.svg
    :target: https://pypi.org/project/PyGSP2
 .. |travis| image:: https://img.shields.io/travis/com/epfl-lts2/pygsp2.svg
@@ -33,7 +33,7 @@ A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html
 .. |coveralls| image:: https://img.shields.io/coveralls/github/epfl-lts2/pygsp2.svg
    :target: https://coveralls.io/github/epfl-lts2/pygsp2
 .. |github| image:: https://img.shields.io/github/stars/epfl-lts2/pygsp2.svg?style=social
-   :target: https://github.com/epfl-lts2/pygsp2
+   :target: https://github.com/gsp-eeg/pygsp2
 .. |binder| image:: https://static.mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/epfl-lts2/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb
 .. |conda| image:: https://img.shields.io/conda/vn/conda-forge/pygsp2.svg
@@ -143,5 +143,5 @@ Or cite the generic concept as::
       title = {PyGSP2: Graph Signal Processing in Python},
       author = {Defferrard, Micha\"el and Martin, Lionel and Pena, Rodrigo and Perraudin, Nathana\"el},
       doi = {10.5281/zenodo.1003157},
-      url = {https://github.com/epfl-lts2/pygsp2/},
+      url = {https://github.com/gsp-eeg/pygsp2/},
     }
