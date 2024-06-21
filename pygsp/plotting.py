@@ -28,12 +28,15 @@ import functools
 
 import numpy as np
 
+from matplotlib import colormaps
+
 from pygsp import utils
 
 
 _logger = utils.build_logger(__name__)
 
 BACKEND = 'matplotlib'
+CMAP = 'viridis'
 _qtg_widgets = []
 _plt_figures = []
 
@@ -297,7 +300,7 @@ def _plt_plot_filter(filters, n, eigenvalues, sum, labels, ax, **kwargs):
 
 def _plot_graph(G, vertex_color, vertex_size, highlight,
                 edges, edge_color, edge_width,
-                indices, colorbar, limits, ax, title, backend):
+                indices, colorbar, limits, ax, title, backend, cmap):
     r"""Plot a graph with signals as color or vertex size.
 
     Parameters
@@ -357,6 +360,8 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
     backend: {'matplotlib', 'pyqtgraph', None}
         Defines the drawing backend to use.
         Defaults to :data:`pygsp.plotting.BACKEND`.
+    cmap: str
+        Colormap of the figure
 
     Returns
     -------
@@ -435,6 +440,13 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
 
         else:
             return False  # No support for pyqtgraph (yet).
+        
+    if cmap is None:
+        cmap = CMAP
+    else:
+        if cmap not in colormaps:
+            print("Wrong colormap")
+            cmap = CMAP
 
     if vertex_color is None:
         limits = [0, 0]
@@ -496,7 +508,7 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
                                vertex_size=vertex_size, highlight=highlight,
                                edges=edges, indices=indices, colorbar=colorbar,
                                edge_color=edge_color, edge_width=edge_width,
-                               limits=limits, ax=ax, title=title)
+                               limits=limits, ax=ax, title=title, cmap=cmap)
     else:
         raise ValueError('Unknown backend {}.'.format(backend))
 
@@ -504,9 +516,10 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
 @_plt_handle_figure
 def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
                     edges, edge_color, edge_width,
-                    indices, colorbar, limits, ax):
+                    indices, colorbar, limits, ax, cmap):
 
     mpl, plt, mplot3d = _import_plt()
+    plt.set_cmap(cmap) 
 
     if edges and (G.coords.ndim != 1):  # No edges for 1D plots.
 
