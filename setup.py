@@ -32,6 +32,7 @@ setup(
     install_requires=[
         'numpy',
         'scipy',
+        'pandas'
     ],
     extras_require={
         # Optional dependencies for development. Some bring additional
