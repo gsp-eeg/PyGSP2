@@ -39,7 +39,7 @@ setup(
         'dev': [
             # Import and export.
             'networkx',
-            'json',
+            #'json',
             'utm',
             'geopy',
             'pyxlsb',
