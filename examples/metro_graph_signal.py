@@ -30,7 +30,8 @@ import pandas as pd
 from unidecode import unidecode
 import matplotlib.pyplot as plt
 from utils import make_metro_graph, metro_database_preprocessing, plot_signal_in_graph
-current_dir = os.path.abspath(os.path.dirname(__file__)) if '__file__' in globals() else os.getcwd()
+#current_dir = os.path.abspath(os.path.dirname(__file__)) if '__file__' in globals() else os.getcwd()
+current_dir = os.getcwd()
 os.chdir(current_dir)
 #os.chdir(os.path.dirname(__file__))
 

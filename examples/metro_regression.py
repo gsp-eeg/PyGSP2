@@ -34,7 +34,8 @@ import matplotlib.pyplot as plt
 from utils import make_metro_graph, plot_signal_in_graph, metro_database_preprocessing
 from pygsp2 import graphs, learning
 
-current_dir = os.path.abspath(os.path.dirname(__file__)) if '__file__' in globals() else os.getcwd()
+#current_dir = os.path.abspath(os.path.dirname(__file__)) if '__file__' in globals() else os.getcwd()
+current_dir = os.getcwd()
 os.chdir(current_dir)
 #os.chdir(os.path.dirname(__file__))
 
