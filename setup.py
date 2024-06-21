@@ -32,7 +32,9 @@ setup(
     install_requires=[
         'numpy',
         'scipy',
-        'pandas'
+        'pandas',
+        'networkx',
+        'geopy'
     ],
     extras_require={
         # Optional dependencies for development. Some bring additional

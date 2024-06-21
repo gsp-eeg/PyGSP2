@@ -30,7 +30,9 @@ import pandas as pd
 from unidecode import unidecode
 import matplotlib.pyplot as plt
 from utils import make_metro_graph, metro_database_preprocessing, plot_signal_in_graph
-os.chdir(os.path.dirname(__file__))
+current_dir = os.path.abspath(os.path.dirname(__file__)) if '__file__' in globals() else os.getcwd()
+os.chdir(current_dir)
+#os.chdir(os.path.dirname(__file__))
 
 try:
     commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb', header=1,
