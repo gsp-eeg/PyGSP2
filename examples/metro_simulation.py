@@ -97,7 +97,7 @@ if MAKE_ANIMATION:
                                    interval=50)
 
     # saving to gif using ffmpeg writer
-    writervideo = animation.FFMpegWriter(fps=5)
+    writervideo = animation.PillowWriter(fps=5)
 
     anim.save('metro_simulation.gif', writer=writervideo)
 
