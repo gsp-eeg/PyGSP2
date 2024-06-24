@@ -1,6 +1,6 @@
-=========================
+==========================
 Introduction to the PyGSP2
-=========================
+==========================
 
 This tutorial will show you the basic operations of the toolbox. After
 installing the package with pip, start by opening a python shell, e.g.
