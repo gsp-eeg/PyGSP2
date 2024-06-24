@@ -11,11 +11,9 @@ and development takes place on
 A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html>`_ exists.
 
 +-----------------------------------+
-| |doc|  |pypi|  |conda|  |binder|  |
+| |doc|  |pypi|                     |
 +-----------------------------------+
 | |zenodo|  |license|  |pyversions| |
-+-----------------------------------+
-| |travis|  |coveralls|  |github|   |
 +-----------------------------------+
 
 .. |doc| image:: https://readthedocs.org/projects/pygsp2/badge/?version=latest
@@ -28,16 +26,6 @@ A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html
    :target: https://github.com/gsp-eeg/pygsp2/blob/master/LICENSE.txt
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/pygsp2.svg
    :target: https://pypi.org/project/PyGSP2
-.. |travis| image:: https://img.shields.io/travis/com/epfl-lts2/pygsp2.svg
-   :target: https://app.travis-ci.com/github/epfl-lts2/pygsp2
-.. |coveralls| image:: https://img.shields.io/coveralls/github/epfl-lts2/pygsp2.svg
-   :target: https://coveralls.io/github/epfl-lts2/pygsp2
-.. |github| image:: https://img.shields.io/github/stars/epfl-lts2/pygsp2.svg?style=social
-   :target: https://github.com/gsp-eeg/pygsp2
-.. |binder| image:: https://static.mybinder.org/badge_logo.svg
-   :target: https://mybinder.org/v2/gh/epfl-lts2/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb
-.. |conda| image:: https://img.shields.io/conda/vn/conda-forge/pygsp2.svg
-   :target: https://anaconda.org/conda-forge/pygsp2
 
 The PyGSP2 facilitates a wide variety of operations on graphs, like computing
 their Fourier basis, filtering or interpolating signals, plotting graphs,
@@ -74,8 +62,6 @@ main objects of the package.
 
 .. image:: ../pygsp2/data/readme_example_filter.png
     :alt:
-.. image:: pygsp2/data/readme_example_filter.png
-    :alt:
 
 Let's now create a graph signal: a set of three Kronecker deltas for that
 example. We can now look at one step of heat diffusion by filtering the deltas
@@ -90,8 +76,6 @@ structure!
 >>> fig, ax = G.plot(s, highlight=DELTAS)
 
 .. image:: ../pygsp2/data/readme_example_graph.png
-    :alt:
-.. image:: pygsp2/data/readme_example_graph.png
     :alt:
 
 You can
@@ -108,16 +92,6 @@ Installation
 The PyGSP2 is available on PyPI::
 
     $ pip install pygsp2
-
-The PyGSP2 is available on `conda-forge <https://github.com/conda-forge/pygsp2-feedstock>`_::
-
-    $ conda install -c conda-forge pygsp2
-
-The PyGSP2 is available in the `Arch User Repository <https://aur.archlinux.org/packages/python-pygsp2>`_::
-
-   $ git clone https://aur.archlinux.org/python-pygsp2.git
-   $ cd python-pygsp2
-   $ makepkg -csi
 
 Contributing
 ------------
