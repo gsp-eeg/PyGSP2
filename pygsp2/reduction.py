@@ -115,7 +115,8 @@ def graph_sparsify(M, epsilon, maxiter=10, seed=None):
         q = round(N * np.log(N) * 9 * C**2 / (epsilon**2))
 
         results = dist.rvs(size=int(q))
-        spin_counts = stats.itemfreq(results).astype(int)
+        #spin_counts = stats.itemfreq(results).astype(int)
+        spin_counts = np.unique(results, return_counts=True)[1].astype(int)
         per_spin_weights = weights / (q * Pe)
 
         counts = np.zeros(np.shape(weights)[0])
