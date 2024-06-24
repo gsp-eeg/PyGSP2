@@ -1,4 +1,8 @@
-"""Utils functions used in the examples.
+r"""
+Utils 
+=====
+
+Utils functions used in the examples.
 
 This module contains functions to run examples of graph signal processing.
 

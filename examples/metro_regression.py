@@ -1,4 +1,8 @@
-"""Data imputing example in a  Santiago Metro station.
+r"""
+Metro Regression
+================
+
+Data imputing example in a  Santiago Metro station.
 
 Compute the number of exits in a random metro station. Then, compute the
 regression over the whole network and plot the error of the regression. Here,
@@ -112,16 +116,16 @@ for i, s in enumerate(signal):
 abs_err = np.abs(tikhonov_estimation - signal)
 
 # %% Plot Tikhonov error in graph
-plot_signal_in_graph(G, abs_err,
+fig, ax = plot_signal_in_graph(G, abs_err,
                      title='Error of Tikhonov Regression',
                      label='Error absoluto')
+fig.savefig('metro_regression_tikhonov_error.png', dpi=300)
 
 # %% Plot Average error in graph
 # Change variable to error with average estimation
 abs_err = np.abs(average_estimation - signal)
 
-plot_signal_in_graph(G, abs_err,
+fig, ax = plot_signal_in_graph(G, abs_err,
                      title=r'Error of $y = AD^{-1}x$',
                      label='Error absoluto')
-
-plt.show()
+fig.savefig('metro_regression_error_abs.png', dpi=300)

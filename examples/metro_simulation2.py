@@ -1,4 +1,8 @@
-"""Example of a simulation of the evolution of a graph signal over the Santiago Metro
+r"""
+Metro simulation 2
+==================
+
+Example of a simulation of the evolution of a graph signal over the Santiago Metro
 network.
 
 Simulation of the distribution of a signal over the metro network. The starting

@@ -1,4 +1,8 @@
-"""Example of a graph signal for the Santiago Metro.
+r"""
+Metro Graph Signal
+==================
+
+Example of a graph signal for the Santiago Metro.
 
 This example shows a graph signal defined over a graph induced by the Santiago
 Metro (https://en.wikipedia.org/wiki/Santiago_Metro). Each station is a
@@ -69,4 +73,4 @@ _ = [print(f'\t{i+1}. {station}')
 # %% Plot signal in graph
 
 fig, ax = plot_signal_in_graph(G, signal, 'Promedio Diario\nBajadas de Metro')
-plt.show()
+fig.savefig('metro_graph_signal.png')

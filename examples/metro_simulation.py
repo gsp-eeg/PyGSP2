@@ -1,4 +1,8 @@
-"""Example of a simulation of the evolution of a graph signal over the Santiago Metro
+r"""
+Metro simulation
+================
+
+Example of a simulation of the evolution of a graph signal over the Santiago Metro
 network.
 
 The initial condition is a graph signal with only one positive integer value
