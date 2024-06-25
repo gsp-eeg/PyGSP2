@@ -1,5 +1,5 @@
 r"""
-Utils 2
+Utils Examples
 =====
 
 Utils functions used in the examples.
