@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
     name='pygsp2',
-    version='2.0.1',
+    version='2.0.2',
     description='Graph Signal Processing in Python',
     long_description=open('README.rst').read(),
     long_description_content_type='text/x-rst',
@@ -36,7 +36,9 @@ setup(
         'networkx',
         'geopy',
         'matplotlib',
-        'unidecode'
+        'unidecode',
+        'utm',
+        'pyxlsb'
     ],
     extras_require={
         # Optional dependencies for development. Some bring additional
