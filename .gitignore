@@ -14,8 +14,8 @@ develop-eggs
 .installed.cfg
 
 # Data
-*.geojson
-*.xlsb
+#*.geojson
+#*.xlsb
 *.mp4
 #santiago_metro_stations_connections.txt
 
