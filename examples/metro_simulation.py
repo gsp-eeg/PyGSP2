@@ -35,14 +35,17 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib import animation
-from utils import make_metro_graph
+from pygsp2.utils2 import make_metro_graph
+import pygsp2 as pg
+
 
 # If set to true make animation,
 # otherwise store each frame as png
 MAKE_ANIMATION = True
 
 # %% Load graph and compute adjacency and node degree
-G, pos = make_metro_graph()
+G, pos = make_metro_graph(edgesfile='../pygsp2/data/santiago_metro_stations_connections.txt',
+                     coordsfile='../pygsp2/data/santiago_metro_stations_coords.geojson')
 
 W = nx.adjacency_matrix(G).toarray()
 D = np.diag(W.sum(1))

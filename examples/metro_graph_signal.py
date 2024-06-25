@@ -33,14 +33,14 @@ import sys
 import pandas as pd
 from unidecode import unidecode
 import matplotlib.pyplot as plt
-from utils import make_metro_graph, metro_database_preprocessing, plot_signal_in_graph
+from pygsp2.utils2 import make_metro_graph, metro_database_preprocessing, plot_signal_in_graph
 #current_dir = os.path.abspath(os.path.dirname(__file__)) if '__file__' in globals() else os.getcwd()
 current_dir = os.getcwd()
 os.chdir(current_dir)
 #os.chdir(os.path.dirname(__file__))
 
 try:
-    commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb', header=1,
+    commutes = pd.read_excel('../pygsp2/data/2023.11 Matriz_baj_SS_MH.xlsb', header=1,
                              sheet_name='bajadas_prom_laboral')
 except FileNotFoundError:
     print(f'Data file was not found in:\n {os.getcwd()}')
@@ -71,6 +71,6 @@ _ = [print(f'\t{i+1}. {station}')
      for i, station in enumerate(stations_missing)]
 
 # %% Plot signal in graph
-
+fig = plt.plot()
 fig, ax = plot_signal_in_graph(G, signal, 'Promedio Diario\nBajadas de Metro')
 fig.savefig('metro_graph_signal.png')

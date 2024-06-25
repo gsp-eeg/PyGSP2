@@ -58,7 +58,7 @@ import os
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
-from utils import make_metro_graph
+from pygsp2.utils2 import make_metro_graph
 
 try:
     os.mkdir('metro_simulation2/')
