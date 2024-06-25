@@ -64,3 +64,4 @@ for w, ax in zip([10, 1, 0.1, 0.01], axes.flatten()):
                 horizontalalignment='center')
 
 fig.tight_layout()
+plt.show()

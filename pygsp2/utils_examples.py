@@ -1,5 +1,5 @@
 r"""
-Utils 
+Utils Examples
 =====
 
 Utils functions used in the examples.
@@ -15,6 +15,7 @@ functions:
 * metro_simulation.py
 * metro_simulation2.py
 """
+import os
 import json
 import utm
 import networkx as nx
@@ -24,8 +25,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
-                     coordsfile='santiago_metro_stations_coords.geojson'):
+def make_metro_graph(edgesfile='../pygsp2/data/santiago_metro_stations_connections.txt',
+                     coordsfile='../pygsp2/data/santiago_metro_stations_coords.geojson'):
     """Create a NetworkX graph corresponding to Santiago Metro network.
 
     Parameters

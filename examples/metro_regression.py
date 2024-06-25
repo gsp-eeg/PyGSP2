@@ -35,7 +35,7 @@ import numpy as np
 from unidecode import unidecode
 import networkx as nx
 import matplotlib.pyplot as plt
-from utils import make_metro_graph, plot_signal_in_graph, metro_database_preprocessing
+from pygsp2.utils_examples import make_metro_graph, plot_signal_in_graph, metro_database_preprocessing
 from pygsp2 import graphs, learning
 
 #current_dir = os.path.abspath(os.path.dirname(__file__)) if '__file__' in globals() else os.getcwd()
@@ -44,7 +44,7 @@ os.chdir(current_dir)
 #os.chdir(os.path.dirname(__file__))
 
 try:
-    commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb', header=1,
+    commutes = pd.read_excel('../pygsp2/data/2023.11 Matriz_baj_SS_MH.xlsb', header=1,
                              sheet_name='bajadas_prom_laboral')
 except FileNotFoundError:
     print(f'Data file was not found in:\n {os.getcwd()}')
@@ -119,8 +119,7 @@ abs_err = np.abs(tikhonov_estimation - signal)
 fig, ax = plot_signal_in_graph(G, abs_err,
                      title='Error of Tikhonov Regression',
                      label='Error absoluto')
-fig.savefig('metro_regression_tikhonov_error.png', dpi=300)
-
+#fig.savefig('metro_regression_tikhonov_error.png', dpi=300)
 # %% Plot Average error in graph
 # Change variable to error with average estimation
 abs_err = np.abs(average_estimation - signal)
@@ -128,4 +127,5 @@ abs_err = np.abs(average_estimation - signal)
 fig, ax = plot_signal_in_graph(G, abs_err,
                      title=r'Error of $y = AD^{-1}x$',
                      label='Error absoluto')
-fig.savefig('metro_regression_error_abs.png', dpi=300)
+#fig.savefig('metro_regression_error_abs.png', dpi=300)
+plt.show()

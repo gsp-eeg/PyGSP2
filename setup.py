@@ -6,7 +6,7 @@ from setuptools import setup
 
 setup(
     name='pygsp2',
-    version='2.0.0',
+    version='2.0.3',
     description='Graph Signal Processing in Python',
     long_description=open('README.rst').read(),
     long_description_content_type='text/x-rst',
@@ -34,7 +34,11 @@ setup(
         'scipy',
         'pandas',
         'networkx',
-        'geopy'
+        'geopy',
+        'matplotlib',
+        'unidecode',
+        'utm',
+        'pyxlsb'
     ],
     extras_require={
         # Optional dependencies for development. Some bring additional
@@ -93,5 +97,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ],
 )
