@@ -14,7 +14,7 @@ Moreover, the following modules provide additional functionality:
 * :mod:`.learning` to solve learning problems,
 * :mod:`.optimization` to help solving convex optimization problems,
 * :mod:`.utils` for various utilities.
-* :mod:`.utils2` for metro applications.
+* :mod:`.utils_examples` for metro applications.
 
 """
 
@@ -26,7 +26,7 @@ from . import features  # noqa: F401
 from . import learning  # noqa: F401
 from . import optimization  # noqa: F401
 from . import utils  # noqa: F401
-from . import utils2 # noqa: F401
+from . import utils_examples # noqa: F401
 
 # Users only call the plot methods from the objects.
 # It's thus more convenient for them to have the doc there.

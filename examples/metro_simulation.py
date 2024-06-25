@@ -35,7 +35,7 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib import animation
-from pygsp2.utils2 import make_metro_graph
+from pygsp2.utils_examples import make_metro_graph
 import pygsp2 as pg
 
 
