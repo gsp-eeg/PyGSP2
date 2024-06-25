@@ -38,3 +38,4 @@ for graph, axs in zip(graphs, axes):
         ax.set_axis_off()
 
 fig.tight_layout()
+plt.show()

@@ -43,3 +43,4 @@ for i, t in enumerate(times):
     axes[1, i].set_axis_off()
 
 fig.tight_layout()
+plt.show()

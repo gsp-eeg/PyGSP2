@@ -13,6 +13,7 @@ import pygsp2 as pg
 n_neighbors = [1, 2, 5, 8]
 fig, axes = plt.subplots(3, len(n_neighbors), figsize=(15, 8))
 
+
 for k, ax in zip(n_neighbors, axes.T):
 
     graph = pg.graphs.Ring(17, k=k)
@@ -36,3 +37,4 @@ for k, ax in zip(n_neighbors, axes.T):
     assert np.all(np.abs(LambdaM - Lambda) < 1e-10)
 
 fig.tight_layout()
+plt.show()

@@ -44,3 +44,4 @@ axes[1, 0].set_ylabel(r'frequency content $\hat{x}(\lambda)$')
 # axes[1, 0].set_title(r'$\hat{x}$: signal in the spectral domain')
 
 fig.tight_layout()
+plt.show()

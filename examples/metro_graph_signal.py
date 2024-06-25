@@ -71,6 +71,6 @@ _ = [print(f'\t{i+1}. {station}')
      for i, station in enumerate(stations_missing)]
 
 # %% Plot signal in graph
-fig = plt.plot()
 fig, ax = plot_signal_in_graph(G, signal, 'Promedio Diario\nBajadas de Metro')
-fig.savefig('metro_graph_signal.png')
+#fig.savefig('metro_graph_signal.png')
+plt.show()

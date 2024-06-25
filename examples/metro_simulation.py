@@ -103,6 +103,7 @@ if MAKE_ANIMATION:
     writervideo = animation.PillowWriter(fps=5)
 
     anim.save('metro_simulation.gif', writer=writervideo)
+    plt.show()
 
 else:
     try:

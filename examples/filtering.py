@@ -64,3 +64,4 @@ axes[2].text(0, -0.1, '$y^T L y = {:.2f}$'.format(G.dirichlet_energy(y)))
 axes[2].set_axis_off()
 
 fig.tight_layout()
+plt.show()

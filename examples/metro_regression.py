@@ -119,8 +119,7 @@ abs_err = np.abs(tikhonov_estimation - signal)
 fig, ax = plot_signal_in_graph(G, abs_err,
                      title='Error of Tikhonov Regression',
                      label='Error absoluto')
-fig.savefig('metro_regression_tikhonov_error.png', dpi=300)
-
+#fig.savefig('metro_regression_tikhonov_error.png', dpi=300)
 # %% Plot Average error in graph
 # Change variable to error with average estimation
 abs_err = np.abs(average_estimation - signal)
@@ -128,4 +127,5 @@ abs_err = np.abs(average_estimation - signal)
 fig, ax = plot_signal_in_graph(G, abs_err,
                      title=r'Error of $y = AD^{-1}x$',
                      label='Error absoluto')
-fig.savefig('metro_regression_error_abs.png', dpi=300)
+#fig.savefig('metro_regression_error_abs.png', dpi=300)
+plt.show()
