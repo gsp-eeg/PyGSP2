@@ -23,7 +23,6 @@ class TestCase(unittest.TestCase):
         pass
 
     def test_graphs(self):
-        print("hola")
         edgesfile='../data/santiago_metro_stations_connections.txt',
         coordsfile='../data/santiago_metro_stations_coords.geojson'
         G, pos = utils_examples.make_metro_graph(edgesfile, coordsfile)
