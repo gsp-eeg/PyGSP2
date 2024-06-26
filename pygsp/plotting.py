@@ -300,7 +300,7 @@ def _plt_plot_filter(filters, n, eigenvalues, sum, labels, ax, **kwargs):
 
 def _plot_graph(G, vertex_color, vertex_size, highlight,
                 edges, edge_color, edge_width,
-                indices, colorbar, limits, ax, title, backend, cmap):
+                indices, colorbar, limits, ax, title, backend, cmap, alphan, alphav):
     r"""Plot a graph with signals as color or vertex size.
 
     Parameters
@@ -420,7 +420,7 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         Set intercept value in G.plotting["normalize_intercept"]
         with value in [0, 1], default is .25.
         """
-        ptp = x.ptp()
+        ptp = np.ptp(x)
         if ptp == 0:
             return np.full(x.shape, 0.5)
         else:
@@ -447,6 +447,9 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         if cmap not in colormaps:
             print("Wrong colormap")
             cmap = CMAP
+    
+    alphan = np.abs(alphan)
+    alphav = np.abs(alphav)
 
     if vertex_color is None:
         limits = [0, 0]
@@ -508,7 +511,7 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
                                vertex_size=vertex_size, highlight=highlight,
                                edges=edges, indices=indices, colorbar=colorbar,
                                edge_color=edge_color, edge_width=edge_width,
-                               limits=limits, ax=ax, title=title, cmap=cmap)
+                               limits=limits, ax=ax, title=title, cmap=cmap, alphan=alphan, alphav=alphav)
     else:
         raise ValueError('Unknown backend {}.'.format(backend))
 
@@ -516,7 +519,7 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
 @_plt_handle_figure
 def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
                     edges, edge_color, edge_width,
-                    indices, colorbar, limits, ax, cmap):
+                    indices, colorbar, limits, ax, cmap, alphan, alphav):
 
     mpl, plt, mplot3d = _import_plt()
     plt.set_cmap(cmap) 
@@ -549,7 +552,7 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
     coords_hl = G.coords[highlight]
 
     if G.coords.ndim == 1:
-        ax.plot(G.coords, vertex_color, alpha=0.5)
+        ax.plot(G.coords, vertex_color, alpha=alphav)
         ax.set_ylim(limits)
         for coord_hl in coords_hl:
             ax.axvline(x=coord_hl, color=G.plotting['highlight_color'],
@@ -558,7 +561,7 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
     else:
         sc = ax.scatter(*G.coords.T,
                         c=vertex_color, s=vertex_size,
-                        marker='o', linewidths=0, alpha=0.5, zorder=2,
+                        marker='o', linewidths=0, alpha=alphan, zorder=2,
                         vmin=limits[0], vmax=limits[1])
         if np.isscalar(vertex_size):
             size_hl = vertex_size
