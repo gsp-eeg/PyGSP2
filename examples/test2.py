@@ -40,7 +40,7 @@ from pygsp2 import graphs, learning
 os.chdir(os.path.dirname(__file__))
 
 try:
-    commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb', header=1,
+    commutes = pd.read_excel('../pygsp2/data/2023.11 Matriz_baj_SS_MH.xlsb', header=1,
                              sheet_name='bajadas_prom_laboral')
 except FileNotFoundError:
     print(f'Data file was not found in:\n {os.getcwd()}')
