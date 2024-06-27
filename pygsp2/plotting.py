@@ -28,12 +28,15 @@ import functools
 
 import numpy as np
 
+from matplotlib import colormaps
+
 from pygsp2 import utils
 
 
 _logger = utils.build_logger(__name__)
 
 BACKEND = 'matplotlib'
+CMAP = 'viridis'
 _qtg_widgets = []
 _plt_figures = []
 
@@ -297,7 +300,8 @@ def _plt_plot_filter(filters, n, eigenvalues, sum, labels, ax, **kwargs):
 
 def _plot_graph(G, vertex_color, vertex_size, highlight,
                 edges, edge_color, edge_width,
-                indices, colorbar, limits, ax, title, backend):
+                indices, colorbar, limits, ax, title, backend, 
+                cmap, alphan, alphav, edge_weights):
     r"""Plot a graph with signals as color or vertex size.
 
     Parameters
@@ -356,7 +360,9 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         Title of the figure.
     backend: {'matplotlib', 'pyqtgraph', None}
         Defines the drawing backend to use.
-        Defaults to :data:`pygsp2.plotting.BACKEND`.
+        Defaults to :data:`pygsp.plotting.BACKEND`.
+    cmap: str
+        Colormap of the figure
 
     Returns
     -------
@@ -415,7 +421,6 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         Set intercept value in G.plotting["normalize_intercept"]
         with value in [0, 1], default is .25.
         """
-        #ptp = x.ptp()
         ptp = np.ptp(x)
         if ptp == 0:
             return np.full(x.shape, 0.5)
@@ -436,6 +441,16 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
 
         else:
             return False  # No support for pyqtgraph (yet).
+        
+    if cmap is None:
+        cmap = CMAP
+    else:
+        if cmap not in colormaps:
+            print("Wrong colormap")
+            cmap = CMAP
+    
+    alphan = np.abs(alphan)
+    alphav = np.abs(alphav)
 
     if vertex_color is None:
         limits = [0, 0]
@@ -497,7 +512,8 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
                                vertex_size=vertex_size, highlight=highlight,
                                edges=edges, indices=indices, colorbar=colorbar,
                                edge_color=edge_color, edge_width=edge_width,
-                               limits=limits, ax=ax, title=title)
+                               limits=limits, ax=ax, title=title, cmap=cmap, 
+                               alphan=alphan, alphav=alphav, edge_weights=edge_weights)
     else:
         raise ValueError('Unknown backend {}.'.format(backend))
 
@@ -505,9 +521,11 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
 @_plt_handle_figure
 def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
                     edges, edge_color, edge_width,
-                    indices, colorbar, limits, ax):
+                    indices, colorbar, limits, ax, cmap, alphan, alphav, edge_weights):
 
     mpl, plt, mplot3d = _import_plt()
+    plt.set_cmap(cmap) 
+    cmap = mpl.colormaps.get_cmap(cmap)
 
     if edges and (G.coords.ndim != 1):  # No edges for 1D plots.
 
@@ -522,13 +540,30 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
             LineCollection = mpl.collections.LineCollection
         elif G.coords.shape[1] == 3:
             LineCollection = mplot3d.art3d.Line3DCollection
-        ax.add_collection(LineCollection(
-            edges,
-            linewidths=edge_width,
-            colors=edge_color,
-            linestyles=G.plotting['edge_style'],
-            zorder=1,
-        ))
+        
+        if edge_weights is not None:
+            normalized_signal = edge_weights / np.max(edge_weights)
+            colors = cmap(normalized_signal)
+            
+            ax.add_collection(LineCollection(
+                edges,
+                linewidths=edge_width,
+                colors=colors,
+                linestyles=G.plotting['edge_style'],
+                zorder=1,
+                alpha=alphav,
+            ))
+   
+        else:
+            ax.add_collection(LineCollection(
+                edges,
+                linewidths=edge_width,
+                colors=edge_color,
+                linestyles=G.plotting['edge_style'],
+                zorder=1,
+                alpha=alphav
+            ))
+
 
     try:
         iter(highlight)
@@ -537,7 +572,7 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
     coords_hl = G.coords[highlight]
 
     if G.coords.ndim == 1:
-        ax.plot(G.coords, vertex_color, alpha=0.5)
+        ax.plot(G.coords, vertex_color, alpha=alphan)
         ax.set_ylim(limits)
         for coord_hl in coords_hl:
             ax.axvline(x=coord_hl, color=G.plotting['highlight_color'],
@@ -546,7 +581,7 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
     else:
         sc = ax.scatter(*G.coords.T,
                         c=vertex_color, s=vertex_size,
-                        marker='o', linewidths=0, alpha=0.5, zorder=2,
+                        marker='o', linewidths=0, alpha=alphan, zorder=2,
                         vmin=limits[0], vmax=limits[1])
         if np.isscalar(vertex_size):
             size_hl = vertex_size

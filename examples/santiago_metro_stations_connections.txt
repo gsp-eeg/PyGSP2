@@ -1,0 +1,144 @@
+# Línea 1
+San Pablo, Neptuno
+Neptuno, Pajaritos
+Pajaritos, Las Rejas
+Las Rejas, Ecuador
+Ecuador, San Alberto Hurtado
+San Alberto Hurtado, Universidad de Santiago
+Universidad de Santiago, Estación Central
+Estación Central, Unión Latinoamericana
+Unión Latinoamericana, República
+República, Los Héroes
+Los Héroes, La Moneda
+La Moneda, Universidad de Chile
+Universidad de Chile, Santa Lucía
+Santa Lucía, Universidad Católica
+Universidad Católica, Baquedano
+Baquedano, Salvador
+Salvador, Manuel Montt
+Manuel Montt, Pedro de Valdivia
+Pedro de Valdivia, Los Leones
+Los Leones, Tobalaba
+Tobalaba, El Golf
+El Golf, Alcántara
+Alcántara, Escuela Militar
+Escuela Militar, Manquehue
+Manquehue, Hernando de Magallanes
+Hernando de Magallanes, Los Dominicos
+# Línea 2
+La Cisterna, El Parrón
+El Parrón, Lo Ovalle
+Lo Ovalle, Ciudad del Niño
+Ciudad del Niño, Departamental
+Departamental, Lo Vial
+Lo Vial, San Miguel
+San Miguel, El Llano
+El Llano, Franklin
+Franklin, Rondizzoni
+Rondizzoni, Parque O'Higgins
+Parque O'Higgins, Toesca
+Toesca, Los Héroes
+Los Héroes, Santa Ana
+Santa Ana, Puente Cal y Canto
+Puente Cal y Canto, Patronato
+Patronato, Cerro Blanco
+Cerro Blanco, Cementerios
+Cementerios, Einstein
+Einstein, Dorsal
+Dorsal, Zapadores
+Zapadores, Vespucio Norte
+# Línea 3
+Los Libertadores, Cardenal Caro
+Cardenal Caro, Vivaceta
+Vivaceta, Conchalí
+Conchalí, Plaza Chacabuco
+Plaza Chacabuco, Hospitales
+Hospitales, Puente Cal y Canto
+Puente Cal y Canto, Plaza de Armas
+Plaza de Armas, Universidad de Chile
+Universidad de Chile, Parque Almagro
+Parque Almagro, Matta
+Matta, Irarrázaval
+Irarrázaval, Monseñor Eyzaguirre
+Monseñor Eyzaguirre, Ñuñoa
+Ñuñoa, Chile España
+Chile España, Villa Frei
+Villa Frei, Plaza Egaña
+Plaza Egaña, Fernando Castillo Velasco
+# Línea 4
+Tobalaba, Cristóbal Colón
+Cristóbal Colón, Francisco Bilbao
+Francisco Bilbao, Príncipe de Gales
+Príncipe de Gales, Simón Bolívar
+Simón Bolívar, Plaza Egaña
+Plaza Egaña, Los Orientales
+Los Orientales, Grecia
+Grecia, Los Presidentes
+Los Presidentes, Quilín
+Quilín, Las Torres
+Las Torres, Macul
+Macul, Vicuña Mackenna
+Vicuña Mackenna, Vicente Valdés
+Vicente Valdés, Rojas Magallanes
+Rojas Magallanes, Trinidad
+Trinidad, San José de la Estrella
+San José de la Estrella, Los Quillayes
+Los Quillayes, Elisa Correa
+Elisa Correa, Hospital Sótero del Río
+Hospital Sótero del Río, Protectora de la Infancia
+Protectora de la Infancia, Las Mercedes
+Las Mercedes, Plaza de Puente Alto
+# Línea 4A
+Vicuña Mackenna, Santa Julia
+Santa Julia, La Granja
+La Granja, Santa Rosa
+Santa Rosa, San Ramón
+San Ramón, La Cisterna
+# Línea 5
+Plaza de Maipú, Santiago Bueras
+Santiago Bueras, Del Sol
+Del Sol, Monte Tabor
+Monte Tabor, Las Parcelas
+Las Parcelas, Laguna Sur
+Laguna Sur, Barrancas
+Barrancas, Pudahuel
+Pudahuel, San Pablo
+San Pablo, Lo Prado
+Lo Prado, Blanqueado
+Blanqueado, Gruta de Lourdes
+Gruta de Lourdes, Quinta Normal
+Quinta Normal, Cumming
+Cumming, Santa Ana
+Santa Ana, Plaza de Armas
+Plaza de Armas, Bellas Artes
+Bellas Artes, Baquedano
+Baquedano, Parque Bustamante
+Parque Bustamante, Santa Isabel
+Santa Isabel, Irarrázaval
+Irarrázaval, Ñuble
+Ñuble, Rodrigo de Araya
+Rodrigo de Araya, Carlos Valdovinos
+Carlos Valdovinos, Camino Agrícola
+Camino Agrícola, San Joaquín
+San Joaquín, Pedrero
+Pedrero, Mirador
+Mirador, Bellavista de La Florida
+Bellavista de La Florida, Vicente Valdés
+# Línea 6
+Cerrillos, Lo Valledor
+Lo Valledor, Presidente Pedro Aguirre Cerda
+Presidente Pedro Aguirre Cerda, Franklin
+Franklin, Bío Bío
+Bío Bío, Ñuble
+Ñuble, Estadio Nacional
+Estadio Nacional, Ñuñoa
+Ñuñoa, Inés de Suárez
+Inés de Suárez, Los Leones
+# No están en el mapa
+Plaza Quilicura, Lo Cruzat
+Lo Cruzat, Ferrocarril
+Ferrocarril, Los Libertadores
+Hospital El Pino, Copa Lo Martínez
+Copa Lo Martínez, Observatorio
+Observatorio, El Bosque
+El Bosque, La Cisterna
