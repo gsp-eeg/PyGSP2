@@ -101,7 +101,7 @@ See the guidelines for contributing in ``CONTRIBUTING.rst``.
 Acknowledgments
 ---------------
 
-The PyGSP2 was started in 2014 as an academic open-source project for
+The PyGSP was started in 2014 as an academic open-source project for
 research purpose at the `EPFL LTS2 laboratory <https://lts2.epfl.ch>`_.
 This project has been partly funded by the Swiss National Science Foundation
 under grant 200021_154350 "Towards Signal Processing on Graphs".
@@ -113,9 +113,9 @@ reproducibility, please cite the version you used as indexed by
 `Zenodo <https://doi.org/10.5281/zenodo.1003157>`_.
 Or cite the generic concept as::
 
-    @misc{pygsp2,
-      title = {PyGSP2: Graph Signal Processing in Python},
+    @misc{pygsp,
+      title = {PyGSP: Graph Signal Processing in Python},
       author = {Defferrard, Micha\"el and Martin, Lionel and Pena, Rodrigo and Perraudin, Nathana\"el},
       doi = {10.5281/zenodo.1003157},
-      url = {https://github.com/gsp-eeg/pygsp2/},
+      url = {https://github.com/epfl-lts2/pygsp/},
     }
