@@ -33,7 +33,7 @@ class Sensor(NNGraph):
     -----
 
     The definition of this graph changed in February 2019.
-    See the `GitHub PR <https://github.com/epfl-lts2/pygsp2/pull/19>`_.
+    See the `GitHub PR <https://github.com/gsp-eeg/pygsp2/pull/19>`_.
 
     Examples
     --------

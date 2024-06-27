@@ -376,7 +376,7 @@ def sum_squareform(n):
     St:   the adjoint of S
 
     Reference:
-    https://epfl-lts2.github.io/gspbox-html/doc/learn_graph/gsp_learn_graph_log_degrees.html
+    https://gsp-eeg.github.io/gspbox-html/doc/learn_graph/gsp_learn_graph_log_degrees.html
 
     """
     # number of columns is the length of w given size of W

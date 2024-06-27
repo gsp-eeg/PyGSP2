@@ -8,7 +8,7 @@ The documentation is available on
 `Read the Docs <https://pygsp2.readthedocs.io>`_
 and development takes place on
 `GitHub <https://github.com/gsp-eeg/pygsp2>`_.
-A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html>`_ exists.
+A (mostly unmaintained) `Matlab version <https://gsp-eeg.github.io/gspbox-html>`_ exists.
 
 +-----------------------------------+
 | |doc|  |pypi|                     |
@@ -79,7 +79,7 @@ structure!
     :alt:
 
 You can
-`try it online <https://mybinder.org/v2/gh/epfl-lts2/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb>`_,
+`try it online <https://mybinder.org/v2/gh/gsp-eeg/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb>`_,
 look at the
 `tutorials <https://pygsp2.readthedocs.io/en/stable/tutorials/index.html>`_
 to learn how to use it, or look at the

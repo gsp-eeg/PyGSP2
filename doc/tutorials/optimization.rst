@@ -58,7 +58,7 @@ The second approach, called graph Tikhonov regularization, is to use a smooth (d
 Results and code
 ----------------
 
-For solving the optimization problems we've assembled, you will need a numerical solver package. This part is implemented in this tutorial with the `pyunlocbox <https://github.com/epfl-lts2/pyunlocbox>`_, which is based on proximal splitting algorithms. Check also its `documentation <https://pyunlocbox.readthedocs.io>`_ for more information about the parameters used here.
+For solving the optimization problems we've assembled, you will need a numerical solver package. This part is implemented in this tutorial with the `pyunlocbox <https://github.com/gsp-eeg/pyunlocbox>`_, which is based on proximal splitting algorithms. Check also its `documentation <https://pyunlocbox.readthedocs.io>`_ for more information about the parameters used here.
 
 We start with the graph TV regularization. We will use the :class:`pyunlocbox.solvers.mlfbf` solver from :mod:`pyunlocbox`. It is a primal-dual solver, which means for our problem that the regularization term will be written in terms of the dual variable :math:`u = \nabla_G x`, and the graph gradient :math:`\nabla_G` will be passed to the solver as the primal-dual map. The value of :math:`3.0` for the regularization parameter :math:`\gamma` was chosen on the basis of the visual appeal of the returned solution.
 
