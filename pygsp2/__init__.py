@@ -41,8 +41,8 @@ except AttributeError:
     graphs.Graph.plot.__func__.__doc__ = plotting._plot_graph.__doc__
     graphs.Graph.plot_spectrogram.__func__.__doc__ = plotting._plot_spectrogram.__doc__
 
-__version__ = '0.5.1'
-__release_date__ = '2017-12-15'
+__version__ = '2.0.4'
+__release_date__ = '2024-06-27'
 
 
 def test():  # pragma: no cover

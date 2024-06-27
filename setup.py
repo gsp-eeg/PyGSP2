@@ -17,7 +17,7 @@ setup(
         'Download': 'https://pypi.org/project/pygsp2',
         'Source Code': 'https://github.com/gsp-eeg/pygsp2',
         'Bug Tracker': 'https://github.com/gsp-eeg/pygsp2/issues',
-        'Try It Online': 'https://mybinder.org/v2/gh/epfl-lts2/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb',
+        'Try It Online': 'https://mybinder.org/v2/gh/gsp-eeg/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb',
     },
     packages=[
         'pygsp2',
