@@ -24,9 +24,27 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
+ASSETS_METRO = [
+    {
+        "filename": "2023.11 Matriz_baj_SS_MH.xlsb",
+        "url": r"https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip"
+    },
+    {
+        "filename": "santiago_metro_stations_coords.geojson",
+        "url": r"https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson"
+    },
+    {
+        "filename": "santiago_metro_stations_connections.txt",
+        "url": r"https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt"
+    }
+]
 
-def make_metro_graph(edgesfile='../pygsp2/data/santiago_metro_stations_connections.txt',
-                     coordsfile='../pygsp2/data/santiago_metro_stations_coords.geojson'):
+ASSETS = {
+    "metro": ASSETS_METRO
+}
+
+def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
+                     coordsfile='santiago_metro_stations_coords.geojson'):
     """Create a NetworkX graph corresponding to Santiago Metro network.
 
     Parameters
@@ -178,3 +196,32 @@ def plot_signal_in_graph(G, signal, title='Graph Signal', label=''):
     plt.tight_layout()
 
     return fig, ax
+
+def fetch_data(output_dir, database="metro"):
+    """ 
+    Fetch data from the internet and save it in the output_dir.
+
+    Parameters
+    ----------
+    output_dir : str
+        Directory where the data will be saved.
+    database : str, optional
+        Database to fetch data from. Options are: "metro".
+    """ 
+    for asset_dict in ASSETS[database]:
+        filename = asset_dict["filename"]
+        url = asset_dict["url"]
+        assets_filepath = os.path.join(output_dir, filename)
+        if not os.path.isfile(assets_filepath):
+            import requests
+            import zipfile
+            import io
+            print(f'Downloading data file to:\n {assets_filepath}')
+            r = requests.get(url)
+            if url.endswith('.zip'):
+                z = zipfile.ZipFile(io.BytesIO(r.content))
+                z.extractall(output_dir)
+            else:
+                with open(assets_filepath, 'wb') as f:
+                    f.write(r.content)
+

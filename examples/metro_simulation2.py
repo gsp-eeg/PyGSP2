@@ -58,7 +58,10 @@ import os
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
-from pygsp2.utils_examples import make_metro_graph
+from pygsp2.utils_examples import make_metro_graph, fetch_data
+
+current_dir = os.getcwd()
+os.chdir(current_dir)
 
 try:
     os.mkdir('metro_simulation2/')
@@ -66,8 +69,14 @@ except FileExistsError:
     print(
         'Warning: It seems like this folder already exists. Overwritting...')
 
+# %% Download data
+assets_dir = os.path.join(current_dir, 'examples')
+fetch_data(assets_dir, "metro")
 # %% Load graph and compute adjacency and node degree
-G, pos = make_metro_graph()
+G, pos = make_metro_graph(
+    edgesfile=os.path.join(assets_dir, 'santiago_metro_stations_connections.txt'),
+    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson')
+)
 stations = list(G)
 
 W0 = nx.adjacency_matrix(G).toarray()
