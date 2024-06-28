@@ -1,4 +1,8 @@
-"""Data imputing example in a  Santiago Metro station.
+r"""
+Metro Regression
+================
+
+Data imputing example in a  Santiago Metro station.
 
 Compute the number of exits in a random metro station. Then, compute the
 regression over the whole network and plot the error of the regression. Here,
@@ -31,13 +35,26 @@ import numpy as np
 from unidecode import unidecode
 import networkx as nx
 import matplotlib.pyplot as plt
-from utils import make_metro_graph, plot_signal_in_graph, metro_database_preprocessing
-from pygsp import graphs, learning
-os.chdir(os.path.dirname(__file__))
+from pygsp2.utils_examples import (
+    make_metro_graph, 
+    plot_signal_in_graph, 
+    metro_database_preprocessing,
+    fetch_data
+)
+from pygsp2 import graphs, learning
+
+current_dir = os.getcwd()
+os.chdir(current_dir)
+
+# %% Load data
+assets_dir = os.path.join(current_dir, 'examples')
+fetch_data(assets_dir, "metro")
 
 try:
-    commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb', header=1,
-                             sheet_name='bajadas_prom_laboral')
+    commutes = pd.read_excel(
+        os.path.join(assets_dir, '2023.11 Matriz_baj_SS_MH.xlsb'),
+        header=1,
+        sheet_name='bajadas_prom_laboral')
 except FileNotFoundError:
     print(f'Data file was not found in:\n {os.getcwd()}')
     print('Download it from:\n' +
@@ -45,7 +62,10 @@ except FileNotFoundError:
     sys.exit(1)
 
 # %% Load graph
-G, pos = make_metro_graph()
+G, pos = make_metro_graph(
+    edgesfile=os.path.join(assets_dir, 'santiago_metro_stations_connections.txt'),
+    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson')
+)
 pos_list = [(G.nodes[node]['y'], G.nodes[node]['x']) for node in G.nodes]
 
 # Extract adjacency matrix
@@ -108,16 +128,16 @@ for i, s in enumerate(signal):
 abs_err = np.abs(tikhonov_estimation - signal)
 
 # %% Plot Tikhonov error in graph
-plot_signal_in_graph(G, abs_err,
+fig, ax = plot_signal_in_graph(G, abs_err,
                      title='Error of Tikhonov Regression',
                      label='Error absoluto')
-
+#fig.savefig('metro_regression_tikhonov_error.png', dpi=300)
 # %% Plot Average error in graph
 # Change variable to error with average estimation
 abs_err = np.abs(average_estimation - signal)
 
-plot_signal_in_graph(G, abs_err,
+fig, ax = plot_signal_in_graph(G, abs_err,
                      title=r'Error of $y = AD^{-1}x$',
                      label='Error absoluto')
-
+#fig.savefig('metro_regression_error_abs.png', dpi=300)
 plt.show()

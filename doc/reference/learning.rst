@@ -2,4 +2,4 @@
 Learning
 ========
 
-.. automodule:: pygsp.learning
+.. automodule:: pygsp2.learning

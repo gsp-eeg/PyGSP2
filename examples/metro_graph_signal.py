@@ -1,4 +1,8 @@
-"""Example of a graph signal for the Santiago Metro.
+r"""
+Metro Graph Signal
+==================
+
+Example of a graph signal for the Santiago Metro.
 
 This example shows a graph signal defined over a graph induced by the Santiago
 Metro (https://en.wikipedia.org/wiki/Santiago_Metro). Each station is a
@@ -29,12 +33,26 @@ import sys
 import pandas as pd
 from unidecode import unidecode
 import matplotlib.pyplot as plt
-from utils import make_metro_graph, metro_database_preprocessing, plot_signal_in_graph
-os.chdir(os.path.dirname(__file__))
+
+from pygsp2.utils_examples import (
+    make_metro_graph, 
+    metro_database_preprocessing, 
+    plot_signal_in_graph,
+    fetch_data
+)
+
+current_dir = os.getcwd()
+os.chdir(current_dir)
+
+# %% Load data
+assets_dir = os.path.join(current_dir, 'examples')
+fetch_data(assets_dir, "metro")
 
 try:
-    commutes = pd.read_excel('2023.11 Matriz_baj_SS_MH.xlsb', header=1,
-                             sheet_name='bajadas_prom_laboral')
+    commutes = pd.read_excel(
+        os.path.join(assets_dir, '2023.11 Matriz_baj_SS_MH.xlsb'),
+        header=1,
+        sheet_name='bajadas_prom_laboral')
 except FileNotFoundError:
     print(f'Data file was not found in:\n {os.getcwd()}')
     print('Download it from:\n' +
@@ -43,7 +61,10 @@ except FileNotFoundError:
 
 # %% Load graph
 
-G, pos = make_metro_graph()
+G, pos = make_metro_graph(
+    edgesfile=os.path.join(assets_dir, 'santiago_metro_stations_connections.txt'),
+    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson')
+)
 
 stations = [name.upper() for name in list(G.nodes)]
 stations = [unidecode(station) for station in stations]
@@ -64,6 +85,6 @@ _ = [print(f'\t{i+1}. {station}')
      for i, station in enumerate(stations_missing)]
 
 # %% Plot signal in graph
-
 fig, ax = plot_signal_in_graph(G, signal, 'Promedio Diario\nBajadas de Metro')
+#fig.savefig('metro_graph_signal.png')
 plt.show()

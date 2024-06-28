@@ -2,7 +2,7 @@
 Graphs
 ======
 
-.. automodule:: pygsp.graphs
+.. automodule:: pygsp2.graphs
     :exclude-members: Graph
 
     .. autoclass:: Graph

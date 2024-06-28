@@ -2,4 +2,4 @@
 Optimization
 ============
 
-.. automodule:: pygsp.optimization
+.. automodule:: pygsp2.optimization

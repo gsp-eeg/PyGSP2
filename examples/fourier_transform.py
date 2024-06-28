@@ -2,15 +2,15 @@ r"""
 Fourier transform
 =================
 
-The graph Fourier transform :meth:`pygsp.graphs.Graph.gft` transforms a
+The graph Fourier transform :meth:`pygsp2.graphs.Graph.gft` transforms a
 signal from the vertex domain to the spectral domain. The smoother the signal
-(see :meth:`pygsp.graphs.Graph.dirichlet_energy`), the lower in the frequencies
+(see :meth:`pygsp2.graphs.Graph.dirichlet_energy`), the lower in the frequencies
 its energy is concentrated.
 """
 
 import numpy as np
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 G = pg.graphs.Sensor(seed=42)
 G.compute_fourier_basis()
@@ -44,3 +44,4 @@ axes[1, 0].set_ylabel(r'frequency content $\hat{x}(\lambda)$')
 # axes[1, 0].set_title(r'$\hat{x}$: signal in the spectral domain')
 
 fig.tight_layout()
+plt.show()

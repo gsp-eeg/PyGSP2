@@ -23,7 +23,7 @@ export DISPLAY = :99
 
 test:
 	Xvfb $$DISPLAY -screen 0 800x600x24 &
-	coverage run --branch --source pygsp setup.py test
+	coverage run --branch --source pygsp2 setup.py test
 	coverage report
 	coverage html
 	killall Xvfb
