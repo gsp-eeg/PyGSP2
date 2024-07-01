@@ -1,4 +1,8 @@
-"""Example of a simulation of the evolution of a graph signal over the Santiago Metro
+r"""
+Metro simulation
+================
+
+Example of a simulation of the evolution of a graph signal over the Santiago Metro
 network.
 
 The initial condition is a graph signal with only one positive integer value
@@ -31,14 +35,27 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib import animation
-from utils import make_metro_graph
+from pygsp2.utils_examples import make_metro_graph, fetch_data
+import pygsp2 as pg
+
+current_dir = os.getcwd()
+os.chdir(current_dir)
+
 
 # If set to true make animation,
 # otherwise store each frame as png
 MAKE_ANIMATION = True
 
+# %% Download data
+assets_dir = os.path.join(current_dir, 'examples')
+fetch_data(assets_dir, "metro")
+
+
 # %% Load graph and compute adjacency and node degree
-G, pos = make_metro_graph()
+G, pos = make_metro_graph(
+    edgesfile=os.path.join(assets_dir, 'santiago_metro_stations_connections.txt'),
+    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson')
+)
 
 W = nx.adjacency_matrix(G).toarray()
 D = np.diag(W.sum(1))
@@ -93,9 +110,10 @@ if MAKE_ANIMATION:
                                    interval=50)
 
     # saving to gif using ffmpeg writer
-    writervideo = animation.FFMpegWriter(fps=5)
+    writervideo = animation.PillowWriter(fps=5)
 
     anim.save('metro_simulation.gif', writer=writervideo)
+    plt.show()
 
 else:
     try:

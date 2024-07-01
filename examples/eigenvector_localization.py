@@ -11,7 +11,7 @@ This example demonstrates that the more isolated a node is, the more a Fourier
 mode will be localized on it.
 
 The mutual coherence between the basis of Kronecker deltas and the basis formed
-by the eigenvectors of the Laplacian, :attr:`pygsp.graphs.Graph.coherence`, is
+by the eigenvectors of the Laplacian, :attr:`pygsp2.graphs.Graph.coherence`, is
 a measure of the localization of the Fourier modes. The larger the value, the
 more localized the eigenvectors can be.
 
@@ -22,7 +22,7 @@ See `Global and Local Uncertainty Principles for Signals on Graphs
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 fig, axes = plt.subplots(2, 2, figsize=(8, 8))
 
@@ -64,3 +64,4 @@ for w, ax in zip([10, 1, 0.1, 0.01], axes.flatten()):
                 horizontalalignment='center')
 
 fig.tight_layout()
+plt.show()

@@ -2,4 +2,4 @@
 Filters
 =======
 
-.. automodule:: pygsp.filters
+.. automodule:: pygsp2.filters

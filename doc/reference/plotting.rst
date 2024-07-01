@@ -2,4 +2,4 @@
 Plotting
 ========
 
-.. automodule:: pygsp.plotting
+.. automodule:: pygsp2.plotting

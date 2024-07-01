@@ -13,7 +13,7 @@ This tutorial focuses on the problem of recovering a label signal on a graph fro
     :context: reset
 
     >>> import numpy as np
-    >>> from pygsp import graphs, plotting
+    >>> from pygsp2 import graphs, plotting
     >>>
     >>> # Create a random sensor graph
     >>> G = graphs.Sensor(N=256, distributed=True, seed=42)
@@ -43,7 +43,7 @@ The first figure shows a plot of the original label signal, that we wish to reco
 
 This figure shows the label signal on the graph after the application of the subsampling mask and the addition of noise. The label of more than half of the vertices has been set to :math:`0`.
 
-Since the problem is ill-posed, we will use some regularization to reach a solution that is more in tune with what we expect a label signal to look like. We will compare two approaches, but they are both based on measuring local differences on the label signal. Those differences are essentially an edge signal: to each edge we can associate the difference between the label signals of its associated nodes. The linear operator that does such a mapping is called the graph gradient :math:`\nabla_G`, and, fortunately for us, it is available under the :attr:`pygsp.graphs.Graph.D` (for differential) attribute of any :mod:`pygsp.graphs` graph.
+Since the problem is ill-posed, we will use some regularization to reach a solution that is more in tune with what we expect a label signal to look like. We will compare two approaches, but they are both based on measuring local differences on the label signal. Those differences are essentially an edge signal: to each edge we can associate the difference between the label signals of its associated nodes. The linear operator that does such a mapping is called the graph gradient :math:`\nabla_G`, and, fortunately for us, it is available under the :attr:`pygsp2.graphs.Graph.D` (for differential) attribute of any :mod:`pygsp2.graphs` graph.
 
 The reason for measuring local differences comes from prior knowledge: we assume label signals don't vary too much locally. The precise measure of such variation is what distinguishes the two regularization approaches we'll use.
 

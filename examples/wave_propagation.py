@@ -3,14 +3,14 @@ Wave propagation
 ================
 
 Solve the wave equation by filtering the initial conditions with the wave
-kernel :class:`pygsp.filters.Wave`.
+kernel :class:`pygsp2.filters.Wave`.
 """
 
 from os import path
 
 import numpy as np
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 n_side = 13
 G = pg.graphs.Grid2d(n_side)
@@ -43,3 +43,4 @@ for i, t in enumerate(times):
     axes[1, i].set_axis_off()
 
 fig.tight_layout()
+plt.show()

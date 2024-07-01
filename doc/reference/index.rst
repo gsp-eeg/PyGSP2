@@ -2,7 +2,7 @@
 API reference
 =============
 
-.. automodule:: pygsp
+.. automodule:: pygsp2
 
 .. toctree::
     :hidden:

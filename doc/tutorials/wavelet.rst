@@ -16,7 +16,7 @@ As usual, we first have to import some packages.
 
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> from pygsp import graphs, filters, plotting, utils
+    >>> from pygsp2 import graphs, filters, plotting, utils
 
 Then we can load a graph. The graph we'll use is a nearest-neighbor graph of a
 point cloud of the Stanford bunny. It will allow us to get interesting visual
@@ -29,10 +29,10 @@ results using wavelets.
 
 .. note::
     At this stage we could compute the Fourier basis using
-    :meth:`pygsp.graphs.Graph.compute_fourier_basis`, but this would take some
+    :meth:`pygsp2.graphs.Graph.compute_fourier_basis`, but this would take some
     time, and can be avoided with a Chebychev polynomials approximation to
     graph filtering. See the documentation of the
-    :meth:`pygsp.filters.Filter.filter` filtering function and
+    :meth:`pygsp2.filters.Filter.filter` filtering function and
     :cite:`hammond2011wavelets` for details on how it is down.
 
 Simple filtering: heat diffusion
@@ -81,7 +81,7 @@ scales.
     >>> fig.tight_layout()
 
 .. note::
-    The :meth:`pygsp.filters.Filter.localize` method can be used to visualize a
+    The :meth:`pygsp2.filters.Filter.localize` method can be used to visualize a
     filter in the vertex domain instead of doing it manually.
 
 Visualizing wavelets atoms
@@ -89,7 +89,7 @@ Visualizing wavelets atoms
 
 Let's now replace the Heat filter by a filter bank of wavelets. We can create a
 filter bank using one of the predefined filters, such as
-:class:`pygsp.filters.MexicanHat` to design a set of `Mexican hat wavelets`_.
+:class:`pygsp2.filters.MexicanHat` to design a set of `Mexican hat wavelets`_.
 
 .. _Mexican hat wavelets:
     https://en.wikipedia.org/wiki/Mexican_hat_wavelet
@@ -110,8 +110,8 @@ Then plot the frequency response of those filters.
 .. note::
     We can see that the wavelet atoms are stacked on the low frequency part of
     the spectrum. A better coverage could be obtained by adapting the filter
-    bank with :class:`pygsp.filters.WarpedTranslates` or by using another
-    filter bank like :class:`pygsp.filters.Itersine`.
+    bank with :class:`pygsp2.filters.WarpedTranslates` or by using another
+    filter bank like :class:`pygsp2.filters.Itersine`.
 
 We can visualize the atoms as we did with the heat kernel, by filtering
 a Kronecker delta placed at one specific vertex.

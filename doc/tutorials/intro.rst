@@ -1,10 +1,10 @@
-=========================
-Introduction to the PyGSP
-=========================
+==========================
+Introduction to the PyGSP2
+==========================
 
 This tutorial will show you the basic operations of the toolbox. After
 installing the package with pip, start by opening a python shell, e.g.
-a Jupyter notebook, and import the PyGSP. We will also need NumPy to create
+a Jupyter notebook, and import the PyGSP2. We will also need NumPy to create
 matrices and arrays.
 
 .. plot::
@@ -12,7 +12,7 @@ matrices and arrays.
 
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
-    >>> from pygsp import graphs, filters, plotting
+    >>> from pygsp2 import graphs, filters, plotting
 
 We then set default plotting parameters. We're using the ``matplotlib`` backend
 to embed plots in this tutorial. The ``pyqtgraph`` backend is best suited for
@@ -47,7 +47,7 @@ follows.
     >>> print('{} nodes, {} edges'.format(G.N, G.Ne))
     30 nodes, 64 edges
 
-The :class:`pygsp.graphs.Graph` class we just instantiated is the base class
+The :class:`pygsp2.graphs.Graph` class we just instantiated is the base class
 for all graph objects, which offers many methods and attributes.
 
 Given, a graph object, we can test some properties.
@@ -101,10 +101,10 @@ smoothness of a signal.
     (30, 64)
 
 .. note::
-    Note that we called :meth:`pygsp.graphs.Graph.compute_fourier_basis` and
-    :meth:`pygsp.graphs.Graph.compute_differential_operator` before accessing
-    the Fourier basis :attr:`pygsp.graphs.Graph.U` and the differential
-    operator :attr:`pygsp.graphs.Graph.D`. Doing so is however not mandatory as
+    Note that we called :meth:`pygsp2.graphs.Graph.compute_fourier_basis` and
+    :meth:`pygsp2.graphs.Graph.compute_differential_operator` before accessing
+    the Fourier basis :attr:`pygsp2.graphs.Graph.U` and the differential
+    operator :attr:`pygsp2.graphs.Graph.D`. Doing so is however not mandatory as
     those matrices would have been computed when requested (lazy evaluation).
     Omitting to call the *compute* functions does print a warning to tell you
     that a potentially heavy computation is taking place under the hood (that's
@@ -115,7 +115,7 @@ smoothness of a signal.
 To be able to plot a graph, we need to embed its nodes in a 2D or 3D space.
 While most included graph models define these coordinates, the graph we just
 created do not. We only passed a weight matrix after all. Let's set some
-coordinates with :meth:`pygsp.graphs.Graph.set_coordinates` and plot our graph.
+coordinates with :meth:`pygsp2.graphs.Graph.set_coordinates` and plot our graph.
 
 .. plot::
     :context: close-figs
@@ -125,7 +125,7 @@ coordinates with :meth:`pygsp.graphs.Graph.set_coordinates` and plot our graph.
 
 While we created our first graph ourselves, many standard models of graphs are
 implemented as subclasses of the Graph class and can be easily instantiated.
-Check the :mod:`pygsp.graphs` module to get a list of them and learn more about
+Check the :mod:`pygsp2.graphs` module to get a list of them and learn more about
 the Graph object.
 
 Fourier basis
@@ -135,7 +135,7 @@ As in classical signal processing, the Fourier transform plays a central role
 in graph signal processing. Getting the Fourier basis is however
 computationally intensive as it needs to fully diagonalize the Laplacian. While
 it can be used to filter signals on graphs, a better alternative is to use one
-of the fast approximations (see :meth:`pygsp.filters.Filter.filter`). Let's
+of the fast approximations (see :meth:`pygsp2.filters.Filter.filter`). Let's
 compute it nonetheless to visualize the eigenvectors of the Laplacian.
 Analogous to classical Fourier analysis, they look like sinuses on the graph.
 Let's plot the second and third eigenvectors (the first is constant). Those are
@@ -177,7 +177,7 @@ Filters
 -------
 
 To filter signals on graphs, we need to define filters. They are represented in
-the toolbox by the :class:`pygsp.filters.Filter` class. Filters are usually
+the toolbox by the :class:`pygsp2.filters.Filter` class. Filters are usually
 defined in the spectral domain. Given the transfer function
 
 .. math:: g(x) = \frac{1}{1 + \tau x},
@@ -204,7 +204,7 @@ filter will be evaluated to create a discrete filter.
 .. _filter bank: https://en.wikipedia.org/wiki/Filter_bank
 
 .. note::
-    The :mod:`pygsp.filters` module implements various standard filters.
+    The :mod:`pygsp2.filters` module implements various standard filters.
 
 Let's create a graph signal and add some random noise.
 
@@ -237,7 +237,7 @@ While the noise is largely removed thanks to the filter, some energy is
 diffused between the letters. This is the typical behavior of a low-pass
 filter.
 
-So here are the basics for the PyGSP. Please check the other tutorials and the
+So here are the basics for the PyGSP2. Please check the other tutorials and the
 reference guide for more. Enjoy!
 
 .. note::

@@ -9,12 +9,12 @@ measure of "frequency".
 
 In classical signal processing, Fourier modes are completely delocalized, like
 on the grid graph. For general graphs however, Fourier modes might be
-localized. See :attr:`pygsp.graphs.Graph.coherence`.
+localized. See :attr:`pygsp2.graphs.Graph.coherence`.
 """
 
 import numpy as np
 from matplotlib import pyplot as plt
-import pygsp as pg
+import pygsp2 as pg
 
 n_eigenvectors = 7
 
@@ -40,3 +40,4 @@ plot_eigenvectors(G, axes[1])
 fig.subplots_adjust(hspace=0.5, right=0.8)
 cax = fig.add_axes([0.82, 0.16, 0.01, 0.26])
 _ = fig.colorbar(axes[1, -1].collections[1], cax=cax, ticks=[-0.4, 0, 0.4])
+plt.show()
