@@ -16,7 +16,7 @@ G = pg.graphs.Sensor(seed=42)
 G.compute_fourier_basis()
 
 scales = [10, 3, 0]
-limit = 0.44
+limit = 0.5
 
 fig, axes = plt.subplots(2, len(scales), figsize=(12, 4))
 fig.subplots_adjust(hspace=0.5)
