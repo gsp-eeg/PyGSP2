@@ -28,21 +28,14 @@ for i, scale in enumerate(scales):
     x /= np.linalg.norm(x)
     x_hat = G.gft(x).squeeze()
     
-    try:
-        assert np.all((-limit < x) & (x < limit))
-        G.plot(x, limits=[-limit, limit], ax=axes[0, i])
-        axes[0, i].set_axis_off()
-        axes[0, i].set_title('$x^T L x = {:.2f}$'.format(G.dirichlet_energy(x)))
+    G.plot(x, limits=[-limit, limit], ax=axes[0, i])
+    axes[0, i].set_axis_off()
+    axes[0, i].set_title('$x^T L x = {:.2f}$'.format(G.dirichlet_energy(x)))
 
-        axes[1, i].plot(G.e, np.abs(x_hat), '.-')
-        axes[1, i].set_xticks(range(0, 16, 4))
-        axes[1, i].set_xlabel(r'graph frequency $\lambda$')
-        axes[1, i].set_ylim(-0.05, 0.95)
-    except AssertionError as msg: 
-        print(f"x value {np.max(np.abs(x))} outside limits {limit}: {msg}")
-        
-
-    
+    axes[1, i].plot(G.e, np.abs(x_hat), '.-')
+    axes[1, i].set_xticks(range(0, 16, 4))
+    axes[1, i].set_xlabel(r'graph frequency $\lambda$')
+    axes[1, i].set_ylim(-0.05, 0.95)
 
 axes[1, 0].set_ylabel(r'frequency content $\hat{x}(\lambda)$')
 
