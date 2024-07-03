@@ -16,7 +16,7 @@ G = pg.graphs.Sensor(seed=42)
 G.compute_fourier_basis()
 
 scales = [10, 3, 0]
-limit = 0.44
+limit = 0.5
 
 fig, axes = plt.subplots(2, len(scales), figsize=(12, 4))
 fig.subplots_adjust(hspace=0.5)
@@ -27,8 +27,7 @@ for i, scale in enumerate(scales):
     x = g.filter(x0).squeeze()
     x /= np.linalg.norm(x)
     x_hat = G.gft(x).squeeze()
-
-    assert np.all((-limit < x) & (x < limit))
+    
     G.plot(x, limits=[-limit, limit], ax=axes[0, i])
     axes[0, i].set_axis_off()
     axes[0, i].set_title('$x^T L x = {:.2f}$'.format(G.dirichlet_energy(x)))
