@@ -93,6 +93,10 @@ The PyGSP2 is available on PyPI::
 
     $ pip install pygsp2
 
+The PyGSP2 is available on Conda Forge::
+   
+    $ conda install conda-forge::pygsp2
+
 Contributing
 ------------
 
