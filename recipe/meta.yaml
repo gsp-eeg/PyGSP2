@@ -1,0 +1,46 @@
+package:
+  name: pygsp2
+  version: "0.6.0"  # This will be updated by the CI workflow
+
+source:
+  git_url: https://github.com/gsp-eeg/pygsp2
+  git_tag: v0.6.0  # This tag should match the version you want to build
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.7
+    - pip
+  run:
+    - python >=3.7
+    - numpy
+    - scipy
+    - pandas
+    - networkx
+    - geopy
+    - matplotlib-base
+    - unidecode
+    - utm
+    - pyxlsb
+
+test:
+  imports:
+    - pygsp2
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/gsp-eeg/pygsp2
+  summary: Graph Signal Processing in Python
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - lcortesg
