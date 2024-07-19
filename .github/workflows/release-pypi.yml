@@ -2,8 +2,8 @@ name: Release to PyPI
 
 on:
   push:
-    branches:
-      - main
+    #branches:
+    #  - master
     tags:
       - "v*.*.*"
 
