@@ -3,7 +3,7 @@ package:
   version: "0.6.0"  # This will be updated by the CI workflow
 
 source:
-  git_url: https://github.com/gsp-eeg/pygsp3
+  git_url: https://github.com/gsp-eeg/pygsp2
   git_tag: v0.6.0  # This tag should match the version you want to build
 
 build:
