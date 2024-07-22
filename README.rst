@@ -79,11 +79,11 @@ structure!
     :alt:
 
 You can
-`try it online <https://mybinder.org/v2/gh/epfl-lts2/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb>`_,
+`try it online <https://mybinder.org/v2/gh/gsp-eeg/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb>`_,
 look at the
-`tutorials <https://pygsp2.readthedocs.io/en/stable/tutorials/index.html>`_
+`tutorials <https://pygsp2.readthedocs.io/en/latest/tutorials/index.html>`_
 to learn how to use it, or look at the
-`reference guide <https://pygsp2.readthedocs.io/en/stable/reference/index.html>`_
+`reference guide <https://pygsp2.readthedocs.io/en/latest/reference/index.html>`_
 for an exhaustive documentation of the API. Enjoy!
 
 Installation
@@ -94,7 +94,7 @@ The PyGSP2 is available on PyPI::
     $ pip install pygsp2
 
 The PyGSP2 is available on Conda Forge::
-   
+
     $ conda install conda-forge::pygsp2
 
 Contributing
