@@ -24,6 +24,11 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import colormaps
 import numpy as np
+import zipfile
+import io
+import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 ASSETS_METRO = [
     {
@@ -225,11 +230,8 @@ def fetch_data(output_dir, database="metro"):
         url = asset_dict["url"]
         assets_filepath = os.path.join(output_dir, filename)
         if not os.path.isfile(assets_filepath):
-            import requests
-            import zipfile
-            import io
             print(f'Downloading data file to:\n {assets_filepath}')
-            r = requests.get(url, timeout=30)
+            r = get_with_retries(url) #requests.get(url, timeout=30)
             if url.endswith('.zip'):
                 z = zipfile.ZipFile(io.BytesIO(r.content))
                 z.extractall(output_dir)
@@ -237,3 +239,41 @@ def fetch_data(output_dir, database="metro"):
                 with open(assets_filepath, 'wb') as f:
                     f.write(r.content)
 
+def get_with_retries(url, retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 504), timeout=10):
+    # Create a session
+    session = requests.Session()
+    
+    # Define the retry strategy
+    retry_strategy = Retry(
+        total=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist,
+        allowed_methods=["HEAD", "GET", "OPTIONS"]
+    )
+    
+    # Mount the adapter with the retry strategy
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
+    
+    try:
+        # Send a GET request with timeout
+        response = session.get(url, timeout=timeout)
+        
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Process the response data
+            print("File downloaded successfully.")
+            return response
+        else:
+            print(f"Request failed with status code: {response.status_code}")
+    
+    except requests.exceptions.ConnectTimeout:
+        print("The request timed out while trying to connect to the remote server.")
+    
+    except requests.exceptions.ReadTimeout:
+        print("The server did not send any data in the allotted amount of time.")
+    
+    except requests.exceptions.RequestException as e:
+        # Handle any exceptions that occur
+        print(f"An error occurred: {e}")
