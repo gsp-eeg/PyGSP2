@@ -232,12 +232,14 @@ def fetch_data(output_dir, database="metro"):
         if not os.path.isfile(assets_filepath):
             print(f'Downloading data file to:\n {assets_filepath}')
             r = get_with_retries(url) #requests.get(url, timeout=30)
-            if url.endswith('.zip'):
-                z = zipfile.ZipFile(io.BytesIO(r.content))
-                z.extractall(output_dir)
-            else:
-                with open(assets_filepath, 'wb') as f:
-                    f.write(r.content)
+            if r.status_code == 200:
+                if url.endswith('.zip'):
+                    z = zipfile.ZipFile(io.BytesIO(r.content))
+                    z.extractall(output_dir)
+                else:
+                    with open(assets_filepath, 'wb') as f:
+                        f.write(r.content)
+
 
 def get_with_retries(url, retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 504), timeout=10):
     # Create a session
