@@ -38,7 +38,8 @@ setup(
         'matplotlib',
         'unidecode',
         'utm',
-        'pyxlsb'
+        'pyxlsb',
+        'charset-normalizer'
     ],
     extras_require={
         # Optional dependencies for development. Some bring additional
