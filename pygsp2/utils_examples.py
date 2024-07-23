@@ -229,7 +229,7 @@ def fetch_data(output_dir, database="metro"):
             import zipfile
             import io
             print(f'Downloading data file to:\n {assets_filepath}')
-            r = requests.get(url)
+            r = requests.get(url, timeout=30)
             if url.endswith('.zip'):
                 z = zipfile.ZipFile(io.BytesIO(r.content))
                 z.extractall(output_dir)
