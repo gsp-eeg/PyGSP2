@@ -33,7 +33,7 @@ from requests.packages.urllib3.util.retry import Retry
 ASSETS_METRO = [
     {
         "filename": "2023.11 Matriz_baj_SS_MH.xlsb",
-        "url": r"https://www.dtpm.cl/descargas/modelos_y_matrices/Tablas%20de%20subidas%20y%20bajadas%20nov23.zip"
+        "url": r"https://zenodo.org/records/12822782/files/tablas.zip"
     },
     {
         "filename": "santiago_metro_stations_coords.geojson",
