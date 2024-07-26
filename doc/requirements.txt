@@ -1,0 +1,7 @@
+sphinx
+numpydoc
+sphinxcontrib-bibtex
+sphinx-gallery
+memory_profiler
+sphinx-rtd-theme
+sphinx-copybutton
