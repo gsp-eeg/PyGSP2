@@ -20,8 +20,8 @@ A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html
    :target: https://pygsp2.readthedocs.io
 .. |pypi| image:: https://img.shields.io/pypi/v/pygsp2.svg
    :target: https://pypi.org/project/PyGSP2
-.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1003157.svg
-   :target: https://doi.org/10.5281/zenodo.1003157
+.. |zenodo| image:: https://zenodo.org/badge/816842099.svg
+   :target: https://zenodo.org/doi/10.5281/zenodo.13122920
 .. |license| image:: https://img.shields.io/pypi/l/pygsp2.svg
    :target: https://github.com/gsp-eeg/pygsp2/blob/master/LICENSE.txt
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/pygsp2.svg
