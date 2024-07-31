@@ -40,7 +40,8 @@ setup(
         'utm',
         'pyxlsb',
         'charset-normalizer',
-        'requests'
+        'requests',
+        'hatchling'
     ],
     extras_require={
         # Optional dependencies for development. Some bring additional
@@ -81,7 +82,8 @@ setup(
             # Build and upload packages.
             'wheel',
             'twine',
-            'requests'
+            'requests',
+            'hatchling'
         ],
     },
     license="BSD",
