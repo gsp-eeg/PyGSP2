@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "PyGSP2"
+version = "2.0.3"
+authors = [
+  { name="Julio Rodino", email="jrodino14@gmail.com" },
+  { name="Alejandro Weinstein", email="alejandro.weinstein@gmail.com"},
+  { name="Andres Herrera", email="herrerandresc@gmail.com"},
+  { name="Camilo Jara", email="camilo.jara@ug.uchile.cl"},
+  { name="Lucas Cortés", email="lucascortesg@gmail.com"}
+]
+description = "Package for EEG Graph signal Processing"
+readme = "README.rst"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+]
+dependencies= [
+    "numpy",
+    "scipy",
+    "pandas",
+    "networkx",
+    "geopy",
+    "matplotlib",
+    "unidecode",
+    "utm",
+    "pyxlsb"
+]
+
+
+[project.urls]
+Homepage = "https://github.com/gsp-eeg/PyGSP2"
+Issues = "https://github.com/gsp-eeg/PyGSP2/issues"
