@@ -11,9 +11,9 @@ and development takes place on
 A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html>`_ exists.
 
 +-----------------------------------+
-| |doc|  |pypi|                     |
+||doc|   |pypi|   |release|   |test||
 +-----------------------------------+
-| |zenodo|  |license|  |pyversions| |
+||zenodo|   |license|   |pyversions||
 +-----------------------------------+
 
 .. |doc| image:: https://readthedocs.org/projects/pygsp2/badge/?version=latest
@@ -26,6 +26,10 @@ A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html
    :target: https://github.com/gsp-eeg/pygsp2/blob/master/LICENSE.txt
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/pygsp2.svg
    :target: https://pypi.org/project/PyGSP2
+.. |release| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/release-pypi.yml?label=release
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+.. |test| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/test-examples.yml?label=testing
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
 
 The PyGSP2 facilitates a wide variety of operations on graphs, like computing
 their Fourier basis, filtering or interpolating signals, plotting graphs,
