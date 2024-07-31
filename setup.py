@@ -81,6 +81,7 @@ setup(
             # Build and upload packages.
             'wheel',
             'twine',
+            'requests'
         ],
     },
     license="BSD",
