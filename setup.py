@@ -39,7 +39,8 @@ setup(
         'unidecode',
         'utm',
         'pyxlsb',
-        'charset-normalizer'
+        'charset-normalizer',
+        'requests'
     ],
     extras_require={
         # Optional dependencies for development. Some bring additional
