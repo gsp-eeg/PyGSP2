@@ -15,13 +15,13 @@
       "affiliations": [
         {
           "id": "05510vn56",
-          "name": "Federico Santa María Technical University"
+          "name": "Federico Santa Mar\u00eda Technical University"
         }
       ]
     },
     {
       "person_or_org": {
-        "family_name": "Cortés",
+        "family_name": "Cort\u00e9s",
         "given_name": "Lucas",
         "orcid": "0009-0005-0234-2770",
         "type": "personal"
@@ -29,7 +29,7 @@
       "affiliations": [
         {
           "id": "05510vn56",
-          "name": "Federico Santa María Technical University"
+          "name": "Federico Santa Mar\u00eda Technical University"
         },
         {
           "name": "Lanek"
@@ -38,7 +38,7 @@
     },
     {
       "person_or_org": {
-        "family_name": "Rodiño",
+        "family_name": "Rodi\u00f1o",
         "given_name": "Julio",
         "orcid": "0000-0002-8916-6810",
         "type": "personal"
@@ -85,7 +85,7 @@
       },
       "funder": {
         "id": "02ap3w078",
-        "name": "Agencia Nacional de Investigación y Desarrollo"
+        "name": "Agencia Nacional de Investigaci\u00f3n y Desarrollo"
       }
     },
     {
@@ -103,7 +103,7 @@
       },
       "funder": {
         "id": "02ap3w078",
-        "name": "Agencia Nacional de Investigación y Desarrollo"
+        "name": "Agencia Nacional de Investigaci\u00f3n y Desarrollo"
       }
     }
   ]
