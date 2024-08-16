@@ -6,109 +6,61 @@
   "access_right": "open",
   "creators": [
     {
-      "affiliations": [
-        {
-          "id": "05510vn56",
-          "name": "Federico Santa Mar\u00eda Technical University"
-        }
-      ],
       "person_or_org": {
         "family_name": "Weinstein",
         "given_name": "Alejandro",
-        "identifiers": [
-          {
-            "identifier": "0000-0003-1486-7003",
-            "scheme": "orcid"
-          }
-        ],
+        "orcid": "0000-0003-1486-7003",
         "type": "personal"
       },
-      "role": {
-        "id": "projectleader",
-        "title": {
-          "de": "ProjektleiterIn",
-          "en": "Project leader"
-        }
-      }
-    },
-    {
       "affiliations": [
         {
           "id": "05510vn56",
-          "name": "Federico Santa Mar\u00eda Technical University"
+          "name": "Federico Santa María Technical University"
+        }
+      ]
+    },
+    {
+      "person_or_org": {
+        "family_name": "Cortés",
+        "given_name": "Lucas",
+        "orcid": "0009-0005-0234-2770",
+        "type": "personal"
+      },
+      "affiliations": [
+        {
+          "id": "05510vn56",
+          "name": "Federico Santa María Technical University"
         },
         {
           "name": "Lanek"
         }
-      ],
-      "person_or_org": {
-        "family_name": "Cort\u00e9s",
-        "given_name": "Lucas",
-        "identifiers": [
-          {
-            "identifier": "0009-0005-0234-2770",
-            "scheme": "orcid"
-          }
-        ],
-        "type": "personal"
-      },
-      "role": {
-        "id": "projectmember",
-        "title": {
-          "de": "Projektmitglied",
-          "en": "Project member"
-        }
-      }
+      ]
     },
     {
+      "person_or_org": {
+        "family_name": "Rodiño",
+        "given_name": "Julio",
+        "orcid": "0000-0002-8916-6810",
+        "type": "personal"
+      },
       "affiliations": [
         {
           "name": "Brain Dynamics Laboratory"
         }
-      ],
-      "person_or_org": {
-        "family_name": "Rodi\u00f1o",
-        "given_name": "Julio",
-        "identifiers": [
-          {
-            "identifier": "0000-0002-8916-6810",
-            "scheme": "orcid"
-          }
-        ],
-        "type": "personal"
-      },
-      "role": {
-        "id": "projectmember",
-        "title": {
-          "de": "Projektmitglied",
-          "en": "Project member"
-        }
-      }
+      ]
     },
     {
+      "person_or_org": {
+        "family_name": "Jara",
+        "given_name": "Camilo",
+        "orcid": "0009-0008-9445-5423",
+        "type": "personal"
+      },
       "affiliations": [
         {
           "name": "FONDECYT REGULAR 1231132 grant, ANILLO ACT210053"
         }
-      ],
-      "person_or_org": {
-        "family_name": "Jara",
-        "given_name": "Camilo",
-        "identifiers": [
-          {
-            "identifier": "0009-0008-9445-5423",
-            "scheme": "orcid"
-          }
-        ],
-        "type": "personal"
-      },
-      "role": {
-        "id": "projectmember",
-        "title": {
-          "de": "Projektmitglied",
-          "en": "Project member"
-        }
-      }
+      ]
     }
   ],
   "related_identifiers": [
@@ -133,7 +85,7 @@
       },
       "funder": {
         "id": "02ap3w078",
-        "name": "Agencia Nacional de Investigaci\u00f3n y Desarrollo"
+        "name": "Agencia Nacional de Investigación y Desarrollo"
       }
     },
     {
@@ -151,7 +103,7 @@
       },
       "funder": {
         "id": "02ap3w078",
-        "name": "Agencia Nacional de Investigaci\u00f3n y Desarrollo"
+        "name": "Agencia Nacional de Investigación y Desarrollo"
       }
     }
   ]
