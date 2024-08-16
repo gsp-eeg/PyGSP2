@@ -1,0 +1,31 @@
+name: Test examples in main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' # Specify the version of Python you need
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . # Install package in editable mode
+
+      - name: Run example scripts
+        run: |
+          for script in examples/*.py; do
+            echo "Running $script"
+            python "$script"
+          done

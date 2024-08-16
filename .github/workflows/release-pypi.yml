@@ -2,8 +2,6 @@ name: Release to PyPI
 
 on:
   push:
-    #branches:
-    #  - main
     tags:
       - "v*.*.*"
 
@@ -14,6 +12,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Check if ref is a tag
+        id: check_tag
+        run: |
+          if [[ $GITHUB_REF != refs/tags/* ]]; then
+            echo "Not a tag push, exiting."
+            exit 1
+          fi
+          echo "Tag detected: ${GITHUB_REF}"
 
       - name: Set up Python
         uses: actions/setup-python@v4
