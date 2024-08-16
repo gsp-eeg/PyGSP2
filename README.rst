@@ -10,16 +10,19 @@ and development takes place on
 `GitHub <https://github.com/gsp-eeg/pygsp2>`_.
 A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html>`_ exists.
 
-+-----------------------------------+
-||doc|   |pypi|   |release|   |test||
-+-----------------------------------+
-||zenodo|   |license|   |pyversions||
-+-----------------------------------+
++--------------------------------------------------------------------+
+||doc|  |pypi|  |conda|  |pyversions|  |release|  |license|  |zenodo||
++--------------------------------------------------------------------+
+||release|  |testing|  |ruff|  |yapf|  |codespell|  |isort|          |
++--------------------------------------------------------------------+
 
 .. |doc| image:: https://readthedocs.org/projects/pygsp2/badge/?version=latest
    :target: https://pygsp2.readthedocs.io
 .. |pypi| image:: https://img.shields.io/pypi/v/pygsp2.svg
    :target: https://pypi.org/project/PyGSP2
+.. |conda| image:: https://img.shields.io/conda/v/conda-forge/pygsp2
+   :target: https://anaconda.org/conda-forge/pygsp2
+   :alt: Conda Version
 .. |zenodo| image:: https://zenodo.org/badge/816842099.svg
    :target: https://zenodo.org/doi/10.5281/zenodo.13122920
 .. |license| image:: https://img.shields.io/pypi/l/pygsp2.svg
@@ -28,8 +31,21 @@ A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html
    :target: https://pypi.org/project/PyGSP2
 .. |release| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/release-pypi.yml?label=release
    :target: https://github.com/gsp-eeg/PyGSP2/actions
-.. |test| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/test-examples.yml?label=testing
+.. |testing| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/test-main.yml?label=testing
    :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Testing Status
+.. |ruff| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/ruff.yml?label=ruff
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Ruff Status
+.. |yapf| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/yapf.yml?label=yapf
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Yapf Status
+.. |codespell| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/codespell.yml?label=codespell
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Codespell Status
+.. |isort| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/isort.yml?label=isort
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Isort Status
 
 The PyGSP2 facilitates a wide variety of operations on graphs, like computing
 their Fourier basis, filtering or interpolating signals, plotting graphs,
