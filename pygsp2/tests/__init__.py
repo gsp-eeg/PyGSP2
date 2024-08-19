@@ -3,8 +3,13 @@
 
 import unittest
 
-from . import (test_docstrings, test_filters, test_graphs, test_learning, test_plotting,
-               test_utils, test_utils_examples)
+from . import test_graphs
+from . import test_filters
+from . import test_utils
+from . import test_learning
+from . import test_docstrings
+from . import test_plotting
+from . import test_utils_examples
 
 suite = unittest.TestSuite([
     test_graphs.suite,

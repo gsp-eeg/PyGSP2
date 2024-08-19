@@ -17,7 +17,7 @@ lint:
 	isort .
 	yapf -ir .
 	ruff check .
-	codespell -w --skip=*.edf,*.js,*.css,doc,Makefile,examples/datasets -D=dict.txt
+	codespell -w -S=skip.txt -D=dict.txt
 
 # Matplotlib doesn't print to screen. Also faster.
 export MPLBACKEND = agg

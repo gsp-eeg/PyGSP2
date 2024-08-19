@@ -29,7 +29,8 @@ exclude = [
     "site-packages",
     "venv",
     ".git",
-    "pygsp2/tests/test_graphs.py"
+    "pygsp2/tests/test_graphs.py",
+    "__init__.py"
 ]
 
 # Same as Black.

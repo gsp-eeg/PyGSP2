@@ -17,13 +17,13 @@ Moreover, the following modules provide additional functionality:
 
 """
 
-from . import features  # noqa: F401
-from . import filters  # noqa: F401
 from . import graphs  # noqa: F401
-from . import learning  # noqa: F401
-from . import optimization  # noqa: F401
+from . import filters  # noqa: F401
 from . import plotting  # noqa: F401
 from . import reduction  # noqa: F401
+from . import features  # noqa: F401
+from . import learning  # noqa: F401
+from . import optimization  # noqa: F401
 from . import utils  # noqa: F401
 from . import utils_examples  # noqa: F401
 
