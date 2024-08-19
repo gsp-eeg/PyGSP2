@@ -54,7 +54,6 @@ class Wave(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -121,8 +120,7 @@ class Wave(Filter):
         def kernel(x, time, speed):
             return np.cos(time * np.arccos(1 - speed**2 * x / G.lmax / 2))
 
-        kernels = [partial(kernel, time=t, speed=s)
-                   for t, s in zip(time, speed)]
+        kernels = [partial(kernel, time=t, speed=s) for t, s in zip(time, speed)]
 
         super(Wave, self).__init__(G, kernels)
 

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from scipy import sparse, linalg
+from scipy import linalg, sparse
 
 from pygsp2 import utils
-
 
 logger = utils.build_logger(__name__)
 
 
 class FourierMixIn(object):
+    """Defines Fourier MixIn class."""
 
     def _check_fourier_properties(self, name, desc):
         if getattr(self, '_' + name) is None:
@@ -65,18 +65,17 @@ class FourierMixIn(object):
 
         Examples
         --------
-
         Delocalized eigenvectors.
 
         >>> graph = graphs.Path(100)
         >>> graph.compute_fourier_basis()
         >>> minimum = 1 / np.sqrt(graph.n_vertices)
-        >>> print('{:.2f} in [{:.2f}, 1]'.format(graph.coherence, minimum))
+        >>> print("{:.2f} in [{:.2f}, 1]".format(graph.coherence, minimum))
         0.14 in [0.10, 1]
         >>>
         >>> # Plot some delocalized eigenvectors.
         >>> import matplotlib.pyplot as plt
-        >>> graph.set_coordinates('line1D')
+        >>> graph.set_coordinates("line1D")
         >>> _ = graph.plot(graph.U[:, :5])
 
         Localized eigenvectors.
@@ -84,7 +83,7 @@ class FourierMixIn(object):
         >>> graph = graphs.Sensor(64, seed=10)
         >>> graph.compute_fourier_basis()
         >>> minimum = 1 / np.sqrt(graph.n_vertices)
-        >>> print('{:.2f} in [{:.2f}, 1]'.format(graph.coherence, minimum))
+        >>> print("{:.2f} in [{:.2f}, 1]".format(graph.coherence, minimum))
         0.84 in [0.12, 1]
         >>>
         >>> # Plot the most localized eigenvector.
@@ -94,8 +93,7 @@ class FourierMixIn(object):
         >>> _ = graph.plot(graph.U[:, idx_fourier], highlight=idx_vertex)
 
         """
-        return self._check_fourier_properties('coherence',
-                                              'Fourier basis coherence')
+        return self._check_fourier_properties('coherence', 'Fourier basis coherence')
 
     def compute_fourier_basis(self, n_eigenvectors=None):
         r"""Compute the (partial) Fourier basis of the graph (cached).
@@ -156,7 +154,7 @@ class FourierMixIn(object):
         if n_eigenvectors is None:
             n_eigenvectors = self.n_vertices
 
-        if (self._U is not None and n_eigenvectors <= len(self._e)):
+        if self._U is not None and n_eigenvectors <= len(self._e):
             return
 
         assert self.L.shape == (self.n_vertices, self.n_vertices)
@@ -166,17 +164,14 @@ class FourierMixIn(object):
                 ' {1}) is expensive. Consider decreasing n_eigenvectors '
                 'or, if using the Fourier basis to filter, using a '
                 'polynomial filter instead.'.format(
-                    'full' if n_eigenvectors == self.N else 'partial',
-                    self.N))
+                    'full' if n_eigenvectors == self.N else 'partial', self.N))
 
         # TODO: handle non-symmetric Laplacians. Test lap_type?
         if n_eigenvectors == self.n_vertices:
             self._e, self._U = linalg.eigh(self.L.toarray(order='F'), overwrite_a=True)
         else:
             # fast partial eigendecomposition of hermitian matrices
-            self._e, self._U = sparse.linalg.eigsh(self.L,
-                                                   n_eigenvectors,
-                                                   which='SM')
+            self._e, self._U = sparse.linalg.eigsh(self.L, n_eigenvectors, which='SM')
         # Columns are eigenvectors. Sorted in ascending eigenvalue order.
 
         # Smallest eigenvalue should be zero: correct numerical errors.

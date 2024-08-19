@@ -40,8 +40,7 @@ class Grid2dImgPatches(Graph):
         self.Gp = ImgPatches(img, **kwargs)
 
         W = aggregate(self.Gp.W, self.Gg.W)
-        super(Grid2dImgPatches, self).__init__(W,
-                                               coords=self.Gg.coords,
+        super(Grid2dImgPatches, self).__init__(W, coords=self.Gg.coords,
                                                plotting=self.Gg.plotting)
 
     def _get_extra_repr(self):

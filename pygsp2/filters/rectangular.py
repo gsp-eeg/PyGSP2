@@ -40,7 +40,6 @@ class Rectangular(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -69,13 +68,17 @@ class Rectangular(Filter):
             return x >= band_min
 
         if (band_min is None) and (band_max is None):
-            kernel = lambda x: np.ones_like(x)
+
+            def kernel(x):
+                return np.ones_like(x)
         elif band_min is None:
             kernel = kernel_lowpass
         elif band_max is None:
             kernel = kernel_highpass
         else:
-            kernel = lambda x: kernel_lowpass(x) * kernel_highpass(x)
+
+            def kernel(x):
+                return kernel_lowpass(x) * kernel_highpass(x)
 
         super(Rectangular, self).__init__(G, kernel)
 

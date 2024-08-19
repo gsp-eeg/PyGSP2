@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 r"""
 The :mod:`pygsp2.utils` module implements some utility functions used throughout
 the package.
@@ -7,15 +6,15 @@ the package.
 
 from __future__ import division
 
-import sys
-import logging
 import functools
-import pkgutil
 import io
+import logging
+import pkgutil
+import sys
 
 import numpy as np
-from scipy import sparse
 import scipy.io
+from scipy import sparse
 
 
 def build_logger(name):
@@ -23,7 +22,7 @@ def build_logger(name):
 
     if not logger.handlers:
         formatter = logging.Formatter(
-            "%(asctime)s:[%(levelname)s](%(name)s.%(funcName)s): %(message)s")
+            '%(asctime)s:[%(levelname)s](%(name)s.%(funcName)s): %(message)s')
 
         steam_handler = logging.StreamHandler()
         steam_handler.setLevel(logging.DEBUG)
@@ -39,11 +38,9 @@ logger = build_logger(__name__)
 
 
 def filterbank_handler(func):
-
     # Preserve documentation of func.
     @functools.wraps(func)
     def inner(f, *args, **kwargs):
-
         if 'i' in kwargs:
             return func(f, *args, **kwargs)
 
@@ -77,8 +74,8 @@ def loadmat(path):
     Examples
     --------
     >>> from pygsp2 import utils
-    >>> data = utils.loadmat('pointclouds/bunny')
-    >>> data['bunny'].shape
+    >>> data = utils.loadmat("pointclouds/bunny")
+    >>> data["bunny"].shape
     (2503, 3)
 
     """
@@ -132,14 +129,13 @@ def distanz(x, y=None):
 
     # Size verification
     if rx != ry:
-        raise ValueError("The sizes of x and y do not fit")
+        raise ValueError('The sizes of x and y do not fit')
 
     xx = (x * x).sum(axis=0)
     yy = (y * y).sum(axis=0)
     xy = np.dot(x.T, y)
 
-    d = abs(np.kron(np.ones((cy, 1)), xx).T +
-            np.kron(np.ones((cx, 1)), yy) - 2 * xy)
+    d = abs(np.kron(np.ones((cy, 1)), xx).T + np.kron(np.ones((cx, 1)), yy) - 2 * xy)
 
     return np.sqrt(d)
 
@@ -162,7 +158,6 @@ def resistance_distance(G):
     ----------
     :cite:`klein1993resistance`
     """
-
     if sparse.issparse(G):
         L = G.tocsc()
 
@@ -178,9 +173,9 @@ def resistance_distance(G):
 
     N = np.shape(L)[0]
     d = sparse.csc_matrix(pseudo.diagonal())
-    rd = sparse.kron(d, sparse.csc_matrix(np.ones((N, 1)))).T \
-        + sparse.kron(d, sparse.csc_matrix(np.ones((N, 1)))) \
-        - pseudo - pseudo.T
+    rd = (sparse.kron(d, sparse.csc_matrix(np.ones(
+        (N, 1)))).T + sparse.kron(d, sparse.csc_matrix(np.ones(
+            (N, 1)))) - pseudo - pseudo.T)
 
     return rd
 
@@ -219,27 +214,27 @@ def symmetrize(W, method='average'):
     array([[0., 3., 0.],
            [3., 1., 6.],
            [4., 2., 3.]])
-    >>> utils.symmetrize(W, method='average')
+    >>> utils.symmetrize(W, method="average")
     array([[0., 3., 2.],
            [3., 1., 4.],
            [2., 4., 3.]])
-    >>> 2 * utils.symmetrize(W, method='average')
+    >>> 2 * utils.symmetrize(W, method="average")
     array([[0., 6., 4.],
            [6., 2., 8.],
            [4., 8., 6.]])
-    >>> utils.symmetrize(W, method='maximum')
+    >>> utils.symmetrize(W, method="maximum")
     array([[0., 3., 4.],
            [3., 1., 6.],
            [4., 6., 3.]])
-    >>> utils.symmetrize(W, method='fill')
+    >>> utils.symmetrize(W, method="fill")
     array([[0., 3., 4.],
            [3., 1., 4.],
            [4., 4., 3.]])
-    >>> utils.symmetrize(W, method='tril')
+    >>> utils.symmetrize(W, method="tril")
     array([[0., 3., 4.],
            [3., 1., 2.],
            [4., 2., 3.]])
-    >>> utils.symmetrize(W, method='triu')
+    >>> utils.symmetrize(W, method="triu")
     array([[0., 3., 0.],
            [3., 1., 6.],
            [0., 6., 3.]])
@@ -253,13 +248,13 @@ def symmetrize(W, method='average'):
 
     elif method == 'maximum':
         if sparse.issparse(W):
-            bigger = (W.T > W)
+            bigger = W.T > W
             return W - W.multiply(bigger) + W.T.multiply(bigger)
         else:
             return np.maximum(W, W.T)
 
     elif method == 'fill':
-        A = (W > 0)  # Boolean type.
+        A = W > 0  # Boolean type.
         if sparse.issparse(W):
             mask = (A + A.T) - A
             W = W + mask.multiply(W.T)
@@ -347,23 +342,23 @@ def to_sparse(i, j, v, m, n):
     """
     Create and compressing a matrix that have many zeros
     Parameters:
-        i: 1-D array representing the index 1 values 
+        i: 1-D array representing the index 1 values
             Size n1
-        j: 1-D array representing the index 2 values 
+        j: 1-D array representing the index 2 values
             Size n1
-        v: 1-D array representing the values 
+        v: 1-D array representing the values
             Size n1
         m: integer representing x size of the matrix >= n1
         n: integer representing y size of the matrix >= n1
     Returns:
         s: 2-D array
-            Matrix full of zeros excepting values v at indexes i, j
+            Matrix full of zeros excepting values v at indexes i, j.
     """
     return sparse.csr_matrix((v, (i, j)), shape=(m, n))
 
 
 def sum_squareform(n):
-    """ Returns sparse matrix that sums the squareform of a vector. Reference
+    """Return sparse matrix that sums the squareform of a vector. Reference
     from the unlocbox toolbox function for matlab.
 
     Parameters
@@ -380,7 +375,7 @@ def sum_squareform(n):
 
     """
     # number of columns is the length of w given size of W
-    ncols = int((n-1)*(n)/2)
+    ncols = int((n - 1) * (n) / 2)
 
     I = np.zeros([ncols])
     J = np.zeros([ncols])
@@ -388,13 +383,13 @@ def sum_squareform(n):
     # offset
     k = 0
     for i in np.arange(1, n):
-        I[k: k + (n-i)] = np.arange(i, n)
-        k = k + (n-i)
+        I[k:k + (n - i)] = np.arange(i, n)
+        k = k + (n - i)
 
     k = 0
     for i in np.arange(1, n):
-        J[k: k + (n-i)] = i-1
-        k = k + (n-i)
+        J[k:k + (n - i)] = i - 1
+        k = k + (n - i)
 
     i = np.array(np.hstack([np.arange(0, ncols), np.arange(0, ncols)]))
     j = np.hstack([I, J]).squeeze().T.ravel()

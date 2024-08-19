@@ -4,6 +4,7 @@ import numpy as np
 from scipy import sparse
 
 from pygsp2 import utils
+
 from . import Graph  # prevent circular import in Python < 3.5
 
 
@@ -39,8 +40,7 @@ class Minnesota(Graph):
         self.labels = data['labels']
         A = data['A']
 
-        plotting = {"limits": np.array([-98, -89, 43, 50]),
-                    "vertex_size": 40}
+        plotting = {'limits': np.array([-98, -89, 43, 50]), 'vertex_size': 40}
 
         if connected:
 
@@ -53,8 +53,8 @@ class Minnesota(Graph):
             # Binarize: 8 entries are equal to 2 instead of 1.
             A = (A > 0).astype(bool)
 
-        super(Minnesota, self).__init__(A, coords=data['xy'],
-                                        plotting=plotting, **kwargs)
+        super(Minnesota, self).__init__(A, coords=data['xy'], plotting=plotting,
+                                        **kwargs)
 
     def _get_extra_repr(self):
         return dict(connected=self.connected)

@@ -41,6 +41,7 @@ class BarabasiAlbert(Graph):
     >>> _ = G.plot(ax=axes[1])
 
     """
+
     def __init__(self, N=1000, m0=1, m=1, seed=None, **kwargs):
 
         if m > m0:
@@ -55,10 +56,10 @@ class BarabasiAlbert(Graph):
 
         for i in range(m0, N):
             distr = W.sum(axis=1)
-            distr += np.concatenate((np.ones((i, 1)), np.zeros((N-i, 1))))
+            distr += np.concatenate((np.ones((i, 1)), np.zeros((N - i, 1))))
 
-            connections = rng.choice(
-                N, size=m, replace=False, p=np.ravel(distr / distr.sum()))
+            connections = rng.choice(N, size=m, replace=False,
+                                     p=np.ravel(distr / distr.sum()))
             for elem in connections:
                 W[elem, i] = 1
                 W[i, elem] = 1

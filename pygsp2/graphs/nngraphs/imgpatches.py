@@ -62,7 +62,7 @@ class ImgPatches(NNGraph):
                 h, w = img.shape
                 d = 0
             except ValueError:
-                print("Image should be at least a 2D array.")
+                print('Image should be at least a 2D array.')
 
         try:
             r, c = patch_shape

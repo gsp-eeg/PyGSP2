@@ -1,5 +1,5 @@
 r"""
-Metro simulation 2
+Metro simulation 2.
 ==================
 
 Example of a simulation of the evolution of a graph signal over the Santiago Metro
@@ -14,7 +14,7 @@ plots or animation show how this signal distributes over the network using:
 This example adds some constraints to the previous metro simulation
 example. Some of them are:
 
-1. Eliminates the backward connections on the simulation and substracts 1 to
+1. Eliminates the backward connections on the simulation and subtracts 1 to
     every node degree to avoid dilution of the signal by going backwards.
 
 2. If the 2 wagons arrive at the same metro station, there is no other way but
@@ -24,7 +24,7 @@ example. Some of them are:
     force an exit to everyone that reaches the terminal station.
 
 4. If there are less than the number of people that is set to get out in every
-    station then then wagon is emptyed.
+    station then then wagon is emptied.
 
 The output is a folder with numerated figures. You can use websites such as
 https://gifmaker.me/ to make an animation with the resulting figures.
@@ -55,10 +55,12 @@ https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.tx
 """
 # %%
 import os
-import numpy as np
-import networkx as nx
+
 import matplotlib.pyplot as plt
-from pygsp2.utils_examples import make_metro_graph, fetch_data
+import networkx as nx
+import numpy as np
+
+from pygsp2.utils_examples import fetch_data, make_metro_graph
 
 current_dir = os.getcwd()
 os.chdir(current_dir)
@@ -66,21 +68,19 @@ os.chdir(current_dir)
 try:
     os.mkdir('metro_simulation2/')
 except FileExistsError:
-    print(
-        'Warning: It seems like this folder already exists. Overwritting...')
+    print('Warning: It seems like this folder already exists. Overwriting...')
 
 # %% Download data
 assets_dir = os.path.join(current_dir, 'data')
-fetch_data(assets_dir, "metro")
+fetch_data(assets_dir, 'metro')
 # %% Load graph and compute adjacency and node degree
 G, pos = make_metro_graph(
     edgesfile=os.path.join(assets_dir, 'santiago_metro_stations_connections.txt'),
-    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson')
-)
+    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson'))
 stations = list(G)
 
 W0 = nx.adjacency_matrix(G).toarray()
-D = np.diag(W0@np.ones(len(W0)))
+D = np.diag(W0 @ np.ones(len(W0)))
 # The signal will advance through the graph. In our case
 # the backwards direction needs to be subtracted. Otherwise
 # the signal will be "diluted" in each step by half since
@@ -91,7 +91,6 @@ D_inv = np.linalg.inv(D)
 # Store terminal stations. Anything that arrives here
 # will get out of the network.
 terminal_stations = np.where(np.sum(W0, axis=1) == 1)
-
 
 # %% Initialize parameters
 NSTEPS = 27  # Arbitrary units, steps
@@ -114,11 +113,10 @@ colors = cmap(normalized_signal[signal > 0])
 
 nx.draw_networkx_edges(G, pos, node_size=20, ax=ax)
 im = nx.draw_networkx_nodes(G, pos, node_color='gray', node_size=20, ax=ax)
-im = nx.draw_networkx_nodes(
-    G, pos, node_color=colors, nodelist=nodelist, node_size=20, ax=ax)
-cbar = plt.colorbar(im, ax=ax, label='Number of people',
-                    ticks=[0, 0.5, 1])
-cbar.set_ticklabels([0, (OUT_CONSTANT*10)/2, (OUT_CONSTANT*10)])
+im = nx.draw_networkx_nodes(G, pos, node_color=colors, nodelist=nodelist, node_size=20,
+                            ax=ax)
+cbar = plt.colorbar(im, ax=ax, label='Number of people', ticks=[0, 0.5, 1])
+cbar.set_ticklabels([0, (OUT_CONSTANT * 10) / 2, (OUT_CONSTANT * 10)])
 plt.savefig('metro_simulation2/0.png')
 
 # %% Perform simulation
@@ -134,7 +132,7 @@ left = np.zeros_like(signal)
 for it in np.arange(1, NSTEPS):
 
     # Compute signal in new step
-    signal = (W@D_inv@signal).astype(int)
+    signal = (W @ D_inv @ signal).astype(int)
 
     # Eliminate connections of visited stations
     mask[visited_stations, :] = 0
@@ -146,7 +144,8 @@ for it in np.arange(1, NSTEPS):
     stations2empty = np.intersect1d(np.where(signal)[0], terminal_stations)
     # Check if people reached a station that has no connections
     stations2empty2 = np.intersect1d(
-        np.where(signal > 0)[0], np.where(W.sum(1) == 0)[0])
+        np.where(signal > 0)[0],
+        np.where(W.sum(1) == 0)[0])
 
     if stations2empty.size > 0:
         print(f'It {it}: Emptying terminal stations')
@@ -184,7 +183,7 @@ for it in np.arange(1, NSTEPS):
     normalized_signal = signal / INIT_VALUE
     colors = cmap(normalized_signal[signal > 0])
 
-    normalized_left = left / (OUT_CONSTANT*10)
+    normalized_left = left / (OUT_CONSTANT * 10)
     colors2 = cmap(normalized_left[left > 0])
 
     # Update visited stations list
@@ -196,16 +195,14 @@ for it in np.arange(1, NSTEPS):
     nx.draw_networkx_edges(G, pos, node_size=20, ax=ax)
     im = nx.draw_networkx_nodes(G, pos, node_color='gray', node_size=20, ax=ax)
 
-    im = nx.draw_networkx_nodes(
-        G, pos, node_color=colors2, nodelist=nodelist2, node_size=20, ax=ax)
+    im = nx.draw_networkx_nodes(G, pos, node_color=colors2, nodelist=nodelist2,
+                                node_size=20, ax=ax)
 
-    im = nx.draw_networkx_nodes(
-        G, pos, node_color=colors, nodelist=nodelist, node_size=20, ax=ax,
-        node_shape='o', edgecolors='red')
+    im = nx.draw_networkx_nodes(G, pos, node_color=colors, nodelist=nodelist,
+                                node_size=20, ax=ax, node_shape='o', edgecolors='red')
 
-    cbar = plt.colorbar(im, ax=ax, label='Number of people',
-                        ticks=[0, 0.5, 1])
-    cbar.set_ticklabels([0, (OUT_CONSTANT*10)/2, (OUT_CONSTANT*10)])
+    cbar = plt.colorbar(im, ax=ax, label='Number of people', ticks=[0, 0.5, 1])
+    cbar.set_ticklabels([0, (OUT_CONSTANT * 10) / 2, (OUT_CONSTANT * 10)])
 
     plt.savefig(f'metro_simulation2/{it}.png')
     plt.close()

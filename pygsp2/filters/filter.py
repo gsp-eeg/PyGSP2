@@ -5,10 +5,10 @@ from functools import partial
 import numpy as np
 
 from pygsp2 import utils
+
+from ..graphs import Graph
 # prevent circular import in Python < 3.5
 from . import approximations
-from ..graphs import Graph
-
 
 _logger = utils.build_logger(__name__)
 
@@ -44,7 +44,7 @@ class Filter(object):
     Examples
     --------
     >>> G = graphs.Logo()
-    >>> my_filter = filters.Filter(G, lambda x: x / (1. + x))
+    >>> my_filter = filters.Filter(G, lambda x: x / (1.0 + x))
     >>>
     >>> # Signal: Kronecker delta.
     >>> signal = np.zeros(G.N)
@@ -55,7 +55,6 @@ class Filter(object):
     """
 
     def __init__(self, G, kernels):
-
         self.G = G
 
         try:
@@ -75,6 +74,7 @@ class Filter(object):
         return dict()
 
     def __repr__(self):
+        """Return filter."""
         attrs = {'in': self.n_features_in, 'out': self.n_features_out}
         attrs.update(self._get_extra_repr())
         s = ''
@@ -83,10 +83,12 @@ class Filter(object):
         return '{}({})'.format(self.__class__.__name__, s[:-2])
 
     def __len__(self):
+        """Return filter."""
         # Numpy returns shape[0].
         return self.n_filters
 
     def __getitem__(self, key):
+        """Return filter."""
         return Filter(self.G, self._kernels[key])
 
     def __add__(self, other):
@@ -96,12 +98,14 @@ class Filter(object):
         return Filter(self.G, self._kernels + other._kernels)
 
     def __call__(self, x):
+        """Return filter."""
         if isinstance(x, Graph):
             return Filter(x, self._kernels)
         else:
             return self.evaluate(x)
 
     def __matmul__(self, other):
+        """Return filter."""
         return self.filter(other)
 
     def toarray(self):
@@ -208,7 +212,6 @@ class Filter(object):
 
         Examples
         --------
-
         Create a bunch of smooth signals by low-pass filtering white noise:
 
         >>> import matplotlib.pyplot as plt
@@ -223,9 +226,9 @@ class Filter(object):
         Plot the 3 smoothed versions of the 10th signal:
 
         >>> fig, ax = plt.subplots()
-        >>> G.set_coordinates('line1D')  # To visualize multiple signals in 1D.
+        >>> G.set_coordinates("line1D")  # To visualize multiple signals in 1D.
         >>> _ = G.plot(s[:, 9, :], ax=ax)
-        >>> legend = [r'$\tau={}$'.format(t) for t in taus]
+        >>> legend = [r"$\tau={}$".format(t) for t in taus]
         >>> ax.legend(legend)  # doctest: +ELLIPSIS
         <matplotlib.legend.Legend object at ...>
 
@@ -254,14 +257,14 @@ class Filter(object):
         >>> fig, axes = plt.subplots(1, 2)
         >>> _ = G.plot(s1, ax=axes[0])
         >>> _ = G.plot(s2, ax=axes[1])
-        >>> print('{:.5f}'.format(np.linalg.norm(s1 - s2)))
+        >>> print("{:.5f}".format(np.linalg.norm(s1 - s2)))
         0.27649
 
         Perfect reconstruction with Itersine, a tight frame:
 
         >>> g = filters.Itersine(G)
-        >>> s2 = g.analyze(s1, method='exact')
-        >>> s2 = g.synthesize(s2, method='exact')
+        >>> s2 = g.analyze(s1, method="exact")
+        >>> s2 = g.synthesize(s2, method="exact")
         >>> np.linalg.norm(s1 - s2) < 1e-10
         True
 
@@ -291,7 +294,6 @@ class Filter(object):
         n_features_out = self.Nf if n_features_in == 1 else 1
 
         if method == 'exact':
-
             # TODO: will be handled by g.adjoint().
             axis = 1 if n_features_in == 1 else 2
             f = self.evaluate(self.G.e)
@@ -303,7 +305,6 @@ class Filter(object):
             s = self.G.igft(s)
 
         elif method == 'chebyshev':
-
             # TODO: update Chebyshev implementation (after 2D filter banks).
             c = approximations.compute_cheby_coeff(self, m=order)
 
@@ -315,13 +316,11 @@ class Filter(object):
 
             elif n_features_in == self.Nf:  # Synthesis.
                 s = s.swapaxes(1, 2)
-                s_in = s.reshape(
-                    (self.G.N * n_features_in, n_signals), order='F')
+                s_in = s.reshape((self.G.N * n_features_in, n_signals), order='F')
                 s = np.zeros((self.G.N, n_signals))
                 tmpN = np.arange(self.G.N, dtype=int)
                 for i in range(n_features_in):
-                    s += approximations.cheby_op(self.G,
-                                                 c[i],
+                    s += approximations.cheby_op(self.G, c[i],
                                                  s_in[i * self.G.N + tmpN])
                 s = np.expand_dims(s, 2)
 
@@ -332,21 +331,20 @@ class Filter(object):
         return s.squeeze()
 
     def analyze(self, s, method='chebyshev', order=30):
-        r"""Convenience alias to :meth:`filter`."""
+        r"""Analyze convenience alias to :meth:`filter`."""
         if s.ndim == 3 and s.shape[-1] != 1:
             raise ValueError('Last dimension (#features) should be '
                              '1, got {}.'.format(s.shape))
         return self.filter(s, method, order)
 
     def synthesize(self, s, method='chebyshev', order=30):
-        r"""Convenience wrapper around :meth:`filter`.
+        r"""Sinthesize convenience wrapper around :meth:`filter`.
 
         Will be an alias to `adjoint().filter()` in the future.
         """
         if s.shape[-1] != self.Nf:
             raise ValueError('Last dimension (#features) should be the number '
-                             'of filters Nf = {}, got {}.'.format(self.Nf,
-                                                                  s.shape))
+                             'of filters Nf = {}, got {}.'.format(self.Nf, s.shape))
         return self.filter(s, method, order)
 
     def localize(self, i, **kwargs):
@@ -431,7 +429,6 @@ class Filter(object):
 
         Examples
         --------
-
         >>> from matplotlib import pyplot as plt
         >>> fig, axes = plt.subplots(2, 2, figsize=(10, 6))
         >>> G = graphs.Sensor(64, seed=42)
@@ -441,25 +438,37 @@ class Filter(object):
         Estimation quality vs speed (loose & fast -> exact & slow):
 
         >>> A, B = g.estimate_frame_bounds(np.linspace(0, G.lmax, 5))
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=1.883, B=2.288
         >>> A, B = g.estimate_frame_bounds()
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=1.708, B=2.359
         >>> A, B = g.estimate_frame_bounds(G.e)
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=1.875, B=2.359
 
         The frame bounds can be seen in the plot of the filter bank as the
         minimum and maximum of their squared sum (the black curve):
 
         >>> def plot(g, ax):
-        ...     g.plot(ax=ax, labels=False, title='')
-        ...     ax.hlines(B, 0, G.lmax, colors='r', zorder=3,
-        ...               label='upper bound $B={:.2f}$'.format(B))
-        ...     ax.hlines(A, 0, G.lmax, colors='b', zorder=3,
-        ...               label='lower bound $A={:.2f}$'.format(A))
-        ...     ax.legend(loc='center right')
+        ...     g.plot(ax=ax, labels=False, title="")
+        ...     ax.hlines(
+        ...         B,
+        ...         0,
+        ...         G.lmax,
+        ...         colors="r",
+        ...         zorder=3,
+        ...         label="upper bound $B={:.2f}$".format(B),
+        ...     )
+        ...     ax.hlines(
+        ...         A,
+        ...         0,
+        ...         G.lmax,
+        ...         colors="b",
+        ...         zorder=3,
+        ...         label="lower bound $A={:.2f}$".format(A),
+        ...     )
+        ...     ax.legend(loc="center right")
         >>> plot(g, axes[0, 0])
 
         The heat kernel has a null-space and doesn't define a frame (the lower
@@ -467,7 +476,7 @@ class Filter(object):
 
         >>> g = filters.Heat(G)
         >>> A, B = g.estimate_frame_bounds()
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=0.000, B=1.000
         >>> plot(g, axes[0, 1])
 
@@ -475,7 +484,7 @@ class Filter(object):
 
         >>> g = filters.Heat(G, scale=[1, 10])
         >>> A, B = g.estimate_frame_bounds()
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=0.135, B=2.000
         >>> plot(g, axes[1, 0])
 
@@ -483,7 +492,7 @@ class Filter(object):
 
         >>> g = filters.Regular(G)
         >>> A, B = g.estimate_frame_bounds()
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=1.000, B=1.000
         >>> plot(g, axes[1, 1])
         >>> fig.tight_layout()
@@ -492,7 +501,7 @@ class Filter(object):
 
         >>> g = filters.Itersine(G)
         >>> A, B = g.estimate_frame_bounds()
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=1.000, B=1.000
 
         """
@@ -558,7 +567,6 @@ class Filter(object):
 
         Examples
         --------
-
         >>> G = graphs.Sensor(100, seed=42)
         >>> G.compute_fourier_basis()
 
@@ -572,7 +580,7 @@ class Filter(object):
         >>> gL.shape
         (600, 100)
         >>> s1 = gL.dot(s)
-        >>> s1 = s1.reshape(G.N, -1, order='F')
+        >>> s1 = s1.reshape(G.N, -1, order="F")
         >>>
         >>> s2 = g.filter(s)
         >>> np.all(np.abs(s1 - s2) < 1e-10)
@@ -583,9 +591,9 @@ class Filter(object):
 
         >>> g = filters.Itersine(G)
         >>> A, B = g.estimate_frame_bounds()
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=1.000, B=1.000
-        >>> gL = g.compute_frame(method='exact')
+        >>> gL = g.compute_frame(method="exact")
         >>> gL.shape
         (600, 100)
         >>> np.all(gL.T.dot(gL) - np.identity(G.N) < 1e-10)
@@ -630,20 +638,19 @@ class Filter(object):
         >>> G.estimate_lmax()
         >>> g = filters.Abspline(G, 4)
         >>> A, B = g.estimate_frame_bounds()
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=0.200, B=1.971
         >>> fig, axes = plt.subplots(1, 2)
         >>> fig, ax = g.plot(ax=axes[0])
         >>> g += g.complement()
         >>> A, B = g.estimate_frame_bounds()
-        >>> print('A={:.3f}, B={:.3f}'.format(A, B))
+        >>> print("A={:.3f}, B={:.3f}".format(A, B))
         A=1.971, B=1.971
         >>> fig, ax = g.plot(ax=axes[1])
 
         """
 
         def kernel(x, *args, **kwargs):
-
             y = self.evaluate(x)
             np.power(y, 2, out=y)
             y = np.sum(y, axis=0)
@@ -718,24 +725,23 @@ class Filter(object):
         >>> h = g.inverse()
         >>> # Plot them.
         >>> fig, axes = plt.subplots(1, 2)
-        >>> _ = g.plot(ax=axes[0], title='original filter bank')
-        >>> _ = h.plot(ax=axes[1], title='inverse filter bank')
+        >>> _ = g.plot(ax=axes[0], title="original filter bank")
+        >>> _ = h.plot(ax=axes[1], title="inverse filter bank")
         >>> # Filtering with the inverse reconstructs the original signal.
         >>> x = np.random.default_rng(42).normal(size=G.N)
-        >>> y = g.filter(x, method='exact')
-        >>> z = h.filter(y, method='exact')
+        >>> y = g.filter(x, method="exact")
+        >>> z = h.filter(y, method="exact")
         >>> np.linalg.norm(x - z) < 1e-10
         True
         >>> # Indeed, they cancel each others' effect.
         >>> Ag, Bg = g.estimate_frame_bounds()
         >>> Ah, Bh = h.estimate_frame_bounds()
-        >>> print('A(g)*B(h) = {:.3f} * {:.3f} = {:.3f}'.format(Ag, Bh, Ag*Bh))
+        >>> print("A(g)*B(h) = {:.3f} * {:.3f} = {:.3f}".format(Ag, Bh, Ag * Bh))
         A(g)*B(h) = 0.687 * 1.457 = 1.000
-        >>> print('B(g)*A(h) = {:.3f} * {:.3f} = {:.3f}'.format(Bg, Ah, Bg*Ah))
+        >>> print("B(g)*A(h) = {:.3f} * {:.3f} = {:.3f}".format(Bg, Ah, Bg * Ah))
         B(g)*A(h) = 1.994 * 0.501 = 1.000
 
         """
-
         A, _ = self.estimate_frame_bounds()
         if A == 0:
             _logger.warning('The filter bank is not invertible as it is not '
@@ -750,9 +756,26 @@ class Filter(object):
 
         return Filter(self.G, kernels)
 
-    def plot(self, n=500, eigenvalues=None, sum=None, labels=None, title=None,
-             ax=None, **kwargs):
+    def plot(
+        self,
+        n=500,
+        eigenvalues=None,
+        sum=None,
+        labels=None,
+        title=None,
+        ax=None,
+        **kwargs,
+    ):
         r"""Docstring overloaded at import time."""
         from pygsp2.plotting import _plot_filter
-        return _plot_filter(self, n=n, eigenvalues=eigenvalues, sum=sum,
-                            labels=labels, title=title, ax=ax, **kwargs)
+
+        return _plot_filter(
+            self,
+            n=n,
+            eigenvalues=eigenvalues,
+            sum=sum,
+            labels=labels,
+            title=title,
+            ax=ax,
+            **kwargs,
+        )

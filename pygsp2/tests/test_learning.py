@@ -1,22 +1,30 @@
 # -*- coding: utf-8 -*-
-
-"""
-Test suite for the learning module of the pygsp2 package.
-
-"""
+"""Test suite for the learning module of the pygsp2 package."""
 
 import unittest
 
 import numpy as np
-
-from pygsp2 import graphs, filters, learning
 from scipy import spatial
+
+from pygsp2 import filters, graphs, learning
 
 
 class TestCase(unittest.TestCase):
+    """Tests for the learning functionalities in the pygsp2 package."""
 
     def test_regression_tikhonov_1(self):
-        """Solve a trivial regression problem."""
+        """
+        Test trivial regression problem with Tikhonov regularization.
+
+        This test solves a simple regression problem using Tikhonov regularization
+        on a ring graph with a signal containing missing values. It verifies that
+        the recovery matches the expected result and that the original signal is
+        not altered after recovery.
+
+        Returns
+        -------
+        None
+        """
         G = graphs.Ring(N=8)
         signal = np.array([0, np.nan, 4, np.nan, 4, np.nan, np.nan, np.nan])
         signal_bak = signal.copy()
@@ -32,12 +40,23 @@ class TestCase(unittest.TestCase):
         np.testing.assert_allclose(signal_bak, signal)
 
     def test_regression_tikhonov_2(self):
-        """Solve a regression problem with a constraint."""
+        """
+        Test regression problem with a constraint using Tikhonov regularization.
+
+        This test solves a regression problem on a sensor graph with a smooth signal.
+        It verifies the recovery of the signal using Tikhonov regularization with
+        different representations of the graph and checks that the measures remain
+        unchanged.
+
+        Returns
+        -------
+        None
+        """
         G = graphs.Sensor(100)
         G.estimate_lmax()
 
         # Create a smooth signal.
-        filt = filters.Filter(G, lambda x: 1 / (1 + 10*x))
+        filt = filters.Filter(G, lambda x: 1 / (1 + 10 * x))
         rng = np.random.default_rng(1)
         signal = filt.analyze(rng.normal(size=(G.n_vertices, 5)))
 
@@ -53,16 +72,16 @@ class TestCase(unittest.TestCase):
 
         recovery1 = np.zeros_like(recovery0)
         for i in range(recovery0.shape[1]):
-            recovery1[:, i] = learning.regression_tikhonov(
-                G, measures[:, i], mask, tau=0)
+            recovery1[:, i] = learning.regression_tikhonov(G, measures[:, i], mask,
+                                                           tau=0)
         np.testing.assert_allclose(measures_bak, measures)
 
         G = graphs.Graph(G.W.toarray())
         recovery2 = learning.regression_tikhonov(G, measures, mask, tau=0)
         recovery3 = np.zeros_like(recovery0)
         for i in range(recovery0.shape[1]):
-            recovery3[:, i] = learning.regression_tikhonov(
-                G, measures[:, i], mask, tau=0)
+            recovery3[:, i] = learning.regression_tikhonov(G, measures[:, i], mask,
+                                                           tau=0)
 
         np.testing.assert_allclose(recovery1, recovery0)
         np.testing.assert_allclose(recovery2, recovery0)
@@ -70,12 +89,28 @@ class TestCase(unittest.TestCase):
         np.testing.assert_allclose(measures_bak, measures)
 
     def test_regression_tikhonov_3(self, tau=3.5):
-        """Solve a relaxed regression problem."""
+        """
+        Test relaxed regression problem with Tikhonov regularization.
+
+        This test solves a relaxed regression problem on a sensor graph with a smooth
+        signal and compares the results against a manually computed solution. It verifies
+        that the recovery matches the expected result within a tolerance and that the
+        measures remain unchanged.
+
+        Parameters
+        ----------
+        tau : float, optional
+            Regularization parameter for Tikhonov regularization (default is 3.5).
+
+        Returns
+        -------
+        None
+        """
         G = graphs.Sensor(100)
         G.estimate_lmax()
 
         # Create a smooth signal.
-        filt = filters.Filter(G, lambda x: 1 / (1 + 10*x))
+        filt = filters.Filter(G, lambda x: 1 / (1 + 10 * x))
         rng = np.random.default_rng(1)
         signal = filt.analyze(rng.normal(size=(G.n_vertices, 6)))
 
@@ -86,7 +121,7 @@ class TestCase(unittest.TestCase):
         measures_bak = measures.copy()
 
         L = G.L.toarray()
-        recovery = np.matmul(np.linalg.inv(np.diag(1*mask) + tau * L),
+        recovery = np.matmul(np.linalg.inv(np.diag(1 * mask) + tau * L),
                              (mask * measures.T).T)
 
         # Solve the problem.
@@ -94,16 +129,14 @@ class TestCase(unittest.TestCase):
         np.testing.assert_allclose(measures_bak, measures)
         recovery1 = np.zeros_like(recovery0)
         for i in range(recovery0.shape[1]):
-            recovery1[:, i] = learning.regression_tikhonov(
-                G, measures[:, i], mask, tau)
+            recovery1[:, i] = learning.regression_tikhonov(G, measures[:, i], mask, tau)
         np.testing.assert_allclose(measures_bak, measures)
 
         G = graphs.Graph(G.W.toarray())
         recovery2 = learning.regression_tikhonov(G, measures, mask, tau)
         recovery3 = np.zeros_like(recovery0)
         for i in range(recovery0.shape[1]):
-            recovery3[:, i] = learning.regression_tikhonov(
-                G, measures[:, i], mask, tau)
+            recovery3[:, i] = learning.regression_tikhonov(G, measures[:, i], mask, tau)
 
         np.testing.assert_allclose(recovery0, recovery, atol=1e-5)
         np.testing.assert_allclose(recovery1, recovery, atol=1e-5)
@@ -112,7 +145,17 @@ class TestCase(unittest.TestCase):
         np.testing.assert_allclose(measures_bak, measures)
 
     def test_classification_tikhonov(self):
-        """Solve a classification problem."""
+        """
+        Test classification problem with Tikhonov regularization.
+
+        This test solves a classification problem on a logo graph with a binary signal.
+        It verifies that the recovery matches the original signal and that the simplex
+        projection of the recovered probabilities sums to 1.0.
+
+        Returns
+        -------
+        None
+        """
         G = graphs.Logo()
         signal = np.zeros([G.n_vertices], dtype=int)
         signal[G.info['idx_s']] = 1
@@ -133,10 +176,9 @@ class TestCase(unittest.TestCase):
         np.testing.assert_array_equal(recovery, signal)
 
         # Test the function with the simplex projection.
-        recovery = learning.classification_tikhonov_simplex(
-            G, measures, mask, tau=0.1)
+        recovery = learning.classification_tikhonov_simplex(G, measures, mask, tau=0.1)
 
-        # Assert that the probabilities sums to 1
+        # Assert that the probabilities sum to 1
         np.testing.assert_allclose(np.sum(recovery, axis=1), 1)
 
         # Check the quality of the solution.
@@ -145,13 +187,18 @@ class TestCase(unittest.TestCase):
         np.testing.assert_allclose(measures_bak, measures)
 
     def test_graph_log_degree(self):
-        "Solve graph learning from signal"
+        """
+        Test graph learning from signal using log degree regularization.
 
+        This test performs graph learning by constructing a distance matrix from a signal
+        and comparing the learned graph weights with the expected weights.
+
+        Returns
+        -------
+        None
+        """
         # Make graph
-        G = graphs.Graph([[0, 0, 0, 0],
-                          [0, 0, 1, 1],
-                          [0, 1, 0, 1],
-                          [0, 1, 1, 0]])
+        G = graphs.Graph([[0, 0, 0, 0], [0, 0, 1, 1], [0, 1, 0, 1], [0, 1, 1, 0]])
 
         # Signal
         signal = np.array([0, 1, 1, 1])

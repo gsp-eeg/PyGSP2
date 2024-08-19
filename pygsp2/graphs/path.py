@@ -62,16 +62,16 @@ class Path(Graph):
 
         self.directed = directed
         if directed:
-            sources = np.arange(0, N-1)
+            sources = np.arange(0, N - 1)
             targets = np.arange(1, N)
             n_edges = N - 1
         else:
-            sources = np.concatenate((np.arange(0, N-1), np.arange(1, N)))
-            targets = np.concatenate((np.arange(1, N), np.arange(0, N-1)))
+            sources = np.concatenate((np.arange(0, N - 1), np.arange(1, N)))
+            targets = np.concatenate((np.arange(1, N), np.arange(0, N - 1)))
             n_edges = 2 * (N - 1)
         weights = np.ones(n_edges)
         W = sparse.csr_matrix((weights, (sources, targets)), shape=(N, N))
-        plotting = {"limits": np.array([-1, N, -1, 1])}
+        plotting = {'limits': np.array([-1, N, -1, 1])}
 
         super(Path, self).__init__(W, plotting=plotting, **kwargs)
 

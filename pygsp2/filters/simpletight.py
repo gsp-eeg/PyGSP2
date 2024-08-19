@@ -3,6 +3,7 @@
 import numpy as np
 
 from pygsp2 import utils
+
 from . import Filter  # prevent circular import in Python < 3.5
 
 
@@ -24,13 +25,12 @@ class SimpleTight(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
     >>> G = graphs.Ring(N=20)
     >>> G.estimate_lmax()
-    >>> G.set_coordinates('line1D')
+    >>> G.set_coordinates("line1D")
     >>> g = filters.SimpleTight(G)
     >>> s = g.localize(G.N // 2)
     >>> fig, axes = plt.subplots(1, 2)
@@ -43,7 +43,7 @@ class SimpleTight(Filter):
 
         def kernel(x, kerneltype):
             r"""
-            Evaluates 'simple' tight-frame kernel.
+            Evaluate 'simple' tight-frame kernel.
 
             * simple tf wavelet kernel: supported on [1/4, 1]
             * simple tf scaling function kernel: supported on [0, 1/2]
@@ -60,32 +60,31 @@ class SimpleTight(Filter):
             r : ndarray
 
             """
-
             l1 = 0.25
             l2 = 0.5
-            l3 = 1.
+            l3 = 1.0
 
             def h(x):
-                return np.sin(np.pi*x/2.)**2
+                return np.sin(np.pi * x / 2.0)**2
 
-            r1ind = (x < l1)
+            r1ind = x < l1
             r2ind = (x >= l1) * (x < l2)
             r3ind = (x >= l2) * (x < l3)
 
             r = np.zeros(x.shape)
             if kerneltype == 'sf':
-                r[r1ind] = 1.
-                r[r2ind] = np.sqrt(1 - h(4*x[r2ind] - 1)**2)
+                r[r1ind] = 1.0
+                r[r2ind] = np.sqrt(1 - h(4 * x[r2ind] - 1)**2)
             elif kerneltype == 'wavelet':
-                r[r2ind] = h(4*(x[r2ind] - 1/4.))
-                r[r3ind] = np.sqrt(1 - h(2*x[r3ind] - 1)**2)
+                r[r2ind] = h(4 * (x[r2ind] - 1 / 4.0))
+                r[r3ind] = np.sqrt(1 - h(2 * x[r3ind] - 1)**2)
             else:
                 raise TypeError('Unknown kernel type', kerneltype)
 
             return r
 
         if not scales:
-            scales = (1./(2.*G.lmax) * np.power(2, np.arange(Nf-2, -1, -1)))
+            scales = 1.0 / (2.0 * G.lmax) * np.power(2, np.arange(Nf - 2, -1, -1))
         self.scales = scales
 
         if len(scales) != Nf - 1:

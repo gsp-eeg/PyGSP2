@@ -6,6 +6,7 @@ import numpy as np
 from scipy import optimize
 
 from pygsp2 import utils
+
 from . import Filter  # prevent circular import in Python < 3.5
 
 
@@ -27,7 +28,6 @@ class Abspline(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -45,16 +45,16 @@ class Abspline(Filter):
     def __init__(self, G, Nf=6, lpfactor=20, scales=None):
 
         def kernel_abspline3(x, alpha, beta, t1, t2):
-            M = np.array([[1, t1, t1**2, t1**3],
-                          [1, t2, t2**2, t2**3],
-                          [0, 1, 2*t1, 3*t1**2],
-                          [0, 1, 2*t2, 3*t2**2]])
-            v = np.array([1, 1, t1**(-alpha) * alpha * t1**(alpha - 1),
-                          -beta*t2**(- beta - 1) * t2**beta])
+            M = np.array([[1, t1, t1**2, t1**3], [1, t2, t2**2, t2**3],
+                          [0, 1, 2 * t1, 3 * t1**2], [0, 1, 2 * t2, 3 * t2**2]])
+            v = np.array([
+                1, 1, t1**(-alpha) * alpha * t1**(alpha - 1),
+                -beta * t2**(-beta - 1) * t2**beta
+            ])
             a = np.linalg.solve(M, v)
 
             r1 = x <= t1
-            r2 = (x >= t1)*(x < t2)
+            r2 = (x >= t1) * (x < t2)
             r3 = (x >= t2)
 
             if isinstance(x, np.float64):
@@ -73,7 +73,7 @@ class Abspline(Filter):
 
                 r[r1] = x[r1]**alpha * t1**(-alpha)
                 r[r2] = a[0] + a[1] * x2 + a[2] * x2**2 + a[3] * x2**3
-                r[r3] = x[r3]**(-beta) * t2 ** beta
+                r[r3] = x[r3]**(-beta) * t2**beta
 
             return r
 
@@ -85,8 +85,11 @@ class Abspline(Filter):
             scales = utils.compute_log_scales(lmin, G.lmax, Nf - 1)
         self.scales = scales
 
-        gb = lambda x: kernel_abspline3(x, 2, 2, 1, 2)
-        gl = lambda x: np.exp(-np.power(x, 4))
+        def gb(x):
+            return kernel_abspline3(x, 2, 2, 1, 2)
+
+        def gl(x):
+            return np.exp(-np.power(x, 4))
 
         lminfac = .4 * lmin
 
@@ -94,9 +97,10 @@ class Abspline(Filter):
         for i in range(0, Nf - 1):
             g.append(lambda x, i=i: gb(self.scales[i] * x))
 
-        f = lambda x: -gb(x)
-        xstar = optimize.minimize_scalar(f, bounds=(1, 2),
-                                         method='bounded')
+        def f(x):
+            return -gb(x)
+
+        xstar = optimize.minimize_scalar(f, bounds=(1, 2), method='bounded')
         gamma_l = -f(xstar.x)
         lminfac = .6 * lmin
         g[0] = lambda x: gamma_l * gl(x / lminfac)

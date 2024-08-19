@@ -7,11 +7,11 @@ from scipy import sparse
 
 from pygsp2 import utils
 
-
 logger = utils.build_logger(__name__)
 
 
 class DifferenceMixIn(object):
+    """Implements DifferenceMixIn class."""
 
     @property
     def D(self):
@@ -91,7 +91,6 @@ class DifferenceMixIn(object):
 
         Examples
         --------
-
         The difference operator is an incidence matrix.
         Example with a undirected graph.
 
@@ -144,13 +143,12 @@ class DifferenceMixIn(object):
         True
 
         """
-
         sources, targets, weights = self.get_edge_list()
 
         n = self.n_edges
         rows = np.concatenate([sources, targets])
         columns = np.concatenate([np.arange(n), np.arange(n)])
-        values = np.empty(2*n)
+        values = np.empty(2 * n)
 
         if self.lap_type == 'combinatorial':
             values[:n] = -np.sqrt(weights)
@@ -213,31 +211,30 @@ class DifferenceMixIn(object):
 
         Examples
         --------
-
         Non-directed graph and combinatorial Laplacian:
 
-        >>> graph = graphs.Path(4, directed=False, lap_type='combinatorial')
+        >>> graph = graphs.Path(4, directed=False, lap_type="combinatorial")
         >>> graph.compute_differential_operator()
         >>> graph.grad([0, 2, 4, 2])
         array([ 2.,  2., -2.])
 
         Directed graph and combinatorial Laplacian:
 
-        >>> graph = graphs.Path(4, directed=True, lap_type='combinatorial')
+        >>> graph = graphs.Path(4, directed=True, lap_type="combinatorial")
         >>> graph.compute_differential_operator()
         >>> graph.grad([0, 2, 4, 2])
         array([ 1.41421356,  1.41421356, -1.41421356])
 
         Non-directed graph and normalized Laplacian:
 
-        >>> graph = graphs.Path(4, directed=False, lap_type='normalized')
+        >>> graph = graphs.Path(4, directed=False, lap_type="normalized")
         >>> graph.compute_differential_operator()
         >>> graph.grad([0, 2, 4, 2])
         array([ 1.41421356,  1.41421356, -0.82842712])
 
         Directed graph and normalized Laplacian:
 
-        >>> graph = graphs.Path(4, directed=True, lap_type='normalized')
+        >>> graph = graphs.Path(4, directed=True, lap_type="normalized")
         >>> graph.compute_differential_operator()
         >>> graph.grad([0, 2, 4, 2])
         array([ 1.41421356,  1.41421356, -0.82842712])
@@ -295,31 +292,30 @@ class DifferenceMixIn(object):
 
         Examples
         --------
-
         Non-directed graph and combinatorial Laplacian:
 
-        >>> graph = graphs.Path(4, directed=False, lap_type='combinatorial')
+        >>> graph = graphs.Path(4, directed=False, lap_type="combinatorial")
         >>> graph.compute_differential_operator()
         >>> graph.div([2, -2, 0])
         array([-2.,  4., -2.,  0.])
 
         Directed graph and combinatorial Laplacian:
 
-        >>> graph = graphs.Path(4, directed=True, lap_type='combinatorial')
+        >>> graph = graphs.Path(4, directed=True, lap_type="combinatorial")
         >>> graph.compute_differential_operator()
         >>> graph.div([2, -2, 0])
         array([-1.41421356,  2.82842712, -1.41421356,  0.        ])
 
         Non-directed graph and normalized Laplacian:
 
-        >>> graph = graphs.Path(4, directed=False, lap_type='normalized')
+        >>> graph = graphs.Path(4, directed=False, lap_type="normalized")
         >>> graph.compute_differential_operator()
         >>> graph.div([2, -2, 0])
         array([-2.        ,  2.82842712, -1.41421356,  0.        ])
 
         Directed graph and normalized Laplacian:
 
-        >>> graph = graphs.Path(4, directed=True, lap_type='normalized')
+        >>> graph = graphs.Path(4, directed=True, lap_type="normalized")
         >>> graph.compute_differential_operator()
         >>> graph.div([2, -2, 0])
         array([-2.        ,  2.82842712, -1.41421356,  0.        ])

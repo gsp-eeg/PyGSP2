@@ -36,7 +36,6 @@ class Regular(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -64,7 +63,7 @@ class Regular(Filter):
                     output = np.sin(np.pi * output / 2)
                 return np.sin(np.pi / 4 * (1 + output))
 
-        regular = Filter(G, lambda x: kernel(x*2/G.lmax, degree))
+        regular = Filter(G, lambda x: kernel(x * 2 / G.lmax, degree))
         complement = regular.complement(frame_bound=1)
         kernels = regular._kernels + complement._kernels
 

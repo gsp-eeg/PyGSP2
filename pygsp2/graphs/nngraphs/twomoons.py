@@ -56,15 +56,15 @@ class TwoMoons(NNGraph):
 
         if number == 1:
             moonx = np.cos(phi) * r + bx + 0.5
-            moony = -np.sin(phi) * r + by - (distance - 1)/2.
+            moony = -np.sin(phi) * r + by - (distance - 1) / 2.
         elif number == 2:
             moonx = np.cos(phi) * r + bx - 0.5
-            moony = np.sin(phi) * r + by + (distance - 1)/2.
+            moony = np.sin(phi) * r + by + (distance - 1) / 2.
 
         return np.concatenate((moonx, moony), axis=1)
 
-    def __init__(self, moontype='standard', dim=2, sigmag=0.05,
-                 N=400, sigmad=0.07, distance=0.5, seed=None, **kwargs):
+    def __init__(self, moontype='standard', dim=2, sigmag=0.05, N=400, sigmad=0.07,
+                 distance=0.5, seed=None, **kwargs):
 
         self.moontype = moontype
         self.dim = dim
@@ -96,16 +96,17 @@ class TwoMoons(NNGraph):
             'vertex_size': 30,
         }
 
-        super(TwoMoons, self).__init__(Xin=Xin, sigma=sigmag, k=5,
-                                       center=False, rescale=False,
-                                       plotting=plotting, **kwargs)
+        super(TwoMoons, self).__init__(Xin=Xin, sigma=sigmag, k=5, center=False,
+                                       rescale=False, plotting=plotting, **kwargs)
 
     def _get_extra_repr(self):
-        attrs = {'moontype': self.moontype,
-                 'dim': self.dim,
-                 'sigmag': '{:.2f}'.format(self.sigmag),
-                 'sigmad': '{:.2f}'.format(self.sigmad),
-                 'distance': '{:.2f}'.format(self.distance),
-                 'seed': self.seed}
+        attrs = {
+            'moontype': self.moontype,
+            'dim': self.dim,
+            'sigmag': '{:.2f}'.format(self.sigmag),
+            'sigmad': '{:.2f}'.format(self.sigmad),
+            'distance': '{:.2f}'.format(self.distance),
+            'seed': self.seed
+        }
         attrs.update(super(TwoMoons, self)._get_extra_repr())
         return attrs

@@ -1,12 +1,12 @@
 r"""
-Utils Examples
+Utils Examples.
 =====
 
 Utils functions used in the examples.
 
 This module contains functions to run examples of graph signal processing.
 
-Functions are made to avoid excesive repetition of loading, plotting and
+Functions are made to avoid excessive repetition of loading, plotting and
 database management. Bleow there is a list of the examples that use these
 functions:
 
@@ -15,42 +15,49 @@ functions:
 * metro_simulation.py
 * metro_simulation2.py
 """
-import os
+
+import io
 import json
-import utm
-import networkx as nx
-from geopy.distance import distance
+import os
+import zipfile
+
 import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib import colormaps
+import networkx as nx
 import numpy as np
-import zipfile
-import io
 import requests
+import utm
+from geopy.distance import distance
+from matplotlib import colormaps
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 ASSETS_METRO = [
     {
-        "filename": "2023.11 Matriz_baj_SS_MH.xlsb",
-        "url": r"https://zenodo.org/records/12822782/files/tablas.zip"
+        'filename': '2023.11 Matriz_baj_SS_MH.xlsb',
+        'url': r'https://zenodo.org/records/12822782/files/tablas.zip',
     },
     {
-        "filename": "santiago_metro_stations_coords.geojson",
-        "url": r"https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson"
+        'filename':
+        'santiago_metro_stations_coords.geojson',
+        'url':
+        r'https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson',
     },
     {
-        "filename": "santiago_metro_stations_connections.txt",
-        "url": r"https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt"
-    }
+        'filename':
+        'santiago_metro_stations_connections.txt',
+        'url':
+        r'https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt',
+    },
 ]
 
-ASSETS = {
-    "metro": ASSETS_METRO
-}
+ASSETS = {'metro': ASSETS_METRO}
 
-def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
-                     coordsfile='santiago_metro_stations_coords.geojson'):
+
+def make_metro_graph(
+    edgesfile='santiago_metro_stations_connections.txt',
+    coordsfile='santiago_metro_stations_coords.geojson',
+):
     """Create a NetworkX graph corresponding to Santiago Metro network.
 
     Parameters
@@ -60,7 +67,7 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
         the link to download the file.
 
     coordsfile : str, optional.
-        Name of the file with the coordenates of the nodes for the graph.  See
+        Name of the file with the coordinates of the nodes for the graph.  See
         notes for the link to download the file.
 
     Returns
@@ -68,7 +75,7 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
     G : Network Graph.
         Graph data structure containing the graph and its attributes.
     pos : dict.
-        Contains the coordenates of each station. Keys are the station names.
+        Contains the coordinates of each station. Keys are the station names.
         Names can be obtained with `list(G)`.
 
     Notes
@@ -81,12 +88,13 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
 
     https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt
     """
-
     with open(coordsfile) as f:
         data = json.load(f)
 
-    d = {x['properties']['name']: x['geometry']['coordinates'] for
-         x in data['features']}
+    d = {
+        x['properties']['name']: x['geometry']['coordinates']
+        for x in data['features']
+    }
 
     # Manually add missing stations
     d['Irarrázaval'] = (-70.6283197, -33.4550371)
@@ -96,9 +104,13 @@ def make_metro_graph(edgesfile='santiago_metro_stations_connections.txt',
     ref_station = 'San Pablo'
     for station, latlong in d.items():
         x, y, _, _ = utm.from_latlon(*latlong)
-        G.add_node(station, latlong=latlong,
-                   distance=distance(latlong, d[ref_station]).meters,
-                   x=x, y=y)
+        G.add_node(
+            station,
+            latlong=latlong,
+            distance=distance(latlong, d[ref_station]).meters,
+            x=x,
+            y=y,
+        )
 
     with open(edgesfile) as f:
         for e in f.readlines():
@@ -142,15 +154,15 @@ def metro_database_preprocessing(commutes, stations):
 
     # Change some names to coincide with node names
     metro_commutes.loc[metro_commutes['paradero'] == 'CAL Y CANTO',
-                       'paradero'] = 'PUENTE CAL Y CANTO'
+                       'paradero'] = ('PUENTE CAL Y CANTO')
     metro_commutes.loc[metro_commutes['paradero'] == 'PARQUE OHIGGINS',
-                       'paradero'] = 'PARQUE O\'HIGGINS'
+                       'paradero'] = ("PARQUE O'HIGGINS")
     metro_commutes.loc[metro_commutes['paradero'] == 'PDTE PEDRO AGUIRRE CERDA',
                        'paradero'] = 'PRESIDENTE PEDRO AGUIRRE CERDA'
     metro_commutes.loc[metro_commutes['paradero'] == 'PLAZA MAIPU',
-                       'paradero'] = 'PLAZA DE MAIPU'
+                       'paradero'] = ('PLAZA DE MAIPU')
     metro_commutes.loc[metro_commutes['paradero'] == 'RONDIZONNI',
-                       'paradero'] = 'RONDIZZONI'
+                       'paradero'] = ('RONDIZZONI')
     metro_commutes.loc[metro_commutes['paradero'] == 'UNION LATINO AMERICANA',
                        'paradero'] = 'UNION LATINOAMERICANA'
 
@@ -164,8 +176,9 @@ def metro_database_preprocessing(commutes, stations):
     return metro_commutes, signal
 
 
-def plot_signal_in_graph(G, signal, title='Graph Signal', label='', cmap='viridis', alpha=1):
-    """Function to plot signal in graph using networkx.
+def plot_signal_in_graph(G, signal, title='Graph Signal', label='', cmap='viridis',
+                         alpha=1):
+    """Plot signal in graph using networkx.
 
     Parameters
     ----------
@@ -176,7 +189,7 @@ def plot_signal_in_graph(G, signal, title='Graph Signal', label='', cmap='viridi
     title : str, optional.
         Title in the graph.
     label : str, optional.
-        Lables to be displayed in colorbar.
+        Labels to be displayed in colorbar.
     cmap : str, optional.
         Sets colormap
     alpha : float, optional.
@@ -192,7 +205,7 @@ def plot_signal_in_graph(G, signal, title='Graph Signal', label='', cmap='viridi
     if cmap in colormaps:
         cmap = matplotlib.colormaps.get_cmap(cmap)
     else:
-        print("Wrong colormap")
+        print('Wrong colormap')
         cmap = matplotlib.colormaps.get_cmap('viridis')
 
     alpha = np.abs(alpha)
@@ -204,18 +217,21 @@ def plot_signal_in_graph(G, signal, title='Graph Signal', label='', cmap='viridi
     fig, ax = plt.subplots(figsize=(10, 7))
     # Draw edges and nodes
     nx.draw_networkx_edges(G, pos, node_size=20, ax=ax)
-    pc = nx.draw_networkx_nodes(G, pos, node_color=colors, node_size=20, ax=ax, alpha=alpha)
+    pc = nx.draw_networkx_nodes(G, pos, node_color=colors, node_size=20, ax=ax,
+                                alpha=alpha)
     cbar = plt.colorbar(pc, ticks=[0, 0.5, 1], label=label)
-    cbar.set_ticklabels([f'{label:.0f}' for label in [
-                        0, np.amax(signal)/2, np.amax(signal)]])
+    cbar.set_ticklabels(
+        [f'{label:.0f}'
+         for label in [0, np.amax(signal) / 2, np.amax(signal)]])
     plt.title(title)
     plt.tight_layout()
-    plt.set_cmap(cmap) 
+    plt.set_cmap(cmap)
 
     return fig, ax
 
-def fetch_data(output_dir, database="metro"):
-    """ 
+
+def fetch_data(output_dir, database='metro'):
+    """
     Fetch data from the internet and save it in the output_dir.
 
     Parameters
@@ -224,14 +240,14 @@ def fetch_data(output_dir, database="metro"):
         Directory where the data will be saved.
     database : str, optional
         Database to fetch data from. Options are: "metro".
-    """ 
+    """
     for asset_dict in ASSETS[database]:
-        filename = asset_dict["filename"]
-        url = asset_dict["url"]
+        filename = asset_dict['filename']
+        url = asset_dict['url']
         assets_filepath = os.path.join(output_dir, filename)
         if not os.path.isfile(assets_filepath):
             print(f'Downloading data file to:\n {assets_filepath}')
-            r = get_with_retries(url) #requests.get(url, timeout=30)
+            r = get_with_retries(url)  # requests.get(url, timeout=30)
             if url.endswith('.zip'):
                 z = zipfile.ZipFile(io.BytesIO(r.content))
                 z.extractall(output_dir)
@@ -240,41 +256,42 @@ def fetch_data(output_dir, database="metro"):
                     f.write(r.content)
 
 
-def get_with_retries(url, retries=3, backoff_factor=0.3, status_forcelist=(500, 502, 504), timeout=10):
+def get_with_retries(url, retries=3, backoff_factor=0.3,
+                     status_forcelist=(500, 502, 504), timeout=10):
     # Create a session
     session = requests.Session()
-    
+
     # Define the retry strategy
     retry_strategy = Retry(
         total=retries,
         backoff_factor=backoff_factor,
         status_forcelist=status_forcelist,
-        allowed_methods=["HEAD", "GET", "OPTIONS"]
+        allowed_methods=['HEAD', 'GET', 'OPTIONS'],
     )
-    
+
     # Mount the adapter with the retry strategy
     adapter = HTTPAdapter(max_retries=retry_strategy)
-    session.mount("http://", adapter)
-    session.mount("https://", adapter)
-    
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
     try:
         # Send a GET request with timeout
         response = session.get(url, timeout=timeout)
-        
+
         # Check if the request was successful
         if response.status_code == 200:
             # Process the response data
-            print("File downloaded successfully.")
+            print('File downloaded successfully.')
             return response
         else:
-            print(f"Request failed with status code: {response.status_code}")
-    
+            print(f'Request failed with status code: {response.status_code}')
+
     except requests.exceptions.ConnectTimeout:
-        print("The request timed out while trying to connect to the remote server.")
-    
+        print('The request timed out while trying to connect to the remote server.')
+
     except requests.exceptions.ReadTimeout:
-        print("The server did not send any data in the allotted amount of time.")
-    
+        print('The server did not send any data in the allotted amount of time.')
+
     except requests.exceptions.RequestException as e:
         # Handle any exceptions that occur
-        print(f"An error occurred: {e}")
+        print(f'An error occurred: {e}')

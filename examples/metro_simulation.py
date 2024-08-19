@@ -1,5 +1,5 @@
 r"""
-Metro simulation
+Metro simulation.
 ================
 
 Example of a simulation of the evolution of a graph signal over the Santiago Metro
@@ -29,18 +29,20 @@ https://zenodo.org/records/11637462/files/santiago_metro_stations_coords.geojson
 
 https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.txt
 """
+
 # %%
 import os
-import numpy as np
-import networkx as nx
+
 import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
 from matplotlib import animation
-from pygsp2.utils_examples import make_metro_graph, fetch_data
+
 import pygsp2 as pg
+from pygsp2.utils_examples import fetch_data, make_metro_graph
 
 current_dir = os.getcwd()
 os.chdir(current_dir)
-
 
 # If set to true make animation,
 # otherwise store each frame as png
@@ -48,13 +50,12 @@ MAKE_ANIMATION = True
 
 # %% Download data
 assets_dir = os.path.join(current_dir, 'data')
-fetch_data(assets_dir, "metro")
-
+fetch_data(assets_dir, 'metro')
 
 # %% Load graph and compute adjacency and node degree
 G, pos = make_metro_graph(
     edgesfile=os.path.join(assets_dir, 'santiago_metro_stations_connections.txt'),
-    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson')
+    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson'),
 )
 
 W = nx.adjacency_matrix(G).toarray()
@@ -73,7 +74,7 @@ signal[0, np.random.randint(0, len(W), 1)] = INIT_VALUE
 print('Prerforming simulation...')
 
 for i in np.arange(1, NSTEPS):
-    signal[i, :] = W@D_inv@signal[i-1, :]
+    signal[i, :] = W @ D_inv @ signal[i - 1, :]
 
 print('Finished.')
 
@@ -88,25 +89,23 @@ if MAKE_ANIMATION:
     im = nx.draw_networkx_nodes(G, pos, node_color='gray', node_size=20, ax=ax)
     ax.set_title('T = 0')
     cbar = plt.colorbar(im, ax=ax, ticks=[0, 0.5, 1], label='Signal')
-    cbar.set_ticklabels([0, np.amax(signal)/2, np.amax(signal)])
+    cbar.set_ticklabels([0, np.amax(signal) / 2, np.amax(signal)])
 
     # Define function for animation
 
-    def update(frame):
-        """Function that defines what happens in each frame."""
 
-        idxs = ((np.where(signal[frame, :] > 0)[0]).astype(int))
+    def update(frame):
+        """Define what happens in each frame."""
+        idxs = (np.where(signal[frame, :] > 0)[0]).astype(int)
         nodelist = list(np.array(G)[idxs])
         colors = cmap(signal[frame, idxs] / INIT_VALUE)
 
-        nx.draw_networkx_nodes(
-            G, pos, node_color='gray', node_size=20, ax=ax)
+        nx.draw_networkx_nodes(G, pos, node_color='gray', node_size=20, ax=ax)
         nx.draw_networkx_nodes(G, pos, node_color=colors, nodelist=nodelist,
                                node_size=20, ax=ax)
         ax.set_title(f'T = {frame}')
 
-    anim = animation.FuncAnimation(fig, update,
-                                   frames=np.arange(0, len(signal)),
+    anim = animation.FuncAnimation(fig, update, frames=np.arange(0, len(signal)),
                                    interval=50)
 
     # saving to gif using ffmpeg writer
@@ -119,8 +118,7 @@ else:
     try:
         os.mkdir('metro_simulation/')
     except FileExistsError:
-        print(
-            'Warning: It seems like this folder already exists. Overwritting...')
+        print('Warning: It seems like this folder already exists. Overwriting...')
 
     # Initiate figure
     fig, ax = plt.subplots(1, 1, figsize=(10, 9))
@@ -131,17 +129,15 @@ else:
     im = nx.draw_networkx_nodes(G, pos, node_color='gray', node_size=20, ax=ax)
     ax.set_title('T = 0')
     cbar = plt.colorbar(im, ax=ax, ticks=[0, 0.5, 1], label='Signal')
-    cbar.set_ticklabels([0, np.amax(signal)/2, np.amax(signal)])
+    cbar.set_ticklabels([0, np.amax(signal) / 2, np.amax(signal)])
 
     # Iterate through each graph signal
     for i, s in enumerate(signal):
-
         idxs = (np.where(s > 0)[0]).astype(int)
         nodelist = list(np.array(G)[idxs])
         colors = cmap(s[idxs] / INIT_VALUE)
 
-        im = nx.draw_networkx_nodes(
-            G, pos, node_color='gray', node_size=20, ax=ax)
+        im = nx.draw_networkx_nodes(G, pos, node_color='gray', node_size=20, ax=ax)
         im = nx.draw_networkx_nodes(G, pos, node_color=colors, nodelist=nodelist,
                                     node_size=20, ax=ax)
         ax.set_title(f'T = {i}')

@@ -31,7 +31,6 @@ class LayoutMixIn(object):
         >>> fig, ax = G.plot()
 
         """
-
         if not isinstance(kind, str):
             coords = np.asanyarray(kind).squeeze()
             check_1d = (coords.ndim == 1)
@@ -73,8 +72,8 @@ class LayoutMixIn(object):
 
             if 'comm_sizes' not in self.info:
                 counts = Counter(self.info['node_com'])
-                self.info['comm_sizes'] = np.array([cnt[1] for cnt
-                                                    in sorted(counts.items())])
+                self.info['comm_sizes'] = np.array(
+                    [cnt[1] for cnt in sorted(counts.items())])
 
             Nc = self.info['comm_sizes'].shape[0]
 
@@ -86,9 +85,10 @@ class LayoutMixIn(object):
             # Coordinates of the nodes inside their communities
             rng = np.random.default_rng(seed)
             coords = rng.uniform(size=(self.N, 2))
-            self.coords = np.array([[elem[0] * np.cos(2 * np.pi * elem[1]),
-                                     elem[0] * np.sin(2 * np.pi * elem[1])]
-                                    for elem in coords])
+            self.coords = np.array([[
+                elem[0] * np.cos(2 * np.pi * elem[1]),
+                elem[0] * np.sin(2 * np.pi * elem[1])
+            ] for elem in coords])
 
             for i in range(self.N):
                 # Set coordinates as an offset from the center of the community
@@ -106,9 +106,8 @@ class LayoutMixIn(object):
         else:
             raise ValueError('Unexpected argument kind={}.'.format(kind))
 
-    def _fruchterman_reingold(self, dim=2, k=None, pos=None, fixed=[],
-                              iterations=50, scale=1.0, center=None,
-                              seed=None):
+    def _fruchterman_reingold(self, dim=2, k=None, pos=None, fixed=[], iterations=50,
+                              scale=1.0, center=None, seed=None):
         # TODO doc
         # fixed: list of nodes with fixed coordinates
         # Position nodes using Fruchterman-Reingold force-directed algorithm.
@@ -136,8 +135,8 @@ class LayoutMixIn(object):
             # We must adjust k by domain size for layouts that are not near 1x1
             k = dom_size / np.sqrt(self.N)
 
-        pos = _sparse_fruchterman_reingold(self.A, dim, k, pos_arr,
-                                           fixed, iterations, seed)
+        pos = _sparse_fruchterman_reingold(self.A, dim, k, pos_arr, fixed, iterations,
+                                           seed)
 
         if len(fixed) == 0:
             pos = _rescale_layout(pos, scale=scale) + center

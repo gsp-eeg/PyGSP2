@@ -9,11 +9,12 @@ to estimate a graph based on a distance matrix Z.
 """
 import numpy as np
 from scipy.spatial.distance import squareform
+
 from pygsp2.utils import sum_squareform
 
 
-def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
-                     maxiter=1000, gamma=0.04, verbose=True):
+def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5, maxiter=1000,
+                     gamma=0.04, verbose=True):
     r"""Learn graph from pairwise distances using negative log prior on nodes
     degrees.
 
@@ -55,8 +56,7 @@ def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
     Artificial Intelligence and Statistics, PMLR 51:920-929, 2016.
 
     Examples
-    -------
-
+    --------
     Create a graph
 
     >>> G = graphs.Graph([[0, 0, 0, 0],
@@ -93,7 +93,6 @@ def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
     >>> plt.colorbar()
 
     """
-
     # Transform to vector space
     z = squareform(Z)
     z = z / np.amax(z)
@@ -106,8 +105,7 @@ def graph_log_degree(Z, a=1.0, b=1.0, w_0='zeros', w_max=np.inf, tol=1e-5,
     elif isinstance(w_0, np.ndarray) and len(w_0.shape) == 2:
         w_0 = squareform(w_0)
     else:
-        raise TypeError(
-            "w_0 is not 'zeros' or a 2d numpy array. Check parameter type.")
+        raise TypeError("w_0 is not 'zeros' or a 2d numpy array. Check parameter type.")
 
     w = w_0.copy()
     v_n = S @ w

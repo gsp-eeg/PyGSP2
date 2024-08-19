@@ -3,6 +3,7 @@
 import numpy as np
 
 from pygsp2 import utils
+
 from . import Graph  # prevent circular import in Python < 3.5
 
 
@@ -49,16 +50,16 @@ class DavidSensorNet(Graph):
 
             target_dist_cutoff = -0.125 * N / 436.075 + 0.2183
             T = 0.6
-            s = np.sqrt(-target_dist_cutoff**2/(2*np.log(T)))
+            s = np.sqrt(-target_dist_cutoff**2 / (2 * np.log(T)))
             d = utils.distanz(coords.T)
-            W = np.exp(-np.power(d, 2)/(2.*s**2))
+            W = np.exp(-np.power(d, 2) / (2. * s**2))
             W[W < T] = 0
             W[np.diag_indices(N)] = 0
 
-        plotting = {"limits": [0, 1, 0, 1]}
+        plotting = {'limits': [0, 1, 0, 1]}
 
-        super(DavidSensorNet, self).__init__(W, coords=coords,
-                                             plotting=plotting, **kwargs)
+        super(DavidSensorNet, self).__init__(W, coords=coords, plotting=plotting,
+                                             **kwargs)
 
     def _get_extra_repr(self):
         return dict(seed=self.seed)

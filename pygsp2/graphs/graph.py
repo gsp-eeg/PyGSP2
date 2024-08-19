@@ -9,10 +9,11 @@ import numpy as np
 from scipy import sparse
 
 from pygsp2 import utils
-from .fourier import FourierMixIn
-from .difference import DifferenceMixIn
+
 from ._io import IOMixIn
 from ._layout import LayoutMixIn
+from .difference import DifferenceMixIn
+from .fourier import FourierMixIn
 
 
 class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
@@ -61,14 +62,15 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
     Examples
     --------
-
     Define a simple graph.
 
-    >>> graph = graphs.Graph([
-    ...     [0., 2., 0.],
-    ...     [2., 0., 5.],
-    ...     [0., 5., 0.],
-    ... ])
+    >>> graph = graphs.Graph(
+    ...     [
+    ...         [0.0, 2.0, 0.0],
+    ...         [2.0, 0.0, 5.0],
+    ...         [0.0, 5.0, 0.0],
+    ...     ]
+    ... )
     >>> graph
     Graph(n_vertices=3, n_edges=2)
     >>> graph.n_vertices, graph.n_edges
@@ -89,18 +91,18 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
     Add some coordinates to plot it.
 
     >>> import matplotlib.pyplot as plt
-    >>> graph.set_coordinates([
-    ...     [0, 0],
-    ...     [0, 1],
-    ...     [1, 0],
-    ... ])
+    >>> graph.set_coordinates(
+    ...     [
+    ...         [0, 0],
+    ...         [0, 1],
+    ...         [1, 0],
+    ...     ]
+    ... )
     >>> fig, ax = graph.plot()
 
     """
 
-    def __init__(self, adjacency, lap_type='combinatorial', coords=None,
-                 plotting={}):
-
+    def __init__(self, adjacency, lap_type='combinatorial', coords=None, plotting={}):
         self.logger = utils.build_logger(__name__)
 
         if not sparse.isspmatrix(adjacency):
@@ -147,13 +149,13 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
             self.coords = np.asanyarray(coords)
 
         self.plotting = {
-                'vertex_size': 100,
-                'vertex_color': (0.12, 0.47, 0.71, 0.5),
-                'edge_color': (0.5, 0.5, 0.5, 0.5),
-                'edge_width': 2,
-                'edge_style': '-',
-                'highlight_color': 'C1',
-                'normalize_intercept': .25,
+            'vertex_size': 100,
+            'vertex_color': (0.12, 0.47, 0.71, 0.5),
+            'edge_color': (0.5, 0.5, 0.5, 0.5),
+            'edge_width': 2,
+            'edge_style': '-',
+            'highlight_color': 'C1',
+            'normalize_intercept': 0.25,
         }
         self.plotting.update(plotting)
         self.signals = dict()
@@ -182,6 +184,26 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         return dict()
 
     def __repr__(self, limit=None):
+        """
+        Return a string representation of the instance.
+
+        Parameters
+        ----------
+        limit : int, optional
+            The maximum number of additional attributes to include in the string representation.
+            If not specified or set to None, all additional attributes will be included.
+
+        Returns
+        -------
+        str
+            A string representation of the instance, showing the class name, essential attributes,
+            and additional attributes up to the specified limit.
+
+        Notes
+        -----
+        If the `limit` parameter is specified and the number of additional attributes exceeds this
+        limit, the representation will include '...' to indicate that not all attributes are shown.
+        """
         s = ''
         for attr in ['n_vertices', 'n_edges']:
             s += '{}={}, '.format(attr, getattr(self, attr))
@@ -210,7 +232,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         --------
         >>> graph = graphs.Sensor(10)
         >>> signal = np.arange(graph.n_vertices)
-        >>> graph.set_signal(signal, 'mysignal')
+        >>> graph.set_signal(signal, "mysignal")
         >>> graph.signals
         {'mysignal': array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])}
 
@@ -234,12 +256,14 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-        >>> graph = graphs.Graph([
-        ...     [0., 3., 0., 0.],
-        ...     [3., 0., 4., 0.],
-        ...     [0., 4., 0., 2.],
-        ...     [0., 0., 2., 0.],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0.0, 3.0, 0.0, 0.0],
+        ...         [3.0, 0.0, 4.0, 0.0],
+        ...         [0.0, 4.0, 0.0, 2.0],
+        ...         [0.0, 0.0, 2.0, 0.0],
+        ...     ]
+        ... )
         >>> graph = graph.subgraph([0, 2, 1])
         >>> graph.W.toarray()
         array([[0., 0., 3.],
@@ -270,24 +294,27 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Unweighted (binary) graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 1, 0],
-        ...     [1, 0, 1],
-        ...     [0, 1, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 1, 0],
+        ...         [1, 0, 1],
+        ...         [0, 1, 0],
+        ...     ]
+        ... )
         >>> graph.is_weighted()
         False
 
         Weighted graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 2, 0],
-        ...     [2, 0, 1],
-        ...     [0, 1, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 2, 0],
+        ...         [2, 0, 1],
+        ...         [0, 1, 0],
+        ...     ]
+        ... )
         >>> graph.is_weighted()
         True
 
@@ -307,7 +334,6 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Notes
         -----
-
         For undirected graphs, starting at a vertex and trying to visit all the
         others is enough.
         For directed graphs, one needs to check that a vertex can both be
@@ -315,26 +341,29 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Connected graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 3, 0, 0],
-        ...     [3, 0, 4, 0],
-        ...     [0, 4, 0, 2],
-        ...     [0, 0, 2, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 3, 0, 0],
+        ...         [3, 0, 4, 0],
+        ...         [0, 4, 0, 2],
+        ...         [0, 0, 2, 0],
+        ...     ]
+        ... )
         >>> graph.is_connected()
         True
 
         Disconnected graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 3, 0, 0],
-        ...     [3, 0, 4, 0],
-        ...     [0, 0, 0, 2],
-        ...     [0, 0, 2, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 3, 0, 0],
+        ...         [3, 0, 4, 0],
+        ...         [0, 0, 0, 2],
+        ...         [0, 0, 2, 0],
+        ...     ]
+        ... )
         >>> graph.is_connected()
         False
 
@@ -381,24 +410,27 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Directed graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 3, 0],
-        ...     [3, 0, 4],
-        ...     [0, 0, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 3, 0],
+        ...         [3, 0, 4],
+        ...         [0, 0, 0],
+        ...     ]
+        ... )
         >>> graph.is_directed()
         True
 
         Undirected graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 3, 0],
-        ...     [3, 0, 4],
-        ...     [0, 4, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 3, 0],
+        ...         [3, 0, 4],
+        ...         [0, 4, 0],
+        ...     ]
+        ... )
         >>> graph.is_directed()
         False
 
@@ -420,24 +452,27 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Without self-loops:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 3, 0],
-        ...     [3, 0, 4],
-        ...     [0, 0, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 3, 0],
+        ...         [3, 0, 4],
+        ...         [0, 0, 0],
+        ...     ]
+        ... )
         >>> graph.has_loops()
         False
 
         With a self-loop:
 
-        >>> graph = graphs.Graph([
-        ...     [1, 3, 0],
-        ...     [3, 0, 4],
-        ...     [0, 0, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [1, 3, 0],
+        ...         [3, 0, 4],
+        ...         [0, 0, 0],
+        ...     ]
+        ... )
         >>> graph.has_loops()
         True
 
@@ -465,8 +500,8 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         >>> W = utils.symmetrize(W)
         >>> G = graphs.Graph(W)
         >>> components = G.extract_components()
-        >>> has_sinks = 'sink' in components[0].info
-        >>> sinks_0 = components[0].info['sink'] if has_sinks else []
+        >>> has_sinks = "sink" in components[0].info
+        >>> sinks_0 = components[0].info["sink"] if has_sinks else []
 
         """
         if self.A.shape[0] != self.A.shape[1]:
@@ -483,7 +518,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         # indices = [] # Assigned but never used
 
         while not visited.all():
-            # pick a node not visted yet
+            # pick a node not visited yet
             stack = set(np.nonzero(~visited)[0][[0]])
             comp = []
 
@@ -495,8 +530,10 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
                     # Add indices of nodes not visited yet and accessible from
                     # v
-                    stack.update(set([idx for idx in self.A[v, :].nonzero()[1]
-                                      if not visited[idx]]))
+                    stack.update(
+                        set([
+                            idx for idx in self.A[v, :].nonzero()[1] if not visited[idx]
+                        ]))
 
             comp = sorted(comp)
             self.logger.info(('Constructing subgraph for component of '
@@ -539,20 +576,21 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Combinatorial and normalized Laplacians of an undirected graph.
 
-        >>> graph = graphs.Graph([
-        ...     [0, 2, 0],
-        ...     [2, 0, 1],
-        ...     [0, 1, 0],
-        ... ])
-        >>> graph.compute_laplacian('combinatorial')
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 2, 0],
+        ...         [2, 0, 1],
+        ...         [0, 1, 0],
+        ...     ]
+        ... )
+        >>> graph.compute_laplacian("combinatorial")
         >>> graph.L.toarray()
         array([[ 2., -2.,  0.],
                [-2.,  3., -1.],
                [ 0., -1.,  1.]])
-        >>> graph.compute_laplacian('normalized')
+        >>> graph.compute_laplacian("normalized")
         >>> graph.L.toarray()
         array([[ 1.        , -0.81649658,  0.        ],
                [-0.81649658,  1.        , -0.57735027],
@@ -560,17 +598,19 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Combinatorial and normalized Laplacians of a directed graph.
 
-        >>> graph = graphs.Graph([
-        ...     [0, 2, 0],
-        ...     [2, 0, 1],
-        ...     [0, 0, 0],
-        ... ])
-        >>> graph.compute_laplacian('combinatorial')
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 2, 0],
+        ...         [2, 0, 1],
+        ...         [0, 0, 0],
+        ...     ]
+        ... )
+        >>> graph.compute_laplacian("combinatorial")
         >>> graph.L.toarray()
         array([[ 2. , -2. ,  0. ],
                [-2. ,  2.5, -0.5],
                [ 0. , -0.5,  0.5]])
-        >>> graph.compute_laplacian('normalized')
+        >>> graph.compute_laplacian("normalized")
         >>> graph.L.toarray()
         array([[ 1.        , -0.89442719,  0.        ],
                [-0.89442719,  1.        , -0.4472136 ],
@@ -588,17 +628,16 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         The Laplacians have a bounded spectrum.
 
         >>> G = graphs.Sensor(50)
-        >>> G.compute_laplacian('combinatorial')
+        >>> G.compute_laplacian("combinatorial")
         >>> G.compute_fourier_basis()
-        >>> -1e-10 < G.e[0] < 1e-10 < G.e[-1] < 2*np.max(G.dw)
+        >>> -1e-10 < G.e[0] < 1e-10 < G.e[-1] < 2 * np.max(G.dw)
         True
-        >>> G.compute_laplacian('normalized')
+        >>> G.compute_laplacian("normalized")
         >>> G.compute_fourier_basis()
         >>> -1e-10 < G.e[0] < 1e-10 < G.e[-1] < 2
         True
 
         """
-
         if lap_type != self.lap_type:
             # Those attributes are invalidated when the Laplacian is changed.
             # Alternative: don't allow the user to change the Laplacian.
@@ -620,7 +659,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
             self.L = D - W
         elif lap_type == 'normalized':
             d = np.zeros(self.n_vertices)
-            disconnected = (self.dw == 0)
+            disconnected = self.dw == 0
             np.power(self.dw, -0.5, where=~disconnected, out=d)
             D = sparse.diags(d)
             self.L = sparse.identity(self.n_vertices) - D * W * D
@@ -672,7 +711,6 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Non-directed graph:
 
         >>> graph = graphs.Path(5, directed=False)
@@ -739,14 +777,15 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Undirected graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 1, 0],
-        ...     [1, 0, 2],
-        ...     [0, 2, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 1, 0],
+        ...         [1, 0, 2],
+        ...         [0, 2, 0],
+        ...     ]
+        ... )
         >>> print(graph.d)  # Number of neighbors.
         [1 2 1]
         >>> print(graph.dw)  # Weighted degree.
@@ -754,11 +793,13 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Directed graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 1, 0],
-        ...     [0, 0, 2],
-        ...     [0, 2, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 1, 0],
+        ...         [0, 0, 2],
+        ...         [0, 2, 0],
+        ...     ]
+        ... )
         >>> print(graph.d)  # Number of neighbors.
         [0.5 1.5 1. ]
         >>> print(graph.dw)  # Weighted degree.
@@ -797,14 +838,15 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Undirected graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 1, 0],
-        ...     [1, 0, 2],
-        ...     [0, 2, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 1, 0],
+        ...         [1, 0, 2],
+        ...         [0, 2, 0],
+        ...     ]
+        ... )
         >>> print(graph.d)  # Number of neighbors.
         [1 2 1]
         >>> print(graph.dw)  # Weighted degree.
@@ -812,11 +854,13 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Directed graph:
 
-        >>> graph = graphs.Graph([
-        ...     [0, 1, 0],
-        ...     [0, 0, 2],
-        ...     [0, 2, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 1, 0],
+        ...         [0, 0, 2],
+        ...         [0, 2, 0],
+        ...     ]
+        ... )
         >>> print(graph.d)  # Number of neighbors.
         [0.5 1.5 1. ]
         >>> print(graph.dw)  # Weighted degree.
@@ -884,13 +928,13 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         --------
         >>> G = graphs.Logo()
         >>> G.compute_fourier_basis()  # True value.
-        >>> print('{:.2f}'.format(G.lmax))
+        >>> print("{:.2f}".format(G.lmax))
         13.78
-        >>> G.estimate_lmax(method='lanczos')  # Estimate.
-        >>> print('{:.2f}'.format(G.lmax))
+        >>> G.estimate_lmax(method="lanczos")  # Estimate.
+        >>> print("{:.2f}".format(G.lmax))
         13.92
-        >>> G.estimate_lmax(method='bounds')  # Upper bound.
-        >>> print('{:.2f}'.format(G.lmax))
+        >>> G.estimate_lmax(method="bounds")  # Upper bound.
+        >>> print("{:.2f}".format(G.lmax))
         18.58
 
         """
@@ -902,9 +946,13 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
             try:
                 # We need to cast the matrix L to a supported type.
                 # TODO: not good for memory. Cast earlier?
-                lmax = sparse.linalg.eigsh(self.L.asfptype(), k=1, tol=5e-3,
-                                           ncv=min(self.N, 10),
-                                           return_eigenvectors=False)
+                lmax = sparse.linalg.eigsh(
+                    self.L.asfptype(),
+                    k=1,
+                    tol=5e-3,
+                    ncv=min(self.N, 10),
+                    return_eigenvectors=False,
+                )
                 lmax = lmax[0]
                 assert lmax <= self._get_upper_bound() + 1e-12
                 lmax *= 1.01  # Increase by 1% to be robust to errors.
@@ -921,7 +969,6 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
     def _get_upper_bound(self):
         r"""Return an upper bound on the eigenvalues of the Laplacian."""
-
         if self.lap_type == 'normalized':
             return 2  # Equal iff the graph is bipartite.
         elif self.lap_type == 'combinatorial':
@@ -981,31 +1028,33 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
 
         Examples
         --------
-
         Edge list of a directed graph.
 
-        >>> graph = graphs.Graph([
-        ...     [0, 3, 0],
-        ...     [3, 0, 4],
-        ...     [0, 0, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 3, 0],
+        ...         [3, 0, 4],
+        ...         [0, 0, 0],
+        ...     ]
+        ... )
         >>> sources, targets, weights = graph.get_edge_list()
         >>> list(sources), list(targets), list(weights)
         ([0, 1, 1], [1, 0, 2], [3, 3, 4])
 
         Edge list of an undirected graph.
 
-        >>> graph = graphs.Graph([
-        ...     [0, 3, 0],
-        ...     [3, 0, 4],
-        ...     [0, 4, 0],
-        ... ])
+        >>> graph = graphs.Graph(
+        ...     [
+        ...         [0, 3, 0],
+        ...         [3, 0, 4],
+        ...         [0, 4, 0],
+        ...     ]
+        ... )
         >>> sources, targets, weights = graph.get_edge_list()
         >>> list(sources), list(targets), list(weights)
         ([0, 1], [1, 2], [3, 4])
 
         """
-
         if self.is_directed():
             W = self.W.tocoo()
         else:
@@ -1018,24 +1067,54 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         assert self.n_edges == sources.size == targets.size == weights.size
         return sources, targets, weights
 
-    def plot(self, vertex_color=None, vertex_size=None, highlight=[],
-             edges=None, edge_color=None, edge_width=None,
-             indices=False, colorbar=True, limits=None, ax=None,
-             title=None, backend=None, cmap=None, alphan=1, alphav=1, edge_weights=None):
+    def plot(
+        self,
+        vertex_color=None,
+        vertex_size=None,
+        highlight=[],
+        edges=None,
+        edge_color=None,
+        edge_width=None,
+        indices=False,
+        colorbar=True,
+        limits=None,
+        ax=None,
+        title=None,
+        backend=None,
+        cmap=None,
+        alphan=1,
+        alphav=1,
+        edge_weights=None,
+    ):
         r"""Docstring overloaded at import time."""
         from pygsp2.plotting import _plot_graph
-        return _plot_graph(self, vertex_color=vertex_color,
-                           vertex_size=vertex_size, highlight=highlight,
-                           edges=edges, indices=indices, colorbar=colorbar,
-                           edge_color=edge_color, edge_width=edge_width,
-                           limits=limits, ax=ax, title=title, backend=backend, 
-                           cmap=cmap, alphan=alphan, alphav=alphav, edge_weights=edge_weights)
+
+        return _plot_graph(
+            self,
+            vertex_color=vertex_color,
+            vertex_size=vertex_size,
+            highlight=highlight,
+            edges=edges,
+            indices=indices,
+            colorbar=colorbar,
+            edge_color=edge_color,
+            edge_width=edge_width,
+            limits=limits,
+            ax=ax,
+            title=title,
+            backend=backend,
+            cmap=cmap,
+            alphan=alphan,
+            alphav=alphav,
+            edge_weights=edge_weights,
+        )
 
     def plot_signal(self, *args, **kwargs):
-        r"""Deprecated, use plot() instead."""
+        r"""Use plot() instead."""
         return self.plot(*args, **kwargs)
 
     def plot_spectrogram(self, node_idx=None):
         r"""Docstring overloaded at import time."""
         from pygsp2.plotting import _plot_spectrogram
+
         _plot_spectrogram(self, node_idx=node_idx)
