@@ -1,162 +1,94 @@
 {
-  "title": "PyGSP2: Graph Signal Processing in Python",
-  "description": "The PyGSP2 facilitates a wide variety of operations on graphs, like computing their Fourier basis, filtering or interpolating signals, plotting graphs, signals, and filters.",
-  "upload_type": "software",
-  "license": "BSD-3-Clause",
-  "access_right": "open",
-  "creators": [
-    {
-      "affiliations": [
+    "title": "PyGSP2: Graph Signal Processing in Python",
+    "description": "The PyGSP2 facilitates a wide variety of operations on graphs, like computing their Fourier basis, filtering or interpolating signals, plotting graphs, signals, and filters.",
+    "upload_type": "software",
+    "license": "BSD-3-Clause",
+    "access_right": "open",
+    "creators": [
         {
-          "id": "05510vn56",
-          "name": "Federico Santa Mar\u00eda Technical University"
-        }
-      ],
-      "person_or_org": {
-        "family_name": "Weinstein",
-        "given_name": "Alejandro",
-        "identifiers": [
-          {
-            "identifier": "0000-0003-1486-7003",
-            "scheme": "orcid"
-          }
-        ],
-        "name": "Weinstein, Alejandro",
-        "type": "personal"
-      },
-      "role": {
-        "id": "projectleader",
-        "title": {
-          "de": "ProjektleiterIn",
-          "en": "Project leader"
-        }
-      }
-    },
-    {
-      "affiliations": [
-        {
-          "id": "05510vn56",
-          "name": "Federico Santa Mar\u00eda Technical University"
+            "name": "Alejandro Weinstein",
+            "affiliations": [
+                {
+                    "id": "05510vn56",
+                    "name": "Federico Santa Mar\u00eda Technical University"
+                }
+            ],
+            "orcid": "0000-0003-1486-7003"
         },
         {
-          "name": "Lanek"
-        }
-      ],
-      "person_or_org": {
-        "family_name": "Cort\u00e9s",
-        "given_name": "Lucas",
-        "identifiers": [
-          {
-            "identifier": "0009-0005-0234-2770",
-            "scheme": "orcid"
-          }
-        ],
-        "name": "Cort\u00e9s, Lucas",
-        "type": "personal"
-      },
-      "role": {
-        "id": "projectmember",
-        "title": {
-          "de": "Projektmitglied",
-          "en": "Project member"
-        }
-      }
-    },
-    {
-      "affiliations": [
+            "name": "Lucas Cort\u00e9s",
+            "affiliations": [
+                {
+                    "id": "05510vn56",
+                    "name": "Federico Santa Mar\u00eda Technical University"
+                },
+                {
+                    "name": "Lanek SpA"
+                }
+            ],
+            "orcid": "0009-0005-0234-2770"
+        },
         {
-          "name": "Brain Dynamics Laboratory"
-        }
-      ],
-      "person_or_org": {
-        "family_name": "Rodi\u00f1o",
-        "given_name": "Julio",
-        "identifiers": [
-          {
-            "identifier": "0000-0002-8916-6810",
-            "scheme": "orcid"
-          }
-        ],
-        "name": "Rodi\u00f1o, Julio",
-        "type": "personal"
-      },
-      "role": {
-        "id": "projectmember",
-        "title": {
-          "de": "Projektmitglied",
-          "en": "Project member"
-        }
-      }
-    },
-    {
-      "affiliations": [
+            "name": "Julio Rodi\u00f1o",
+            "affiliations": [
+                {
+                    "name": "Brain Dynamics Laboratory"
+                }
+            ],
+            "orcid": "0000-0002-8916-6810"
+        },
         {
-          "name": "FONDECYT REGULAR 1231132 grant, ANILLO ACT210053"
+            "name": "Camilo Jara",
+            "affiliations": [
+                {
+                    "name": "FONDECYT REGULAR 1231132 grant, ANILLO ACT210053"
+                }
+            ],
+            "orcid": "0009-0008-9445-5423"
         }
-      ],
-      "person_or_org": {
-        "family_name": "Jara",
-        "given_name": "Camilo",
-        "identifiers": [
-          {
-            "identifier": "0009-0008-9445-5423",
-            "scheme": "orcid"
-          }
-        ],
-        "name": "Jara, Camilo",
-        "type": "personal"
-      },
-      "role": {
-        "id": "projectmember",
-        "title": {
-          "de": "Projektmitglied",
-          "en": "Project member"
+    ],
+    "related_identifiers": [
+        {
+            "scheme": "url",
+            "identifier": "https://github.com/gsp-eeg/pygsp2",
+            "relation": "isSupplementTo"
+        },
+        {
+            "scheme": "doi",
+            "identifier": "10.5281/zenodo.13122921",
+            "relation": "isPartOf"
         }
-      }
-    }
-  ],
-  "related_identifiers": [
-    {
-      "scheme": "url",
-      "identifier": "https://github.com/gsp-eeg/pygsp2",
-      "relation": "isSupplementTo"
-    },
-    {
-      "scheme": "doi",
-      "identifier": "10.5281/zenodo.13122921",
-      "relation": "isPartOf"
-    }
-  ],
-  "funding": [
-    {
-      "award": {
-        "number": "FONDECYT REGULAR 1231132",
-        "title": {
-          "en": "Novel EEG Topography Analysis using Graph Signal Processing and Network Control Theory"
+    ],
+    "funding": [
+        {
+            "award": {
+                "number": "FONDECYT REGULAR 1231132",
+                "title": {
+                    "en": "Novel EEG Topography Analysis using Graph Signal Processing and Network Control Theory"
+                }
+            },
+            "funder": {
+                "id": "02ap3w078",
+                "name": "Agencia Nacional de Investigaci\u00f3n y Desarrollo"
+            }
+        },
+        {
+            "award": {
+                "identifiers": [
+                    {
+                        "identifier": "https://ac3e.usm.cl/",
+                        "scheme": "url"
+                    }
+                ],
+                "number": "Centro Basal FB0008",
+                "title": {
+                    "en": "Advanced Center for Electrical and Electronics Engineering"
+                }
+            },
+            "funder": {
+                "id": "02ap3w078",
+                "name": "Agencia Nacional de Investigaci\u00f3n y Desarrollo"
+            }
         }
-      },
-      "funder": {
-        "id": "02ap3w078",
-        "name": "Agencia Nacional de Investigaci\u00f3n y Desarrollo"
-      }
-    },
-    {
-      "award": {
-        "identifiers": [
-          {
-            "identifier": "https://ac3e.usm.cl/",
-            "scheme": "url"
-          }
-        ],
-        "number": "Centro Basal FB0008",
-        "title": {
-          "en": "Advanced Center for Electrical and Electronics Engineering"
-        }
-      },
-      "funder": {
-        "id": "02ap3w078",
-        "name": "Agencia Nacional de Investigaci\u00f3n y Desarrollo"
-      }
-    }
-  ]
+    ]
 }
