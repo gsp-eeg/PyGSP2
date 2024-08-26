@@ -55,7 +55,6 @@ class Rectangular(Filter):
     """
 
     def __init__(self, G, band_min=None, band_max=0.2):
-
         self.band_min = band_min
         self.band_max = band_max
 
@@ -76,9 +75,7 @@ class Rectangular(Filter):
         elif band_max is None:
             kernel = kernel_highpass
         else:
-
-            def kernel(x):
-                return kernel_lowpass(x) * kernel_highpass(x)
+            kernel = lambda x: kernel_lowpass(x) * kernel_highpass(x)
 
         super(Rectangular, self).__init__(G, kernel)
 

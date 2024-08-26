@@ -7,6 +7,7 @@ import numpy as np
 from pygsp2 import utils
 
 from ..graphs import Graph
+
 # prevent circular import in Python < 3.5
 from . import approximations
 
@@ -75,12 +76,12 @@ class Filter(object):
 
     def __repr__(self):
         """Return filter."""
-        attrs = {'in': self.n_features_in, 'out': self.n_features_out}
+        attrs = {"in": self.n_features_in, "out": self.n_features_out}
         attrs.update(self._get_extra_repr())
-        s = ''
+        s = ""
         for key, value in attrs.items():
-            s += '{}={}, '.format(key, value)
-        return '{}({})'.format(self.__class__.__name__, s[:-2])
+            s += "{}={}, ".format(key, value)
+        return "{}({})".format(self.__class__.__name__, s[:-2])
 
     def __len__(self):
         """Return filter."""
@@ -149,7 +150,7 @@ class Filter(object):
             y[i] = kernel(x)
         return y
 
-    def filter(self, s, method='chebyshev', order=30):
+    def filter(self, s, method="chebyshev", order=30):
         r"""Filter signals (analysis or synthesis).
 
         A signal is defined as a rank-3 tensor of shape ``(N_NODES, N_SIGNALS,
@@ -274,9 +275,11 @@ class Filter(object):
         # TODO: not in self.Nin (Nf = Nin x Nout).
         if s.ndim == 1 or s.shape[-1] not in [1, self.Nf]:
             if s.ndim == 3:
-                raise ValueError('Third dimension (#features) should be '
-                                 'either 1 or the number of filters Nf = {}, '
-                                 'got {}.'.format(self.Nf, s.shape))
+                raise ValueError(
+                    "Third dimension (#features) should be "
+                    "either 1 or the number of filters Nf = {}, "
+                    "got {}.".format(self.Nf, s.shape)
+                )
             s = np.expand_dims(s, -1)
         n_features_in = s.shape[-1]
 
@@ -285,15 +288,14 @@ class Filter(object):
         n_signals = s.shape[1]
 
         if s.ndim > 3:
-            raise ValueError('At most 3 dimensions: '
-                             '#nodes x #signals x #features.')
+            raise ValueError("At most 3 dimensions: " "#nodes x #signals x #features.")
         assert s.ndim == 3
 
         # TODO: generalize to 2D (m --> n) filter banks.
         # Only 1 --> Nf (analysis) and Nf --> 1 (synthesis) for now.
         n_features_out = self.Nf if n_features_in == 1 else 1
 
-        if method == 'exact':
+        if method == "exact":
             # TODO: will be handled by g.adjoint().
             axis = 1 if n_features_in == 1 else 2
             f = self.evaluate(self.G.e)
@@ -304,47 +306,129 @@ class Filter(object):
             s = np.matmul(s, f)
             s = self.G.igft(s)
 
-        elif method == 'chebyshev':
+        elif method == "chebyshev":
             # TODO: update Chebyshev implementation (after 2D filter banks).
             c = approximations.compute_cheby_coeff(self, m=order)
 
             if n_features_in == 1:  # Analysis.
                 s = s.squeeze(axis=2)
                 s = approximations.cheby_op(self.G, c, s)
-                s = s.reshape((self.G.N, n_features_out, n_signals), order='F')
+                s = s.reshape((self.G.N, n_features_out, n_signals), order="F")
                 s = s.swapaxes(1, 2)
 
             elif n_features_in == self.Nf:  # Synthesis.
                 s = s.swapaxes(1, 2)
-                s_in = s.reshape((self.G.N * n_features_in, n_signals), order='F')
+                s_in = s.reshape((self.G.N * n_features_in, n_signals), order="F")
                 s = np.zeros((self.G.N, n_signals))
                 tmpN = np.arange(self.G.N, dtype=int)
                 for i in range(n_features_in):
-                    s += approximations.cheby_op(self.G, c[i],
-                                                 s_in[i * self.G.N + tmpN])
+                    s += approximations.cheby_op(
+                        self.G, c[i], s_in[i * self.G.N + tmpN]
+                    )
                 s = np.expand_dims(s, 2)
 
         else:
-            raise ValueError('Unknown method {}.'.format(method))
+            raise ValueError("Unknown method {}.".format(method))
 
         # Return a 1D signal if e.g. a 1D signal was filtered by one filter.
         return s.squeeze()
 
-    def analyze(self, s, method='chebyshev', order=30):
-        r"""Analyze convenience alias to :meth:`filter`."""
+    def analyze(self, s, method="chebyshev", order=30):
+        r"""
+        Analyze convenience alias to :meth:`filter`.
+
+        This method provides a convenience alias to the :meth:`filter` method.
+        It analyzes the input signal `s` using the specified filter method and order.
+
+        Parameters
+        ----------
+        s : array_like
+            Input signal to be analyzed. The signal should be a 3D array with the
+            last dimension representing features. If the last dimension is not 1,
+            a `ValueError` is raised.
+        method : str, optional
+            The filtering method to use. Default is 'chebyshev'.
+        order : int, optional
+            The order of the filter to be applied. Default is 30.
+
+        Returns
+        -------
+        ndarray
+            The filtered signal after applying the specified method and order.
+
+        Raises
+        ------
+        ValueError
+            If the last dimension of `s` is not 1.
+
+        See Also
+        --------
+        filter : Method that performs the actual filtering process.
+
+        Examples
+        --------
+        >>> signal = np.random.rand(10, 100, 1)  # Example 3D signal
+        >>> analyzer = MyAnalyzerClass()
+        >>> filtered_signal = analyzer.analyze(signal)
+        """
         if s.ndim == 3 and s.shape[-1] != 1:
-            raise ValueError('Last dimension (#features) should be '
-                             '1, got {}.'.format(s.shape))
+            raise ValueError(
+                "Last dimension (#features) should be " "1, got {}.".format(s.shape)
+            )
         return self.filter(s, method, order)
 
-    def synthesize(self, s, method='chebyshev', order=30):
-        r"""Sinthesize convenience wrapper around :meth:`filter`.
+    def synthesize(self, s, method="chebyshev", order=30):
+        r"""
+        Synthesize convenience wrapper around :meth:`filter`.
 
-        Will be an alias to `adjoint().filter()` in the future.
+        This method is a convenience wrapper around the :meth:`filter` method.
+        It synthesizes the input signal `s` using the specified filter method
+        and order. In the future, this method will be an alias to
+        `adjoint().filter()`.
+
+        Parameters
+        ----------
+        s : array_like
+            Input signal to be synthesized. The signal should have the last
+            dimension equal to the number of filters `Nf`. If the last dimension
+            does not match `Nf`, a `ValueError` is raised.
+        method : str, optional
+            The filtering method to use. Default is 'chebyshev'.
+        order : int, optional
+            The order of the filter to be applied. Default is 30.
+
+        Returns
+        -------
+        ndarray
+            The synthesized signal after applying the specified method and order.
+
+        Raises
+        ------
+        ValueError
+            If the last dimension of `s` does not match the expected number
+            of filters `Nf`.
+
+        See Also
+        --------
+        filter : Method that performs the actual filtering process.
+        adjoint : Method that returns the adjoint of the current instance.
+
+        Notes
+        -----
+        This method is intended to be updated in the future to call
+        `adjoint().filter()`.
+
+        Examples
+        --------
+        >>> signal = np.random.rand(10, 100, 5)  # Example 3D signal with 5 features
+        >>> synthesizer = MySynthesizerClass(Nf=5)
+        >>> synthesized_signal = synthesizer.synthesize(signal)
         """
         if s.shape[-1] != self.Nf:
-            raise ValueError('Last dimension (#features) should be the number '
-                             'of filters Nf = {}, got {}.'.format(self.Nf, s.shape))
+            raise ValueError(
+                "Last dimension (#features) should be the number "
+                "of filters Nf = {}, got {}.".format(self.Nf, s.shape)
+            )
         return self.filter(s, method, order)
 
     def localize(self, i, **kwargs):
@@ -510,7 +594,7 @@ class Filter(object):
         else:
             x = np.asanyarray(x)
 
-        sum_filters = np.sum(self.evaluate(x)**2, axis=0)
+        sum_filters = np.sum(self.evaluate(x) ** 2, axis=0)
 
         return sum_filters.min(), sum_filters.max()
 
@@ -601,8 +685,9 @@ class Filter(object):
 
         """
         if self.G.N > 2000:
-            _logger.warning('Creating a big matrix. '
-                            'You should prefer the filter method.')
+            _logger.warning(
+                "Creating a big matrix. " "You should prefer the filter method."
+            )
 
         # Filter one delta per vertex.
         s = np.identity(self.G.N)
@@ -658,8 +743,11 @@ class Filter(object):
             if frame_bound is None:
                 bound = y.max()
             elif y.max() > frame_bound:
-                raise ValueError('The chosen bound is not feasible. '
-                                 'Choose at least {}.'.format(y.max()))
+                raise ValueError(
+                    "The chosen bound is not feasible. " "Choose at least {}.".format(
+                        y.max()
+                    )
+                )
             else:
                 bound = frame_bound
 
@@ -744,8 +832,10 @@ class Filter(object):
         """
         A, _ = self.estimate_frame_bounds()
         if A == 0:
-            _logger.warning('The filter bank is not invertible as it is not '
-                            'a frame (lower frame bound A=0).')
+            _logger.warning(
+                "The filter bank is not invertible as it is not "
+                "a frame (lower frame bound A=0)."
+            )
 
         def kernel(g, i, x):
             y = g.evaluate(x).T

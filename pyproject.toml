@@ -36,3 +36,96 @@ dependencies= [
 [project.urls]
 Homepage = "https://github.com/gsp-eeg/PyGSP2"
 Issues = "https://github.com/gsp-eeg/PyGSP2/issues"
+
+
+
+[tool.ruff]
+exclude = [
+    "doc",
+    "docs",
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv"
+]
+line-length = 108
+indent-width = 4
+show-fixes = true
+fix = true
+unsafe-fixes = true
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "Q", "D"]
+ignore = ["F401", "D205", "D100", "D103", "E731"]
+extend-select = ["D400"]
+fixable = ["ALL"]
+unfixable = []
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"**/{tests,docs,tools}/*" = ["E402"]
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "single"
+inline-quotes = "single"
+
+[tool.ruff.lint.isort]
+lines-after-imports = 1
+lines-between-types = 1
+length-sort = true
+order-by-type = true
+detect-same-package = true
+from-first = false
+section-order = ["future", "standard-library", "first-party", "local-folder", "third-party"]
+combine-as-imports = true
+
+[tool.ruff.lint.pycodestyle]
+ignore-overlong-task-comments = false
+max-doc-length = 108
+max-line-length = 108
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+
+
+[tool.yapf]
+based_on_style = "pep8"
+split_before_named_assigns = false
+split_before_expression_after_opening_paren = false
+column_limit = 108
+
+
+[tool.isort]
+skip = ["__init__.py"]

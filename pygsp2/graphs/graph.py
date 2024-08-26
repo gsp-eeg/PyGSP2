@@ -120,9 +120,11 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         if np.isinf(self._adjacency.sum()):
             raise ValueError('Adjacency: there is an infinite value.')
         if self.has_loops():
-            self.logger.warning('Adjacency: there are self-loops '
-                                '(non-zeros on the diagonal). '
-                                'The Laplacian will not see them.')
+            self.logger.warning(
+                'Adjacency: there are self-loops '
+                '(non-zeros on the diagonal). '
+                'The Laplacian will not see them.'
+            )
         if (self._adjacency < 0).nnz != 0:
             self.logger.warning('Adjacency: there are negative edge weights.')
 
@@ -232,7 +234,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         --------
         >>> graph = graphs.Sensor(10)
         >>> signal = np.arange(graph.n_vertices)
-        >>> graph.set_signal(signal, "mysignal")
+        >>> graph.set_signal(signal, 'mysignal')
         >>> graph.signals
         {'mysignal': array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])}
 
@@ -500,13 +502,14 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         >>> W = utils.symmetrize(W)
         >>> G = graphs.Graph(W)
         >>> components = G.extract_components()
-        >>> has_sinks = "sink" in components[0].info
-        >>> sinks_0 = components[0].info["sink"] if has_sinks else []
+        >>> has_sinks = 'sink' in components[0].info
+        >>> sinks_0 = components[0].info['sink'] if has_sinks else []
 
         """
         if self.A.shape[0] != self.A.shape[1]:
-            self.logger.error('Inconsistent shape to extract components. '
-                              'Square matrix required.')
+            self.logger.error(
+                'Inconsistent shape to extract components. ' 'Square matrix required.'
+            )
             return None
 
         if self.is_directed():
@@ -531,13 +534,19 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
                     # Add indices of nodes not visited yet and accessible from
                     # v
                     stack.update(
-                        set([
-                            idx for idx in self.A[v, :].nonzero()[1] if not visited[idx]
-                        ]))
+                        set(
+                            [
+                                idx
+                                for idx in self.A[v, :].nonzero()[1]
+                                if not visited[idx]
+                            ]
+                        )
+                    )
 
             comp = sorted(comp)
-            self.logger.info(('Constructing subgraph for component of '
-                              'size {}.').format(len(comp)))
+            self.logger.info(
+                ('Constructing subgraph for component of ' 'size {}.').format(len(comp))
+            )
             G = self.subgraph(comp)
             G.info = {'orig_idx': comp}
             graphs.append(G)
@@ -585,12 +594,12 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         ...         [0, 1, 0],
         ...     ]
         ... )
-        >>> graph.compute_laplacian("combinatorial")
+        >>> graph.compute_laplacian('combinatorial')
         >>> graph.L.toarray()
         array([[ 2., -2.,  0.],
                [-2.,  3., -1.],
                [ 0., -1.,  1.]])
-        >>> graph.compute_laplacian("normalized")
+        >>> graph.compute_laplacian('normalized')
         >>> graph.L.toarray()
         array([[ 1.        , -0.81649658,  0.        ],
                [-0.81649658,  1.        , -0.57735027],
@@ -605,12 +614,12 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         ...         [0, 0, 0],
         ...     ]
         ... )
-        >>> graph.compute_laplacian("combinatorial")
+        >>> graph.compute_laplacian('combinatorial')
         >>> graph.L.toarray()
         array([[ 2. , -2. ,  0. ],
                [-2. ,  2.5, -0.5],
                [ 0. , -0.5,  0.5]])
-        >>> graph.compute_laplacian("normalized")
+        >>> graph.compute_laplacian('normalized')
         >>> graph.L.toarray()
         array([[ 1.        , -0.89442719,  0.        ],
                [-0.89442719,  1.        , -0.4472136 ],
@@ -628,11 +637,11 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         The Laplacians have a bounded spectrum.
 
         >>> G = graphs.Sensor(50)
-        >>> G.compute_laplacian("combinatorial")
+        >>> G.compute_laplacian('combinatorial')
         >>> G.compute_fourier_basis()
         >>> -1e-10 < G.e[0] < 1e-10 < G.e[-1] < 2 * np.max(G.dw)
         True
-        >>> G.compute_laplacian("normalized")
+        >>> G.compute_laplacian('normalized')
         >>> G.compute_fourier_basis()
         >>> -1e-10 < G.e[0] < 1e-10 < G.e[-1] < 2
         True
@@ -672,8 +681,10 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         r"""Check if signal is valid."""
         s = np.asanyarray(s)
         if s.shape[0] != self.n_vertices:
-            raise ValueError('First dimension must be the number of vertices '
-                             'G.N = {}, got {}.'.format(self.N, s.shape))
+            raise ValueError(
+                'First dimension must be the number of vertices '
+                'G.N = {}, got {}.'.format(self.N, s.shape)
+            )
         return s
 
     def dirichlet_energy(self, x):
@@ -745,8 +756,10 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
     @W.setter
     def W(self, value):
         # TODO: user can still do G.W[0, 0] = 1, or modify the passed W.
-        raise AttributeError('In-place modification of the graph is not '
-                             'supported. Create another Graph object.')
+        raise AttributeError(
+            'In-place modification of the graph is not '
+            'supported. Create another Graph object.'
+        )
 
     @property
     def A(self):
@@ -885,11 +898,13 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         approximated by :func:`estimate_lmax`.
         """
         if self._lmax is None:
-            self.logger.warning('The largest eigenvalue G.lmax is not '
-                                'available, we need to estimate it. '
-                                'Explicitly call G.estimate_lmax() or '
-                                'G.compute_fourier_basis() '
-                                'once beforehand to suppress the warning.')
+            self.logger.warning(
+                'The largest eigenvalue G.lmax is not '
+                'available, we need to estimate it. '
+                'Explicitly call G.estimate_lmax() or '
+                'G.compute_fourier_basis() '
+                'once beforehand to suppress the warning.'
+            )
             self.estimate_lmax()
         return self._lmax
 
@@ -928,13 +943,13 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         --------
         >>> G = graphs.Logo()
         >>> G.compute_fourier_basis()  # True value.
-        >>> print("{:.2f}".format(G.lmax))
+        >>> print('{:.2f}'.format(G.lmax))
         13.78
-        >>> G.estimate_lmax(method="lanczos")  # Estimate.
-        >>> print("{:.2f}".format(G.lmax))
+        >>> G.estimate_lmax(method='lanczos')  # Estimate.
+        >>> print('{:.2f}'.format(G.lmax))
         13.92
-        >>> G.estimate_lmax(method="bounds")  # Upper bound.
-        >>> print("{:.2f}".format(G.lmax))
+        >>> G.estimate_lmax(method='bounds')  # Upper bound.
+        >>> print('{:.2f}'.format(G.lmax))
         18.58
 
         """
@@ -958,8 +973,9 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
                 lmax *= 1.01  # Increase by 1% to be robust to errors.
                 self._lmax = lmax
             except sparse.linalg.ArpackNoConvergence:
-                raise ValueError('The Lanczos method did not converge. '
-                                 'Try to use bounds.')
+                raise ValueError(
+                    'The Lanczos method did not converge. ' 'Try to use bounds.'
+                )
 
         elif method == 'bounds':
             self._lmax = self._get_upper_bound()
@@ -993,8 +1009,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
             # Good review: On upper bounds for Laplacian graph eigenvalues.
             return min(bounds)
         else:
-            raise ValueError('Unknown Laplacian type '
-                             '{}'.format(self.lap_type))
+            raise ValueError('Unknown Laplacian type ' '{}'.format(self.lap_type))
 
     def get_edge_list(self):
         r"""Return an edge list, an alternative representation of the graph.
@@ -1110,7 +1125,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         )
 
     def plot_signal(self, *args, **kwargs):
-        r"""Use plot() instead."""
+        r"""Use plot() instead. Deprecated"""
         return self.plot(*args, **kwargs)
 
     def plot_spectrogram(self, node_idx=None):
