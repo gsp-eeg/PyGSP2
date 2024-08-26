@@ -18,7 +18,6 @@ class HalfCosine(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -42,7 +41,7 @@ class HalfCosine(Filter):
 
         def kernel(x):
             y = np.cos(2 * np.pi * (x / dila_fact - .5))
-            y = np.multiply((.5 + .5*y), (x >= 0))
+            y = np.multiply((.5 + .5 * y), (x >= 0))
             return np.multiply(y, (x <= dila_fact))
 
         kernels = []
@@ -50,7 +49,7 @@ class HalfCosine(Filter):
         for i in range(Nf):
 
             def kernel_centered(x, i=i):
-                return kernel(x - dila_fact/3 * (i - 2))
+                return kernel(x - dila_fact / 3 * (i - 2))
 
             kernels.append(kernel_centered)
 

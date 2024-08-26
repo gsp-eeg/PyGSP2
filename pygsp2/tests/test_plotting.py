@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
+"""Test suite for the plotting module of the pygsp2 package."""
 
-"""
-Test suite for the plotting module of the pygsp2 package.
-
-"""
-
-import unittest
 import os
+import unittest
 
 import numpy as np
 from matplotlib import pyplot as plt
 from skimage import data, img_as_float
 
-from pygsp2 import graphs, filters, plotting
+from pygsp2 import filters, graphs, plotting
 
 
 class TestGraphs(unittest.TestCase):
@@ -30,7 +26,6 @@ class TestGraphs(unittest.TestCase):
         With and without signal.
         With both backends.
         """
-
         # Graphs who are not embedded, i.e., have no coordinates.
         COORDS_NO = {
             'Graph',
@@ -39,7 +34,7 @@ class TestGraphs(unittest.TestCase):
             'FullConnected',
             'RandomRegular',
             'StochasticBlockModel',
-            }
+        }
 
         Gs = []
         for classname in dir(graphs):
@@ -123,32 +118,35 @@ class TestGraphs(unittest.TestCase):
         G = graphs.Sensor()
         G.plot()
         rng = np.random.default_rng(42)
+
         def test_color(param, length):
-            for value in ['r', 4*(.5,), length*(2,), np.ones([1, length]),
-                          rng.random(length),
-                          np.ones([length, 3]), ["red"] * length,
-                          rng.random([length, 4])]:
+            for value in [
+                    'r', 4 * (.5, ), length * (2, ),
+                    np.ones([1, length]),
+                    rng.random(length),
+                    np.ones([length, 3]), ['red'] * length,
+                    rng.random([length, 4])
+            ]:
                 params = {param: value}
                 G.plot(**params)
-            for value in [10, (0.5, 0.5), np.ones([length, 2]),
-                          np.ones([2, length, 3]),
-                          np.ones([length, 3]) * 1.1]:
+            for value in [10, (0.5, 0.5), np.ones([length, 2]), np.ones([2, length, 3]), np.ones([length, 3]) * 1.1]:
                 params = {param: value}
                 self.assertRaises(ValueError, G.plot, **params)
-            for value in ['r', 4*(.5)]:
+            for value in ['r', 4 * (.5)]:
                 params = {param: value, 'backend': 'pyqtgraph'}
                 self.assertRaises(ValueError, G.plot, **params)
+
         test_color('vertex_color', G.n_vertices)
         test_color('edge_color', G.n_edges)
+
         def test_size(param, length):
-            for value in [15, length*(2,), np.ones([1, length]),
-                          rng.random(length)]:
+            for value in [15, length * (2, ), np.ones([1, length]), rng.random(length)]:
                 params = {param: value}
                 G.plot(**params)
-            for value in [(2, 3, 4, 5), np.ones([2, length]),
-                          np.ones([2, length, 3])]:
+            for value in [(2, 3, 4, 5), np.ones([2, length]), np.ones([2, length, 3])]:
                 params = {param: value}
                 self.assertRaises(ValueError, G.plot, **params)
+
         test_size('vertex_size', G.n_vertices)
         test_size('edge_width', G.n_edges)
 
@@ -169,7 +167,7 @@ class TestGraphs(unittest.TestCase):
         self.assertRaises(AttributeError, G.plot)
         G.coords = np.ones((G.N, 3, 1))
         self.assertRaises(AttributeError, G.plot)
-        G.coords = np.ones((G.N//2, 3))
+        G.coords = np.ones((G.N // 2, 3))
         self.assertRaises(AttributeError, G.plot)
 
     def test_unknown_backend(self):
@@ -203,11 +201,13 @@ class TestFilters(unittest.TestCase):
 
     def test_evaluation_points(self):
         """Change number of evaluation points."""
+
         def check(ax, n_lines, n_points):
             self.assertEqual(len(ax.lines), n_lines)  # n_filters + sum
             x, y = ax.lines[0].get_data()
             self.assertEqual(len(x), n_points)
             self.assertEqual(len(y), n_points)
+
         g = filters.Abspline(self._graph, 5)
         fig, ax = g.plot(eigenvalues=False)
         check(ax, 6, 500)
@@ -229,10 +229,12 @@ class TestFilters(unittest.TestCase):
 
     def test_sum_and_labels(self):
         """Plot with and without sum or labels."""
+
         def test(g):
             for sum in [None, True, False]:
                 for labels in [None, True, False]:
                     g.plot(sum=sum, labels=labels)
+
         test(filters.Heat(self._graph, 10))  # one filter
         test(filters.Heat(self._graph, [10, 100]))  # multiple filters
 

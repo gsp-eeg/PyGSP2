@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-
 r"""
 The :mod:`pygsp2.optimization` module provides tools to solve convex
 optimization problems on graphs.
 """
 
 from pygsp2 import utils
-
 
 logger = utils.build_logger(__name__)
 
@@ -15,12 +13,10 @@ def _import_pyunlocbox():
     try:
         from pyunlocbox import functions, solvers
     except Exception as e:
-        raise ImportError(
-            'Cannot import pyunlocbox, which is needed to solve '
-            'this optimization problem. Try to install it with '
-            'pip (or conda) install pyunlocbox. '
-            'Original exception: {}'.format(e)
-        )
+        raise ImportError('Cannot import pyunlocbox, which is needed to solve '
+                          'this optimization problem. Try to install it with '
+                          'pip (or conda) install pyunlocbox. '
+                          'Original exception: {}'.format(e))
     return functions, solvers
 
 

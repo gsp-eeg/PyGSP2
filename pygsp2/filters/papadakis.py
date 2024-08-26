@@ -28,7 +28,6 @@ class Papadakis(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -57,12 +56,12 @@ class Papadakis(Filter):
             r3ind = (x >= l2)
 
             y[r1ind] = 1
-            y[r2ind] = np.sqrt((1 - np.sin(3*np.pi/(2*a) * x[r2ind]))/2)
+            y[r2ind] = np.sqrt((1 - np.sin(3 * np.pi / (2 * a) * x[r2ind])) / 2)
             y[r3ind] = 0
 
             return y
 
-        papadakis = Filter(G, lambda x: kernel(x*2/G.lmax, a))
+        papadakis = Filter(G, lambda x: kernel(x * 2 / G.lmax, a))
         complement = papadakis.complement(frame_bound=1)
         kernels = papadakis._kernels + complement._kernels
 

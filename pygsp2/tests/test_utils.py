@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-
-"""
-Test suite for the utils module of the pygsp2 package.
-
-"""
+"""Test suite for the utils module of the pygsp2 package."""
 
 import unittest
 

@@ -5,7 +5,6 @@ from scipy import sparse
 
 from pygsp2 import utils
 
-
 _logger = utils.build_logger(__name__)
 
 
@@ -204,18 +203,14 @@ def compute_jackson_cheby_coeff(filter_bounds, delta_lambda, m):
     ch = np.empty(m + 1, dtype=float)
     ch[0] = (2 / (np.pi)) * (np.arccos(filter_bounds[0]) - np.arccos(filter_bounds[1]))
     for i in range(1, len(ch)):
-        ch[i] = (2 / (np.pi * i)) * (
-            np.sin(i * np.arccos(filter_bounds[0])) - np.sin(i * np.arccos(filter_bounds[1]))
-        )
+        ch[i] = (2 / (np.pi * i)) * (np.sin(i * np.arccos(filter_bounds[0])) - np.sin(i * np.arccos(filter_bounds[1])))
 
     # Then compute jackson coeffs
     jch = np.empty(m + 1, dtype=float)
     alpha = np.pi / (m + 2)
     for i in range(len(jch)):
-        jch[i] = (1 / np.sin(alpha)) * (
-            (1 - i / (m + 2)) * np.sin(alpha) * np.cos(i * alpha)
-            + (1 / (m + 2)) * np.cos(alpha) * np.sin(i * alpha)
-        )
+        jch[i] = (1 / np.sin(alpha)) * ((1 - i / (m + 2)) * np.sin(alpha) * np.cos(i * alpha) +
+                                        (1 / (m + 2)) * np.cos(alpha) * np.sin(i * alpha))
 
     # Combine jackson and cheby coeffs
     jch = ch * jch
@@ -316,7 +311,7 @@ def lanczos(A, order, x):
 
     for k in range(1, order):
         if np.sum(np.abs(H[k, hiv + k - 1])) <= np.spacing(1):
-            H = H[: k - 1, _sum_ind(np.arange(k), hiv)]
+            H = H[:k - 1, _sum_ind(np.arange(k), hiv)]
             V = V[:, _sum_ind(np.arange(k), hiv)]
             orth = orth[:k]
 

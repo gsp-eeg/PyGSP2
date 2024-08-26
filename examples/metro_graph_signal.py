@@ -1,5 +1,5 @@
 r"""
-Metro Graph Signal
+Metro Graph Signal.
 ==================
 
 Example of a graph signal for the Santiago Metro.
@@ -30,29 +30,23 @@ https://zenodo.org/records/11637462/files/santiago_metro_stations_connections.tx
 # %%
 import os
 import sys
+
+import matplotlib.pyplot as plt
 import pandas as pd
 from unidecode import unidecode
-import matplotlib.pyplot as plt
 
-from pygsp2.utils_examples import (
-    make_metro_graph, 
-    metro_database_preprocessing, 
-    plot_signal_in_graph,
-    fetch_data
-)
+from pygsp2.utils_examples import (fetch_data, make_metro_graph, metro_database_preprocessing, plot_signal_in_graph)
 
 current_dir = os.getcwd()
 os.chdir(current_dir)
 
 # %% Load data
 assets_dir = os.path.join(current_dir, 'data')
-fetch_data(assets_dir, "metro")
+fetch_data(assets_dir, 'metro')
 
 try:
-    commutes = pd.read_excel(
-        os.path.join(assets_dir, '2023.11 Matriz_baj_SS_MH.xlsb'),
-        header=1,
-        sheet_name='bajadas_prom_laboral')
+    commutes = pd.read_excel(os.path.join(assets_dir, '2023.11 Matriz_baj_SS_MH.xlsb'), header=1,
+                             sheet_name='bajadas_prom_laboral')
 except FileNotFoundError:
     print(f'Data file was not found in:\n {os.getcwd()}')
     print('Download it from:\n' +
@@ -61,10 +55,8 @@ except FileNotFoundError:
 
 # %% Load graph
 
-G, pos = make_metro_graph(
-    edgesfile=os.path.join(assets_dir, 'santiago_metro_stations_connections.txt'),
-    coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson')
-)
+G, pos = make_metro_graph(edgesfile=os.path.join(assets_dir, 'santiago_metro_stations_connections.txt'),
+                          coordsfile=os.path.join(assets_dir, 'santiago_metro_stations_coords.geojson'))
 
 stations = [name.upper() for name in list(G.nodes)]
 stations = [unidecode(station) for station in stations]
@@ -77,12 +69,11 @@ available_stations = list(metro_commutes['paradero'])
 
 stations_missing = []
 for i, station in enumerate(stations):
-    if not station in available_stations:
+    if station not in available_stations:
         stations_missing.append(station)
 
 print(f'{len(stations_missing)} Stations Not Meassured:')
-_ = [print(f'\t{i+1}. {station}')
-     for i, station in enumerate(stations_missing)]
+_ = [print(f'\t{i+1}. {station}') for i, station in enumerate(stations_missing)]
 
 # %% Plot signal in graph
 fig, ax = plot_signal_in_graph(G, signal, 'Promedio Diario\nBajadas de Metro')

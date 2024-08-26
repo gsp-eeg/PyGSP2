@@ -28,7 +28,6 @@ class Simoncelli(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -43,7 +42,7 @@ class Simoncelli(Filter):
 
     """
 
-    def __init__(self, G, a=2/3):
+    def __init__(self, G, a=2 / 3):
 
         self.a = a
 
@@ -57,12 +56,12 @@ class Simoncelli(Filter):
             r3ind = (x >= l2)
 
             y[r1ind] = 1
-            y[r2ind] = np.cos(np.pi/2 * np.log(x[r2ind]/a) / np.log(2))
+            y[r2ind] = np.cos(np.pi / 2 * np.log(x[r2ind] / a) / np.log(2))
             y[r3ind] = 0
 
             return y
 
-        simoncelli = Filter(G, lambda x: kernel(x*2/G.lmax, a))
+        simoncelli = Filter(G, lambda x: kernel(x * 2 / G.lmax, a))
         complement = simoncelli.complement(frame_bound=1)
         kernels = simoncelli._kernels + complement._kernels
 

@@ -1,5 +1,5 @@
 r"""
-Concentration of the eigenvalues
+Concentration of the eigenvalues.
 ================================
 
 The eigenvalues of the graph Laplacian concentrates to the same value as the
@@ -8,11 +8,11 @@ graph becomes full.
 
 import numpy as np
 from matplotlib import pyplot as plt
+
 import pygsp2 as pg
 
 n_neighbors = [1, 2, 5, 8]
 fig, axes = plt.subplots(3, len(n_neighbors), figsize=(15, 8))
-
 
 for k, ax in zip(n_neighbors, axes.T):
 

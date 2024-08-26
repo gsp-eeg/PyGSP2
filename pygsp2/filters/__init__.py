@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 r"""
 The :mod:`pygsp2.filters` module implements methods used for filtering and
 defines commonly used filters that can be applied to :mod:`pygsp2.graphs`. A

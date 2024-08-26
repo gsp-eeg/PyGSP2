@@ -1,5 +1,5 @@
 r"""
-Fourier transform
+Fourier transform.
 =================
 
 The graph Fourier transform :meth:`pygsp2.graphs.Graph.gft` transforms a
@@ -10,6 +10,7 @@ its energy is concentrated.
 
 import numpy as np
 from matplotlib import pyplot as plt
+
 import pygsp2 as pg
 
 G = pg.graphs.Sensor(seed=42)
@@ -27,7 +28,7 @@ for i, scale in enumerate(scales):
     x = g.filter(x0).squeeze()
     x /= np.linalg.norm(x)
     x_hat = G.gft(x).squeeze()
-    
+
     G.plot(x, limits=[-limit, limit], ax=axes[0, i])
     axes[0, i].set_axis_off()
     axes[0, i].set_title('$x^T L x = {:.2f}$'.format(G.dirichlet_energy(x)))

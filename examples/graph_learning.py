@@ -1,16 +1,17 @@
 r"""
-Graph learning
+Graph learning.
 ==============
 Use Kalofolias2016 algorithm to learn the graph from a signal.
 The algorithm uses the pairwise distances between each node signal.
 In this case, we compute the euclidean distace between the node's coordenates
 but the euclidean distance between each node signal would work in the same style.
 """
+import matplotlib.pyplot as plt
 # %% Import Libraries
 import numpy as np
 from scipy import spatial
-import matplotlib.pyplot as plt
-from pygsp2 import graphs, graph_learning
+
+from pygsp2 import graph_learning, graphs
 
 # %% Create a ring graph
 G = graphs.ring.Ring(10)

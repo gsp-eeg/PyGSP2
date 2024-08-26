@@ -5,6 +5,7 @@ from __future__ import division
 import numpy as np
 
 from pygsp2 import utils
+
 from . import Filter  # prevent circular import in Python < 3.5
 
 
@@ -40,7 +41,6 @@ class MexicanHat(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -63,7 +63,7 @@ class MexicanHat(Filter):
         lmin = G.lmax / lpfactor
 
         if scales is None:
-            scales = utils.compute_log_scales(lmin, G.lmax, Nf-1)
+            scales = utils.compute_log_scales(lmin, G.lmax, Nf - 1)
         self.scales = scales
 
         if len(scales) != Nf - 1:
@@ -88,5 +88,4 @@ class MexicanHat(Filter):
         super(MexicanHat, self).__init__(G, kernels)
 
     def _get_extra_repr(self):
-        return dict(lpfactor='{:.2f}'.format(self.lpfactor),
-                    normalize=self.normalize)
+        return dict(lpfactor='{:.2f}'.format(self.lpfactor), normalize=self.normalize)

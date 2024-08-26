@@ -4,8 +4,8 @@ import numpy as np
 from scipy import sparse
 
 from pygsp2 import utils
-from . import Graph  # prevent circular import in Python < 3.5
 
+from . import Graph  # prevent circular import in Python < 3.5
 
 logger = utils.build_logger(__name__)
 
@@ -51,5 +51,4 @@ class LineGraph(Graph):
         except AttributeError:
             coords = None
 
-        super(LineGraph, self).__init__(adjacency, coords=coords,
-                plotting=graph.plotting, **kwargs)
+        super(LineGraph, self).__init__(adjacency, coords=coords, plotting=graph.plotting, **kwargs)

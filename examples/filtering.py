@@ -1,5 +1,5 @@
 r"""
-Filtering a signal
+Filtering a signal.
 ==================
 
 A graph signal is filtered by transforming it to the spectral domain (via the
@@ -19,6 +19,7 @@ inverse graph Fourier transform).
 
 import numpy as np
 from matplotlib import pyplot as plt
+
 import pygsp2 as pg
 
 G = pg.graphs.Sensor(seed=42)
