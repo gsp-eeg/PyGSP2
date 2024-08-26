@@ -93,7 +93,7 @@ convention = "numpy"
 "**/{tests,docs,tools}/*" = ["E402"]
 
 [tool.ruff.lint.flake8-quotes]
-docstring-quotes = "single"
+docstring-quotes = "double"
 inline-quotes = "single"
 
 [tool.ruff.lint.isort]
