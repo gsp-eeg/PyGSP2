@@ -1125,7 +1125,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         )
 
     def plot_signal(self, *args, **kwargs):
-        r"""Use plot() instead. Deprecated"""
+        r"""Use plot() instead. Deprecated."""
         return self.plot(*args, **kwargs)
 
     def plot_spectrogram(self, node_idx=None):
