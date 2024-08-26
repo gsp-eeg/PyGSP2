@@ -36,7 +36,8 @@ import pandas as pd
 from unidecode import unidecode
 
 from pygsp2.utils_examples import (fetch_data, make_metro_graph,
-                                   metro_database_preprocessing, plot_signal_in_graph)
+                                   metro_database_preprocessing,
+                                   plot_signal_in_graph)
 
 current_dir = os.getcwd()
 os.chdir(current_dir)

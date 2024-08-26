@@ -7,7 +7,6 @@ import numpy as np
 from pygsp2 import utils
 
 from ..graphs import Graph
-
 # prevent circular import in Python < 3.5
 from . import approximations
 

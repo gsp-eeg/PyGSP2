@@ -15,8 +15,8 @@ clean:
 
 lint:
 	isort .
-	yapf -ir .
 	ruff check .
+	yapf -ir .
 	codespell -w -S=skip.txt -D=dict.txt
 
 # Matplotlib doesn't print to screen. Also faster.
