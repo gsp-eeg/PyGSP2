@@ -49,8 +49,7 @@ def compute_cheby_coeff(f, m=30, N=None, *args, **kwargs):
     tmpN = np.arange(N)
     num = np.cos(np.pi * (tmpN + 0.5) / N)
     for o in range(m + 1):
-        c[o] = 2. / N * np.dot(f._kernels[i](a1 * num + a2),
-                               np.cos(np.pi * o * (tmpN + 0.5) / N))
+        c[o] = 2.0 / N * np.dot(f._kernels[i](a1 * num + a2), np.cos(np.pi * o * (tmpN + 0.5) / N))
 
     return c
 
@@ -81,7 +80,7 @@ def cheby_op(G, c, signal, **kwargs):
     Nscales, M = c.shape
 
     if M < 2:
-        raise TypeError("The coefficients have an invalid shape")
+        raise TypeError('The coefficients have an invalid shape')
 
     # thanks to that, we can also have 1d signal.
     try:
@@ -92,21 +91,21 @@ def cheby_op(G, c, signal, **kwargs):
 
     a_arange = [0, G.lmax]
 
-    a1 = float(a_arange[1] - a_arange[0]) / 2.
-    a2 = float(a_arange[1] + a_arange[0]) / 2.
+    a1 = float(a_arange[1] - a_arange[0]) / 2.0
+    a2 = float(a_arange[1] + a_arange[0]) / 2.0
 
     twf_old = signal
     twf_cur = (G.L.dot(signal) - a2 * signal) / a1
 
     tmpN = np.arange(G.N, dtype=int)
     for i in range(Nscales):
-        r[tmpN + G.N*i] = 0.5 * c[i, 0] * twf_old + c[i, 1] * twf_cur
+        r[tmpN + G.N * i] = 0.5 * c[i, 0] * twf_old + c[i, 1] * twf_cur
 
-    factor = 2/a1 * (G.L - a2 * sparse.eye(G.N))
+    factor = 2 / a1 * (G.L - a2 * sparse.eye(G.N))
     for k in range(2, M):
         twf_new = factor.dot(twf_cur) - twf_old
         for i in range(Nscales):
-            r[tmpN + G.N*i] += c[i, k] * twf_new
+            r[tmpN + G.N * i] += c[i, k] * twf_new
 
         twf_old = twf_cur
         twf_cur = twf_new
@@ -147,16 +146,16 @@ def cheby_rect(G, bounds, signal, **kwargs):
     except IndexError:
         r = np.zeros((G.N))
 
-    b1, b2 = np.arccos(2. * bounds / G.lmax - 1.)
-    factor = 4./G.lmax * G.L - 2.*sparse.eye(G.N)
+    b1, b2 = np.arccos(2.0 * bounds / G.lmax - 1.0)
+    factor = 4.0 / G.lmax * G.L - 2.0 * sparse.eye(G.N)
 
     T_old = signal
-    T_cur = factor.dot(signal) / 2.
-    r = (b1 - b2)/np.pi * signal + 2./np.pi * (np.sin(b1) - np.sin(b2)) * T_cur
+    T_cur = factor.dot(signal) / 2.0
+    r = (b1 - b2) / np.pi * signal + 2.0 / np.pi * (np.sin(b1) - np.sin(b2)) * T_cur
 
     for k in range(2, m):
         T_new = factor.dot(T_cur) - T_old
-        r += 2./(k*np.pi) * (np.sin(k*b1) - np.sin(k*b2)) * T_new
+        r += 2.0 / (k * np.pi) * (np.sin(k * b1) - np.sin(k * b2)) * T_new
         T_old = T_cur
         T_cur = T_new
 
@@ -187,34 +186,36 @@ def compute_jackson_cheby_coeff(filter_bounds, delta_lambda, m):
     """
     # Parameters check
     if delta_lambda[0] > filter_bounds[0] or delta_lambda[1] < filter_bounds[1]:
-        _logger.error("Bounds of the filter are out of the lambda values")
-        raise()
+        _logger.error('Bounds of the filter are out of the lambda values')
+        raise ()
     elif delta_lambda[0] > delta_lambda[1]:
-        _logger.error("lambda_min is greater than lambda_max")
-        raise()
+        _logger.error('lambda_min is greater than lambda_max')
+        raise ()
 
     # Scaling and translating to standard cheby interval
-    a1 = (delta_lambda[1]-delta_lambda[0])/2
-    a2 = (delta_lambda[1]+delta_lambda[0])/2
+    a1 = (delta_lambda[1] - delta_lambda[0]) / 2
+    a2 = (delta_lambda[1] + delta_lambda[0]) / 2
 
     # Scaling bounds of the band pass according to lrange
-    filter_bounds[0] = (filter_bounds[0]-a2)/a1
-    filter_bounds[1] = (filter_bounds[1]-a2)/a1
+    filter_bounds[0] = (filter_bounds[0] - a2) / a1
+    filter_bounds[1] = (filter_bounds[1] - a2) / a1
 
     # First compute cheby coeffs
-    ch = np.empty(m+1, dtype=float)
-    ch[0] = (2/(np.pi))*(np.arccos(filter_bounds[0])-np.arccos(filter_bounds[1]))
+    ch = np.empty(m + 1, dtype=float)
+    ch[0] = (2 / (np.pi)) * (np.arccos(filter_bounds[0]) - np.arccos(filter_bounds[1]))
     for i in range(1, len(ch)):
-        ch[i] = (2/(np.pi * i)) * \
-            (np.sin(i * np.arccos(filter_bounds[0])) - np.sin(i * np.arccos(filter_bounds[1])))
+        ch[i] = (2 / (np.pi * i)) * (
+            np.sin(i * np.arccos(filter_bounds[0])) - np.sin(i * np.arccos(filter_bounds[1]))
+        )
 
     # Then compute jackson coeffs
-    jch = np.empty(m+1, dtype=float)
-    alpha = (np.pi/(m+2))
+    jch = np.empty(m + 1, dtype=float)
+    alpha = np.pi / (m + 2)
     for i in range(len(jch)):
-        jch[i] = (1/np.sin(alpha)) * \
-            ((1 - i/(m+2)) * np.sin(alpha) * np.cos(i * alpha) +
-             (1/(m+2)) * np.cos(alpha) * np.sin(i * alpha))
+        jch[i] = (1 / np.sin(alpha)) * (
+            (1 - i / (m + 2)) * np.sin(alpha) * np.cos(i * alpha)
+            + (1 / (m + 2)) * np.cos(alpha) * np.sin(i * alpha)
+        )
 
     # Combine jackson and cheby coeffs
     jch = ch * jch
@@ -247,11 +248,11 @@ def lanczos_op(f, s, order=30):
     try:
         Nv = np.shape(s)[1]
         is2d = True
-        c = np.zeros((G.N*Nf, Nv))
+        c = np.zeros((G.N * Nf, Nv))
     except IndexError:
         Nv = 1
         is2d = False
-        c = np.zeros((G.N*Nf))
+        c = np.zeros((G.N * Nf))
 
     tmpN = np.arange(G.N, dtype=int)
     for j in range(Nv):
@@ -268,16 +269,16 @@ def lanczos_op(f, s, order=30):
 
         for i in range(Nf):
             if is2d:
-                c[tmpN + i*G.N, j] = np.dot(V, fe[:][i] * np.dot(V.T, s[:, j]))
+                c[tmpN + i * G.N, j] = np.dot(V, fe[:][i] * np.dot(V.T, s[:, j]))
             else:
-                c[tmpN + i*G.N] = np.dot(V, fe[:][i] * np.dot(V.T, s))
+                c[tmpN + i * G.N] = np.dot(V, fe[:][i] * np.dot(V.T, s))
 
     return c
 
 
 def lanczos(A, order, x):
     r"""
-    TODO short description
+    TODO short description.
 
     Parameters
     ----------
@@ -285,6 +286,9 @@ def lanczos(A, order, x):
 
     Returns
     -------
+    V: ndarray
+    H: ndarray
+    orth: ndarray
     """
     try:
         N, M = np.shape(x)
@@ -297,14 +301,14 @@ def lanczos(A, order, x):
     q = np.divide(x, np.kron(np.ones((N, 1)), np.linalg.norm(x, axis=0)))
 
     # initialization
-    hiv = np.arange(0, order*M, order)
-    V = np.zeros((N, M*order))
+    hiv = np.arange(0, order * M, order)
+    V = np.zeros((N, M * order))
     V[:, hiv] = q
 
-    H = np.zeros((order + 1, M*order))
+    H = np.zeros((order + 1, M * order))
     r = np.dot(A, q)
-    H[0, hiv] = np.sum(q*r, axis=0)
-    r -= np.kron(np.ones((N, 1)), H[0, hiv])*q
+    H[0, hiv] = np.sum(q * r, axis=0)
+    r -= np.kron(np.ones((N, 1)), H[0, hiv]) * q
     H[1, hiv] = np.linalg.norm(r, axis=0)
 
     orth = np.zeros((order))
@@ -312,7 +316,7 @@ def lanczos(A, order, x):
 
     for k in range(1, order):
         if np.sum(np.abs(H[k, hiv + k - 1])) <= np.spacing(1):
-            H = H[:k - 1, _sum_ind(np.arange(k), hiv)]
+            H = H[: k - 1, _sum_ind(np.arange(k), hiv)]
             V = V[:, _sum_ind(np.arange(k), hiv)]
             orth = orth[:k]
 
@@ -320,13 +324,13 @@ def lanczos(A, order, x):
 
         H[k - 1, hiv + k] = H[k, hiv + k - 1]
         v = q
-        q = r/np.tile(H[k - 1, k + hiv], (N, 1))
+        q = r / np.tile(H[k - 1, k + hiv], (N, 1))
         V[:, k + hiv] = q
 
         r = np.dot(A, q)
-        r -= np.tile(H[k - 1, k + hiv], (N, 1))*v
+        r -= np.tile(H[k - 1, k + hiv], (N, 1)) * v
         H[k, k + hiv] = np.sum(np.multiply(q, r), axis=0)
-        r -= np.tile(H[k, k + hiv], (N, 1))*q
+        r -= np.tile(H[k, k + hiv], (N, 1)) * q
 
         # The next line has to be checked
         r -= np.dot(V, np.dot(V.T, r))  # full reorthogonalization

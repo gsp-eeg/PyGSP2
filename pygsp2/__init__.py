@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 r"""
-The :mod:`pygsp2` package is mainly organized around the following two modules:
+The :mod:`pygsp2` package is mainly organized around the following two modules.
 
 * :mod:`.graphs` to create and manipulate various kinds of graphs,
 * :mod:`.filters` to create and manipulate various graph filters.
@@ -26,7 +26,7 @@ from . import features  # noqa: F401
 from . import learning  # noqa: F401
 from . import optimization  # noqa: F401
 from . import utils  # noqa: F401
-from . import utils_examples # noqa: F401
+from . import utils_examples  # noqa: F401
 
 # Users only call the plot methods from the objects.
 # It's thus more convenient for them to have the doc there.
@@ -48,6 +48,8 @@ __release_date__ = '2017-12-15'
 def test():  # pragma: no cover
     """Run the test suite."""
     import unittest
+
     # Lazy as it might be slow and require additional dependencies.
     from pygsp2.tests import suite
+
     unittest.TextTestRunner(verbosity=2).run(suite)
