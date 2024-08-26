@@ -109,7 +109,7 @@ combine-as-imports = true
 [tool.ruff.lint.pycodestyle]
 ignore-overlong-task-comments = false
 max-doc-length = 108
-max-line-length = 108
+max-line-length = 130
 
 [tool.ruff.format]
 quote-style = "single"
@@ -124,7 +124,7 @@ docstring-code-line-length = "dynamic"
 based_on_style = "pep8"
 split_before_named_assigns = false
 split_before_expression_after_opening_paren = false
-column_limit = 108
+column_limit = 130
 
 
 [tool.isort]
