@@ -514,6 +514,15 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, 
     plt.set_cmap(cmap)
     cmap = mpl.colormaps.get_cmap(cmap)
 
+    def is_color(color):
+        mpl, _, _ = _import_plt()
+        if mpl.colors.is_color_like(color):
+            return True  # single color
+        try:
+            return all(map(mpl.colors.is_color_like, color))  # color list
+        except TypeError:
+            return False  # e.g., color is an int
+
     if edges and (G.coords.ndim != 1):  # No edges for 1D plots.
 
         sources, targets, _ = G.get_edge_list()
@@ -560,8 +569,11 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, 
             ax.axvline(x=coord_hl, color=G.plotting['highlight_color'], linewidth=2)
 
     else:
-        sc = ax.scatter(*G.coords.T, c=vertex_color, s=vertex_size, marker='o', linewidths=0, alpha=alphan, zorder=2,
-                        vmin=limits[0], vmax=limits[1])
+        if is_color(vertex_color):
+            sc = ax.scatter(*G.coords.T, c=vertex_color, s=vertex_size, marker='o', linewidths=0, alpha=alphan, zorder=2)
+        else:
+            sc = ax.scatter(*G.coords.T, c=vertex_color, s=vertex_size, marker='o', linewidths=0, alpha=alphan, zorder=2,
+                            vmin=limits[0], vmax=limits[1])
         if np.isscalar(vertex_size):
             size_hl = vertex_size
         else:
