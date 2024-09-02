@@ -12,7 +12,7 @@ from . import Filter  # prevent circular import in Python < 3.5
 class MexicanHat(Filter):
     r"""Design a filter bank of Mexican hat wavelets.
 
-    The Mexican hat wavelet is the second oder derivative of a Gaussian. Since
+    The Mexican hat wavelet is the second order derivative of a Gaussian. Since
     we express the filter in the Fourier domain, we find:
 
     .. math:: \hat{g}_b(x) = x * \exp(-x)

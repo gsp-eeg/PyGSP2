@@ -6,7 +6,7 @@ Data imputing example in a  Santiago Metro station.
 
 Compute the number of exits in a random metro station. Then, compute the
 regression over the whole network and plot the error of the regression. Here,
-Tikhonov regession is used.  Lastly, the average of neighboring nodes is also
+Tikhonov regression is used.  Lastly, the average of neighboring nodes is also
 used to compare the error of the regression.
 
 To run this example, you need to download three files and place them in the

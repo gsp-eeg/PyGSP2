@@ -477,7 +477,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         # indices = [] # Assigned but never used
 
         while not visited.all():
-            # pick a node not visted yet
+            # pick a node not visited yet
             stack = set(np.nonzero(~visited)[0][[0]])
             comp = []
 

@@ -25,7 +25,7 @@ class SwissRoll(Graph):
     s : float
         sigma (default =  sqrt(2./N))
     noise : bool
-        Wether to add noise or not (default = False)
+        Whether to add noise or not (default = False)
     srtype : str
         Swiss roll Type, possible arguments are 'uniform' or 'classic'
         (default = 'uniform')
