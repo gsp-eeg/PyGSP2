@@ -3,6 +3,7 @@
 import numpy as np
 
 from pygsp2 import utils
+
 from . import Filter  # prevent circular import in Python < 3.5
 
 
@@ -24,7 +25,6 @@ class Meyer(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -42,7 +42,7 @@ class Meyer(Filter):
     def __init__(self, G, Nf=6, scales=None):
 
         if scales is None:
-            scales = (4./(3 * G.lmax)) * np.power(2., np.arange(Nf-2, -1, -1))
+            scales = (4. / (3 * G.lmax)) * np.power(2., np.arange(Nf - 2, -1, -1))
         self.scales = scales
 
         if len(scales) != Nf - 1:
@@ -55,20 +55,19 @@ class Meyer(Filter):
 
         def kernel(x, kernel_type):
             r"""
-            Evaluates Meyer function and scaling function
+            Evaluates Meyer function and scaling function.
 
             * meyer wavelet kernel: supported on [2/3,8/3]
             * meyer scaling function kernel: supported on [0,4/3]
             """
-
             x = np.asanyarray(x)
 
-            l1 = 2/3.
-            l2 = 4/3.  # 2*l1
-            l3 = 8/3.  # 4*l1
+            l1 = 2 / 3.
+            l2 = 4 / 3.  # 2*l1
+            l3 = 8 / 3.  # 4*l1
 
             def v(x):
-                return x**4 * (35 - 84*x + 70*x**2 - 20*x**3)
+                return x**4 * (35 - 84 * x + 70 * x**2 - 20 * x**3)
 
             r1ind = (x < l1)
             r2ind = (x >= l1) * (x < l2)
@@ -79,10 +78,10 @@ class Meyer(Filter):
             r = np.zeros(x.shape)
             if kernel_type == 'scaling_function':
                 r[r1ind] = 1
-                r[r2ind] = np.cos((np.pi/2) * v(np.abs(x[r2ind])/l1 - 1))
+                r[r2ind] = np.cos((np.pi / 2) * v(np.abs(x[r2ind]) / l1 - 1))
             elif kernel_type == 'wavelet':
-                r[r2ind] = np.sin((np.pi/2) * v(np.abs(x[r2ind])/l1 - 1))
-                r[r3ind] = np.cos((np.pi/2) * v(np.abs(x[r3ind])/l2 - 1))
+                r[r2ind] = np.sin((np.pi / 2) * v(np.abs(x[r2ind]) / l1 - 1))
+                r[r3ind] = np.cos((np.pi / 2) * v(np.abs(x[r3ind]) / l2 - 1))
             else:
                 raise ValueError('Unknown kernel type {}'.format(kernel_type))
 

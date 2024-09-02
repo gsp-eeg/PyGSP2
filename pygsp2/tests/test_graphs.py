@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-
-"""
-Test suite for the graphs module of the pygsp2 package.
-
-"""
+"""Test suite for the graphs module of the pygsp2 package."""
 
 from __future__ import division
 
@@ -12,12 +8,12 @@ import random
 import sys
 import unittest
 
+import graph_tool as gt
+import graph_tool.generation
+import networkx as nx
 import numpy as np
 import scipy.linalg
 from scipy import sparse
-import networkx as nx
-import graph_tool as gt
-import graph_tool.generation
 from skimage import data, img_as_float
 
 from pygsp2 import graphs
@@ -168,7 +164,7 @@ class TestCase(unittest.TestCase):
         G.compute_laplacian('combinatorial')
         np.testing.assert_allclose(G.L.toarray(), laplacian)
         G.compute_laplacian('normalized')
-        np.testing.assert_allclose(G.L.toarray(), laplacian/4)
+        np.testing.assert_allclose(G.L.toarray(), laplacian / 4)
 
         G = graphs.Graph([
             [0, 6, 0, 1],
@@ -180,7 +176,7 @@ class TestCase(unittest.TestCase):
         G.compute_laplacian('combinatorial')
         np.testing.assert_allclose(G.L.toarray(), laplacian)
         G.compute_laplacian('normalized')
-        np.testing.assert_allclose(G.L.toarray(), laplacian/4)
+        np.testing.assert_allclose(G.L.toarray(), laplacian / 4)
 
         def test_combinatorial(G):
             np.testing.assert_equal(G.L.toarray(), G.L.T.toarray())
@@ -215,7 +211,7 @@ class TestCase(unittest.TestCase):
             graph.estimate_lmax(method='bounds')
             np.testing.assert_allclose(graph.lmax, lmax)
             graph.estimate_lmax(method='lanczos')
-            np.testing.assert_allclose(graph.lmax, lmax*1.01)
+            np.testing.assert_allclose(graph.lmax, lmax * 1.01)
             graph.compute_fourier_basis()
             np.testing.assert_allclose(graph.lmax, lmax)
 
@@ -223,7 +219,7 @@ class TestCase(unittest.TestCase):
         n_nodes, value = 10, 2
         adjacency = np.full((n_nodes, n_nodes), value)
         graph = graphs.Graph(adjacency, lap_type='combinatorial')
-        check_lmax(graph, lmax=value*n_nodes)
+        check_lmax(graph, lmax=value * n_nodes)
 
         # Regular bipartite graph (bound is tight).
         adjacency = [
@@ -269,8 +265,7 @@ class TestCase(unittest.TestCase):
         assert G.U.shape[1] == G.N
         assert G.e[-1] < 2
         # eigsh might flip a sign
-        np.testing.assert_allclose(np.abs(U), np.abs(G.U[:, :n]),
-                                   atol=1e-12)
+        np.testing.assert_allclose(np.abs(U), np.abs(G.U[:, :n]), atol=1e-12)
         np.testing.assert_allclose(e, G.e[:n])
 
     def test_eigendecompositions(self):
@@ -286,6 +281,7 @@ class TestCase(unittest.TestCase):
             signs = np.sign(U[0, :])
             signs[signs == 0] = 1
             return U * signs
+
         U1 = correct_sign(U1)
         U2 = correct_sign(U2)
         U3 = correct_sign(U3)
@@ -323,13 +319,14 @@ class TestCase(unittest.TestCase):
             if not directed:
                 self.assertTrue(np.all(sources <= targets))
             edges = np.arange(G.n_edges)
-            np.testing.assert_equal(G.W[sources[edges], targets[edges]],
-                                    weights[edges][np.newaxis, :])
+            np.testing.assert_equal(G.W[sources[edges], targets[edges]], weights[edges][np.newaxis, :])
 
     def test_differential_operator(self, n_vertices=98):
         r"""The Laplacian must always be the divergence of the gradient,
         whether the Laplacian is combinatorial or normalized, and whether the
-        graph is directed or weighted."""
+        graph is directed or weighted.
+        """
+
         def test_incidence_nx(graph):
             r"""Test that the incidence matrix corresponds to NetworkX."""
             incidence_pg = np.sign(graph.D.toarray())
@@ -337,12 +334,15 @@ class TestCase(unittest.TestCase):
             graph_nx = nx.from_scipy_sparse_matrix(graph.W, create_using=G)
             incidence_nx = nx.incidence_matrix(graph_nx, oriented=True)
             np.testing.assert_equal(incidence_pg, incidence_nx.toarray())
-        for graph in [graphs.Graph(np.zeros((n_vertices, n_vertices))),
-                      graphs.Graph(np.identity(n_vertices)),
-                      graphs.Graph([[0, 0.8], [0.8, 0]]),
-                      graphs.Graph([[1.3, 0], [0.4, 0.5]]),
-                      graphs.ErdosRenyi(n_vertices, directed=False, seed=42),
-                      graphs.ErdosRenyi(n_vertices, directed=True, seed=42)]:
+
+        for graph in [
+                graphs.Graph(np.zeros((n_vertices, n_vertices))),
+                graphs.Graph(np.identity(n_vertices)),
+                graphs.Graph([[0, 0.8], [0.8, 0]]),
+                graphs.Graph([[1.3, 0], [0.4, 0.5]]),
+                graphs.ErdosRenyi(n_vertices, directed=False, seed=42),
+                graphs.ErdosRenyi(n_vertices, directed=True, seed=42)
+        ]:
             for lap_type in ['combinatorial', 'normalized']:
                 graph.compute_laplacian(lap_type)
                 graph.compute_differential_operator()
@@ -506,8 +506,7 @@ class TestCase(unittest.TestCase):
             # Distance type unsupported in the C bindings,
             # use the C++ bindings instead.
             if dist_type != 'max_dist':
-                graphs.NNGraph(Xin, use_flann=True, NNtype='knn',
-                               dist_type=dist_type)
+                graphs.NNGraph(Xin, use_flann=True, NNtype='knn', dist_type=dist_type)
 
     def test_bunny(self):
         graphs.Bunny()
@@ -529,7 +528,7 @@ class TestCase(unittest.TestCase):
     def test_comet(self, n=100, k=10):
         graph = graphs.Comet(n, k)
         self.assertEqual(graph.n_vertices, n)
-        self.assertEqual(graph.n_edges, n-1)
+        self.assertEqual(graph.n_edges, n - 1)
         self.assertEqual(graph.dw[0], k)
         graph = graphs.Comet(7, 4)
         adjacency = [
@@ -549,15 +548,15 @@ class TestCase(unittest.TestCase):
         g2 = graphs.Path(n)
         np.testing.assert_array_equal(g1.W.toarray(), g2.W.toarray())
         # Comet generalizes Star.
-        g1 = graphs.Comet(n, n-1)
+        g1 = graphs.Comet(n, n - 1)
         g2 = graphs.Star(n)
         np.testing.assert_array_equal(g1.W.toarray(), g2.W.toarray())
 
     def test_star(self, n=20):
         graph = graphs.Star(n)
         self.assertEqual(graph.n_vertices, n)
-        self.assertEqual(graph.n_edges, n-1)
-        np.testing.assert_array_equal(graph.d, [n-1] + (n-1) * [1])
+        self.assertEqual(graph.n_edges, n - 1)
+        np.testing.assert_array_equal(graph.d, [n - 1] + (n - 1) * [1])
         np.testing.assert_allclose(np.linalg.norm(graph.coords[1:], axis=1), 1)
 
     def test_lowstretchtree(self):
@@ -599,8 +598,7 @@ class TestCase(unittest.TestCase):
         graphs.StochasticBlockModel(N=100, self_loops=False)
         graphs.StochasticBlockModel(N=100, connected=True, seed=42)
         graphs.StochasticBlockModel(N=100, connected=False)
-        self.assertRaises(ValueError, graphs.StochasticBlockModel,
-                          N=100, p=0, q=0, connected=True)
+        self.assertRaises(ValueError, graphs.StochasticBlockModel, N=100, p=0, q=0, connected=True)
 
     def test_airfoil(self):
         graphs.Airfoil()
@@ -685,6 +683,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(G.W[9, 16], 1.0)
         self.assertEqual(G.W[20, 27], 1.0)
 
+
 suite_graphs = unittest.TestLoader().loadTestsFromTestCase(TestCase)
 
 
@@ -704,8 +703,7 @@ class TestImportExport(unittest.TestCase):
         g_nx = nx.gnm_random_graph(100, 50)  # Generate a random graph
         g = graphs.Graph.from_networkx(g_nx).to_networkx()
 
-        np.testing.assert_array_equal(nx.adjacency_matrix(g_nx).todense(),
-                                      nx.adjacency_matrix(g).todense())
+        np.testing.assert_array_equal(nx.adjacency_matrix(g_nx).todense(), nx.adjacency_matrix(g).todense())
 
     def test_graphtool_export_import(self):
         # Export to graph tool and reimport to PyGSP2 directly
@@ -725,14 +723,14 @@ class TestImportExport(unittest.TestCase):
         g = graphs.Graph.from_graphtool(g_gt)
         self.assertEqual(g.W[3, 6], 3.0)
 
-        eprop_double = g_gt.new_edge_property("double")
+        eprop_double = g_gt.new_edge_property('double')
 
         # Set the weight of 2 out of the 3 edges. The last one has a default weight of 0
         e = g_gt.edge(3, 6, all_edges=True)
         eprop_double[e[0]] = 8.0
         eprop_double[e[1]] = 1.0
 
-        g_gt.edge_properties["weight"] = eprop_double
+        g_gt.edge_properties['weight'] = eprop_double
         g3 = graphs.Graph.from_graphtool(g_gt)
         self.assertEqual(g3.W[3, 6], 9.0)
 
@@ -742,17 +740,17 @@ class TestImportExport(unittest.TestCase):
         rng = np.random.default_rng(42)
         graph_gt = gt.generation.random_graph(100, lambda: (rng.poisson(4), rng.poisson(4)))
 
-        eprop_double = graph_gt.new_edge_property("double")
+        eprop_double = graph_gt.new_edge_property('double')
         for e in graph_gt.edges():
             eprop_double[e] = random.random()
-        graph_gt.edge_properties["weight"] = eprop_double
+        graph_gt.edge_properties['weight'] = eprop_double
 
         graph2_gt = graphs.Graph.from_graphtool(graph_gt).to_graphtool()
 
-        self.assertEqual(graph_gt.num_edges(), graph2_gt.num_edges(),
-                         "the number of edges does not correspond")
+        self.assertEqual(graph_gt.num_edges(), graph2_gt.num_edges(), 'the number of edges does not correspond')
 
-        def key(edge): return str(edge.source()) + ":" + str(edge.target())
+        def key(edge):
+            return str(edge.source()) + ':' + str(edge.target())
 
         for e1, e2 in zip(sorted(graph_gt.edges(), key=key), sorted(graph2_gt.edges(), key=key)):
             self.assertEqual(e1.source(), e2.source())
@@ -765,12 +763,12 @@ class TestImportExport(unittest.TestCase):
         rng = np.random.default_rng(42)
         signal1 = rng.normal(0, 1, graph.N)
         signal2 = rng.integers(0, 10, graph.N)
-        graph.set_signal(signal1, "signal1")
-        graph.set_signal(signal2, "signal2")
+        graph.set_signal(signal1, 'signal1')
+        graph.set_signal(signal2, 'signal2')
         graph_nx = graph.to_networkx()
         for i in range(graph.N):
-            self.assertEqual(graph_nx.nodes[i]["signal1"], signal1[i])
-            self.assertEqual(graph_nx.nodes[i]["signal2"], signal2[i])
+            self.assertEqual(graph_nx.nodes[i]['signal1'], signal1[i])
+            self.assertEqual(graph_nx.nodes[i]['signal2'], signal2[i])
         # invalid signal type
         graph = graphs.Path(3)
         graph.set_signal(np.array(['a', 'b', 'c']), 'sig')
@@ -781,13 +779,13 @@ class TestImportExport(unittest.TestCase):
         rng = np.random.default_rng(42)
         s = rng.normal(0, 1, size=g.N)
         s2 = rng.integers(0, 10, size=g.N)
-        g.set_signal(s, "signal1")
-        g.set_signal(s2, "signal2")
+        g.set_signal(s, 'signal1')
+        g.set_signal(s2, 'signal2')
         g_gt = g.to_graphtool()
         # Check the signals on all nodes
         for i, v in enumerate(g_gt.vertices()):
-            self.assertEqual(g_gt.vertex_properties["signal1"][v], s[i])
-            self.assertEqual(g_gt.vertex_properties["signal2"][v], s2[i])
+            self.assertEqual(g_gt.vertex_properties['signal1'][v], s[i])
+            self.assertEqual(g_gt.vertex_properties['signal2'][v], s2[i])
         # invalid signal type
         graph = graphs.Path(3)
         graph.set_signal(np.array(['a', 'b', 'c']), 'sig')
@@ -801,25 +799,25 @@ class TestImportExport(unittest.TestCase):
         g_gt.add_edge(g_gt.vertex(4), g_gt.vertex(6))
         g_gt.add_edge(g_gt.vertex(7), g_gt.vertex(2))
 
-        vprop_double = g_gt.new_vertex_property("double")
+        vprop_double = g_gt.new_vertex_property('double')
 
         vprop_double[g_gt.vertex(0)] = 5
         vprop_double[g_gt.vertex(1)] = -3
         vprop_double[g_gt.vertex(2)] = 2.4
 
-        g_gt.vertex_properties["signal"] = vprop_double
+        g_gt.vertex_properties['signal'] = vprop_double
         g = graphs.Graph.from_graphtool(g_gt)
-        self.assertEqual(g.signals["signal"][0], 5.0)
-        self.assertEqual(g.signals["signal"][1], -3.0)
-        self.assertEqual(g.signals["signal"][2], 2.4)
+        self.assertEqual(g.signals['signal'][0], 5.0)
+        self.assertEqual(g.signals['signal'][1], -3.0)
+        self.assertEqual(g.signals['signal'][2], 2.4)
 
     def test_networkx_signal_import(self):
         graph_nx = nx.Graph()
         graph_nx.add_nodes_from(range(2, 5))
         graph_nx.add_edges_from([(3, 4), (2, 4), (3, 5)])
-        nx.set_node_attributes(graph_nx, {2: 4, 3: 5, 5: 2.3}, "s")
+        nx.set_node_attributes(graph_nx, {2: 4, 3: 5, 5: 2.3}, 's')
         graph_pg = graphs.Graph.from_networkx(graph_nx)
-        np.testing.assert_allclose(graph_pg.signals["s"], [4, 5, np.nan, 2.3])
+        np.testing.assert_allclose(graph_pg.signals['s'], [4, 5, np.nan, 2.3])
 
     def test_no_weights(self):
 
@@ -836,7 +834,7 @@ class TestImportExport(unittest.TestCase):
         graph_nx.edges[(0, 1)]['weight'] = 2
         graph_nx.edges[(1, 2)]['weight'] = 2
         graph_pg = graphs.Graph.from_networkx(graph_nx)
-        np.testing.assert_allclose(graph_pg.W.toarray(), 2*adjacency)
+        np.testing.assert_allclose(graph_pg.W.toarray(), 2 * adjacency)
         graph_pg = graphs.Graph.from_networkx(graph_nx, weight='unknown')
         np.testing.assert_allclose(graph_pg.W.toarray(), adjacency)
 
@@ -848,12 +846,12 @@ class TestImportExport(unittest.TestCase):
         np.testing.assert_allclose(graph_pg.W.toarray(), adjacency)
 
         # Graph-tool non-existent weight name.
-        prop = graph_gt.new_edge_property("double")
+        prop = graph_gt.new_edge_property('double')
         prop[graph_gt.edge(0, 1)] = 2
         prop[graph_gt.edge(1, 2)] = 2
-        graph_gt.edge_properties["weight"] = prop
+        graph_gt.edge_properties['weight'] = prop
         graph_pg = graphs.Graph.from_graphtool(graph_gt)
-        np.testing.assert_allclose(graph_pg.W.toarray(), 2*adjacency)
+        np.testing.assert_allclose(graph_pg.W.toarray(), 2 * adjacency)
         graph_pg = graphs.Graph.from_graphtool(graph_gt, weight='unknown')
         np.testing.assert_allclose(graph_pg.W.toarray(), adjacency)
 
@@ -892,8 +890,7 @@ class TestImportExport(unittest.TestCase):
 
                 if fmt == 'gexf' and backend == 'graph-tool':
                     self.assertRaises(ValueError, G1.save, 'g', fmt, backend)
-                    self.assertRaises(ValueError, graphs.Graph.load, 'g', fmt,
-                                      backend)
+                    self.assertRaises(ValueError, graphs.Graph.load, 'g', fmt, backend)
                     os.remove('g')
                     continue
 
@@ -918,19 +915,15 @@ class TestImportExport(unittest.TestCase):
         with patch.dict(sys.modules, {'networkx': None}):
             self.assertRaises(ImportError, graph.to_networkx)
             self.assertRaises(ImportError, graphs.Graph.from_networkx, None)
-            self.assertRaises(ImportError, graph.save, filename,
-                              backend='networkx')
-            self.assertRaises(ImportError, graphs.Graph.load, filename,
-                              backend='networkx')
+            self.assertRaises(ImportError, graph.save, filename, backend='networkx')
+            self.assertRaises(ImportError, graphs.Graph.load, filename, backend='networkx')
             graph.save(filename)
             graphs.Graph.load(filename)
         with patch.dict(sys.modules, {'graph_tool': None}):
             self.assertRaises(ImportError, graph.to_graphtool)
             self.assertRaises(ImportError, graphs.Graph.from_graphtool, None)
-            self.assertRaises(ImportError, graph.save, filename,
-                              backend='graph-tool')
-            self.assertRaises(ImportError, graphs.Graph.load, filename,
-                              backend='graph-tool')
+            self.assertRaises(ImportError, graph.save, filename, backend='graph-tool')
+            self.assertRaises(ImportError, graphs.Graph.load, filename, backend='graph-tool')
             graph.save(filename)
             graphs.Graph.load(filename)
         with patch.dict(sys.modules, {'networkx': None, 'graph_tool': None}):

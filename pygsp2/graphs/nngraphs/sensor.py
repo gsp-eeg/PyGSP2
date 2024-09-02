@@ -31,7 +31,6 @@ class Sensor(NNGraph):
 
     Notes
     -----
-
     The definition of this graph changed in February 2019.
     See the `GitHub PR <https://github.com/epfl-lts2/pygsp2/pull/19>`_.
 
@@ -68,18 +67,14 @@ class Sensor(NNGraph):
                                  'perfect square if they are to be '
                                  'distributed on a grid.')
 
-            coords = np.mgrid[0:1:1/m, 0:1:1/m].reshape(2, -1).T
-            coords += rng.uniform(0, 1/m, (N, 2))
+            coords = np.mgrid[0:1:1 / m, 0:1:1 / m].reshape(2, -1).T
+            coords += rng.uniform(0, 1 / m, (N, 2))
 
         else:
 
             coords = rng.uniform(0, 1, (N, 2))
 
-        super(Sensor, self).__init__(Xin=coords, k=k,
-                                     rescale=False, center=False,
-                                     plotting=plotting, **kwargs)
+        super(Sensor, self).__init__(Xin=coords, k=k, rescale=False, center=False, plotting=plotting, **kwargs)
 
     def _get_extra_repr(self):
-        return {'k': self.k,
-                'distributed': self.distributed,
-                'seed': self.seed}
+        return {'k': self.k, 'distributed': self.distributed, 'seed': self.seed}

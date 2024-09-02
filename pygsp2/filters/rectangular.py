@@ -40,7 +40,6 @@ class Rectangular(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt

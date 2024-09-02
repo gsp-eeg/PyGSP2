@@ -29,7 +29,6 @@ class Expwin(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -52,7 +51,8 @@ class Expwin(Filter):
 
         def exp(x):
             """Exponential function with canary to avoid division by zero and
-            overflow."""
+            overflow.
+            """
             y = np.where(x <= 0, -1, x)
             y = np.exp(-slope / y)
             return np.where(x <= 0, 0, y)
@@ -63,9 +63,10 @@ class Expwin(Filter):
             return y / (y + z)
 
         def kernel_lowpass(x):
-            return h(0.5 - x/G.lmax + band_max)
+            return h(0.5 - x / G.lmax + band_max)
+
         def kernel_highpass(x):
-            return h(0.5 + x/G.lmax - band_min)
+            return h(0.5 + x / G.lmax - band_min)
 
         if (band_min is None) and (band_max is None):
             kernel = lambda x: np.ones_like(x)

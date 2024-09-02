@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from scipy import sparse, linalg
+from scipy import linalg, sparse
 
 from pygsp2 import utils
-
 
 logger = utils.build_logger(__name__)
 
@@ -65,7 +64,6 @@ class FourierMixIn(object):
 
         Examples
         --------
-
         Delocalized eigenvectors.
 
         >>> graph = graphs.Path(100)
@@ -94,8 +92,7 @@ class FourierMixIn(object):
         >>> _ = graph.plot(graph.U[:, idx_fourier], highlight=idx_vertex)
 
         """
-        return self._check_fourier_properties('coherence',
-                                              'Fourier basis coherence')
+        return self._check_fourier_properties('coherence', 'Fourier basis coherence')
 
     def compute_fourier_basis(self, n_eigenvectors=None):
         r"""Compute the (partial) Fourier basis of the graph (cached).
@@ -161,22 +158,17 @@ class FourierMixIn(object):
 
         assert self.L.shape == (self.n_vertices, self.n_vertices)
         if self.n_vertices**2 * n_eigenvectors > 3000**3:
-            self.logger.warning(
-                'Computing the {0} eigendecomposition of a large matrix ({1} x'
-                ' {1}) is expensive. Consider decreasing n_eigenvectors '
-                'or, if using the Fourier basis to filter, using a '
-                'polynomial filter instead.'.format(
-                    'full' if n_eigenvectors == self.N else 'partial',
-                    self.N))
+            self.logger.warning('Computing the {0} eigendecomposition of a large matrix ({1} x'
+                                ' {1}) is expensive. Consider decreasing n_eigenvectors '
+                                'or, if using the Fourier basis to filter, using a '
+                                'polynomial filter instead.'.format('full' if n_eigenvectors == self.N else 'partial', self.N))
 
         # TODO: handle non-symmetric Laplacians. Test lap_type?
         if n_eigenvectors == self.n_vertices:
             self._e, self._U = linalg.eigh(self.L.toarray(order='F'), overwrite_a=True)
         else:
             # fast partial eigendecomposition of hermitian matrices
-            self._e, self._U = sparse.linalg.eigsh(self.L,
-                                                   n_eigenvectors,
-                                                   which='SM')
+            self._e, self._U = sparse.linalg.eigsh(self.L, n_eigenvectors, which='SM')
         # Columns are eigenvectors. Sorted in ascending eigenvalue order.
 
         # Smallest eigenvalue should be zero: correct numerical errors.

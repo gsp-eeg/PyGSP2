@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-
 r"""
 The :mod:`pygsp2.optimization` module provides tools to solve convex
 optimization problems on graphs.
 """
 
 from pygsp2 import utils
-
 
 logger = utils.build_logger(__name__)
 
@@ -64,15 +62,14 @@ def prox_tv(x, gamma, G, A=None, At=None, nu=1, tol=10e-4, maxit=200, use_matrix
     Returns
     -------
     sol: solution
-
-    Examples
-    --------
-
     """
     if A is None:
+
         def A(x):
             return x
+
     if At is None:
+
         def At(x):
             return x
 
@@ -80,12 +77,14 @@ def prox_tv(x, gamma, G, A=None, At=None, nu=1, tol=10e-4, maxit=200, use_matrix
     l1_nu = 2 * G.lmax * nu
 
     if use_matrix:
+
         def l1_a(x):
             return G.Diff * A(x)
 
         def l1_at(x):
             return G.Diff * At(D.T * x)
     else:
+
         def l1_a(x):
             return G.grad(A(x))
 

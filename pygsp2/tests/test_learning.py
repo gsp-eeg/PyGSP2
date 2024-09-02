@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
-
-"""
-Test suite for the learning module of the pygsp2 package.
-
-"""
+"""Test suite for the learning module of the pygsp2 package."""
 
 import unittest
 
 import numpy as np
-
-from pygsp2 import graphs, filters, learning
 from scipy import spatial
+
+from pygsp2 import filters, graphs, learning
 
 
 class TestCase(unittest.TestCase):
@@ -37,7 +33,7 @@ class TestCase(unittest.TestCase):
         G.estimate_lmax()
 
         # Create a smooth signal.
-        filt = filters.Filter(G, lambda x: 1 / (1 + 10*x))
+        filt = filters.Filter(G, lambda x: 1 / (1 + 10 * x))
         rng = np.random.default_rng(1)
         signal = filt.analyze(rng.normal(size=(G.n_vertices, 5)))
 
@@ -53,16 +49,14 @@ class TestCase(unittest.TestCase):
 
         recovery1 = np.zeros_like(recovery0)
         for i in range(recovery0.shape[1]):
-            recovery1[:, i] = learning.regression_tikhonov(
-                G, measures[:, i], mask, tau=0)
+            recovery1[:, i] = learning.regression_tikhonov(G, measures[:, i], mask, tau=0)
         np.testing.assert_allclose(measures_bak, measures)
 
         G = graphs.Graph(G.W.toarray())
         recovery2 = learning.regression_tikhonov(G, measures, mask, tau=0)
         recovery3 = np.zeros_like(recovery0)
         for i in range(recovery0.shape[1]):
-            recovery3[:, i] = learning.regression_tikhonov(
-                G, measures[:, i], mask, tau=0)
+            recovery3[:, i] = learning.regression_tikhonov(G, measures[:, i], mask, tau=0)
 
         np.testing.assert_allclose(recovery1, recovery0)
         np.testing.assert_allclose(recovery2, recovery0)
@@ -75,7 +69,7 @@ class TestCase(unittest.TestCase):
         G.estimate_lmax()
 
         # Create a smooth signal.
-        filt = filters.Filter(G, lambda x: 1 / (1 + 10*x))
+        filt = filters.Filter(G, lambda x: 1 / (1 + 10 * x))
         rng = np.random.default_rng(1)
         signal = filt.analyze(rng.normal(size=(G.n_vertices, 6)))
 
@@ -86,24 +80,21 @@ class TestCase(unittest.TestCase):
         measures_bak = measures.copy()
 
         L = G.L.toarray()
-        recovery = np.matmul(np.linalg.inv(np.diag(1*mask) + tau * L),
-                             (mask * measures.T).T)
+        recovery = np.matmul(np.linalg.inv(np.diag(1 * mask) + tau * L), (mask * measures.T).T)
 
         # Solve the problem.
         recovery0 = learning.regression_tikhonov(G, measures, mask, tau=tau)
         np.testing.assert_allclose(measures_bak, measures)
         recovery1 = np.zeros_like(recovery0)
         for i in range(recovery0.shape[1]):
-            recovery1[:, i] = learning.regression_tikhonov(
-                G, measures[:, i], mask, tau)
+            recovery1[:, i] = learning.regression_tikhonov(G, measures[:, i], mask, tau)
         np.testing.assert_allclose(measures_bak, measures)
 
         G = graphs.Graph(G.W.toarray())
         recovery2 = learning.regression_tikhonov(G, measures, mask, tau)
         recovery3 = np.zeros_like(recovery0)
         for i in range(recovery0.shape[1]):
-            recovery3[:, i] = learning.regression_tikhonov(
-                G, measures[:, i], mask, tau)
+            recovery3[:, i] = learning.regression_tikhonov(G, measures[:, i], mask, tau)
 
         np.testing.assert_allclose(recovery0, recovery, atol=1e-5)
         np.testing.assert_allclose(recovery1, recovery, atol=1e-5)
@@ -133,8 +124,7 @@ class TestCase(unittest.TestCase):
         np.testing.assert_array_equal(recovery, signal)
 
         # Test the function with the simplex projection.
-        recovery = learning.classification_tikhonov_simplex(
-            G, measures, mask, tau=0.1)
+        recovery = learning.classification_tikhonov_simplex(G, measures, mask, tau=0.1)
 
         # Assert that the probabilities sums to 1
         np.testing.assert_allclose(np.sum(recovery, axis=1), 1)
@@ -145,13 +135,9 @@ class TestCase(unittest.TestCase):
         np.testing.assert_allclose(measures_bak, measures)
 
     def test_graph_log_degree(self):
-        "Solve graph learning from signal"
-
+        """Solve graph learning from signal."""
         # Make graph
-        G = graphs.Graph([[0, 0, 0, 0],
-                          [0, 0, 1, 1],
-                          [0, 1, 0, 1],
-                          [0, 1, 1, 0]])
+        G = graphs.Graph([[0, 0, 0, 0], [0, 0, 1, 1], [0, 1, 0, 1], [0, 1, 1, 0]])
 
         # Signal
         signal = np.array([0, 1, 1, 1])

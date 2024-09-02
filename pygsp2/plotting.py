@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 r"""
 The :mod:`pygsp2.plotting` module implements functionality to plot PyGSP2 objects
 with a `pyqtgraph <https://www.pyqtgraph.org>`_ or `matplotlib
@@ -27,11 +26,9 @@ from __future__ import division
 import functools
 
 import numpy as np
-
 from matplotlib import colormaps
 
 from pygsp2 import utils
-
 
 _logger = utils.build_logger(__name__)
 
@@ -70,11 +67,11 @@ def _import_qtg():
 
 def _plt_handle_figure(plot):
     r"""Handle the common work (creating an axis if not given, setting the
-    title) of all matplotlib plot commands."""
+    title) of all matplotlib plot commands.
+    """
 
     # Preserve documentation of plot.
     @functools.wraps(plot)
-
     def inner(obj, **kwargs):
 
         # Create a figure and an axis if none were passed.
@@ -84,8 +81,7 @@ def _plt_handle_figure(plot):
             global _plt_figures
             _plt_figures.append(fig)
 
-            if (hasattr(obj, 'coords') and obj.coords.ndim == 2 and
-                    obj.coords.shape[1] == 3):
+            if (hasattr(obj, 'coords') and obj.coords.ndim == 2 and obj.coords.shape[1] == 3):
                 kwargs['ax'] = fig.add_subplot(111, projection='3d')
             else:
                 kwargs['ax'] = fig.add_subplot(111)
@@ -109,7 +105,6 @@ def _plt_handle_figure(plot):
 
 def close_all():
     r"""Close all opened windows."""
-
     global _qtg_widgets
     for widget in _qtg_widgets:
         widget.close()
@@ -155,8 +150,7 @@ def _qtg_plot_graph(G, edges, vertex_size, title):
 
         adj = _get_coords(G, edge_list=True)
 
-        g = qtg.GraphItem(pos=G.coords, adj=adj, pen=pen,
-                          size=vertex_size/10)
+        g = qtg.GraphItem(pos=G.coords, adj=adj, pen=pen, size=vertex_size / 10)
         view.addItem(g)
 
     elif G.coords.shape[1] == 3:
@@ -168,12 +162,10 @@ def _qtg_plot_graph(G, edges, vertex_size, title):
         if edges:
             x, y, z = _get_coords(G)
             pos = np.stack((x, y, z), axis=1)
-            g = gl.GLLinePlotItem(pos=pos, mode='lines',
-                                  color=G.plotting['edge_color'])
+            g = gl.GLLinePlotItem(pos=pos, mode='lines', color=G.plotting['edge_color'])
             widget.addItem(g)
 
-        gp = gl.GLScatterPlotItem(pos=G.coords, size=vertex_size/3,
-                                  color=G.plotting['vertex_color'])
+        gp = gl.GLScatterPlotItem(pos=G.coords, size=vertex_size / 3, color=G.plotting['vertex_color'])
         widget.addItem(gp)
 
     widget.setWindowTitle(title)
@@ -228,7 +220,6 @@ def _plot_filter(filters, n, eigenvalues, sum, labels, title, ax, **kwargs):
     >>> fig, ax = mh.plot()
 
     """
-
     if eigenvalues is None:
         eigenvalues = (filters.G._e is not None)
 
@@ -241,8 +232,7 @@ def _plot_filter(filters, n, eigenvalues, sum, labels, title, ax, **kwargs):
     if title is None:
         title = repr(filters)
 
-    return _plt_plot_filter(filters, n=n, eigenvalues=eigenvalues, sum=sum,
-                            labels=labels, title=title, ax=ax, **kwargs)
+    return _plt_plot_filter(filters, n=n, eigenvalues=eigenvalues, sum=sum, labels=labels, title=title, ax=ax, **kwargs)
 
 
 @_plt_handle_figure
@@ -270,7 +260,7 @@ def _plt_plot_filter(filters, n, eigenvalues, sum, labels, ax, **kwargs):
         for i, line in enumerate(lines):
             line.set_label(fr'$g_{{{i}}}(\lambda)$')
         if sum:
-            line_sum.set_label(fr'$\sum_i g_i^2(\lambda)$')
+            line_sum.set_label(r'$\sum_i g_i^2(\lambda)$')
         ax.legend()
 
     if eigenvalues:
@@ -279,10 +269,9 @@ def _plt_plot_filter(filters, n, eigenvalues, sum, labels, ax, **kwargs):
         segs[:, 0, 0] = segs[:, 1, 0] = filters.G.e
         segs[:, :, 1] = [0, 1]
         mpl, _, _ = _import_plt()
-        ax.add_collection(mpl.collections.LineCollection(
-            segs, transform=ax.get_xaxis_transform(), zorder=0,
-            color=[0.9]*3, linewidth=1, label='eigenvalues')
-        )
+        ax.add_collection(
+            mpl.collections.LineCollection(segs, transform=ax.get_xaxis_transform(), zorder=0, color=[0.9] * 3, linewidth=1,
+                                           label='eigenvalues'))
 
         # Plot dots where the evaluation matters.
         y = filters.evaluate(filters.G.e).T
@@ -298,10 +287,8 @@ def _plt_plot_filter(filters, n, eigenvalues, sum, labels, ax, **kwargs):
     ax.set_ylabel(r'filter response $g(\lambda)$')
 
 
-def _plot_graph(G, vertex_color, vertex_size, highlight,
-                edges, edge_color, edge_width,
-                indices, colorbar, limits, ax, title, backend,
-                cmap, alphan, alphav, edge_weights):
+def _plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge_width, indices, colorbar, limits, ax, title,
+                backend, cmap, alphan, alphav, edge_weights):
     r"""Plot a graph with signals as color or vertex size.
 
     Parameters
@@ -453,7 +440,7 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         cmap = CMAP
     else:
         if cmap not in colormaps:
-            print("Wrong colormap")
+            print('Wrong colormap')
             cmap = CMAP
 
     alphan = np.abs(alphan)
@@ -463,14 +450,13 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         limits = [0, 0]
         colorbar = False
         if backend == 'matplotlib':
-            vertex_color = (G.plotting['vertex_color'],)
+            vertex_color = (G.plotting['vertex_color'], )
     elif is_color(vertex_color):
         limits = [0, 0]
         colorbar = False
     else:
         vertex_color = np.asanyarray(vertex_color).squeeze()
-        check_shape(vertex_color, 'Vertex color', G.n_vertices,
-                    many=(G.coords.ndim == 1))
+        check_shape(vertex_color, 'Vertex color', G.n_vertices, many=(G.coords.ndim == 1))
 
     if vertex_size is None:
         vertex_size = G.plotting['vertex_size']
@@ -483,7 +469,7 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         edges = G.Ne < 10e3
 
     if edge_color is None:
-        edge_color = (G.plotting['edge_color'],)
+        edge_color = (G.plotting['edge_color'], )
     elif not is_color(edge_color):
         edge_color = np.asanyarray(edge_color).squeeze()
         check_shape(edge_color, 'Edge color', G.n_edges)
@@ -502,33 +488,27 @@ def _plot_graph(G, vertex_color, vertex_size, highlight,
         edge_width = G.plotting['edge_width'] * 2 * normalize(edge_width)
 
     if limits is None:
-        limits = [1.05*vertex_color.min(), 1.05*vertex_color.max()]
+        limits = [1.05 * vertex_color.min(), 1.05 * vertex_color.max()]
 
     if title is None:
         title = G.__repr__(limit=4)
 
     if backend == 'pyqtgraph':
         if vertex_color is None:
-            _qtg_plot_graph(G, edges=edges, vertex_size=vertex_size,
-                            title=title)
+            _qtg_plot_graph(G, edges=edges, vertex_size=vertex_size, title=title)
         else:
-            _qtg_plot_signal(G, signal=vertex_color, vertex_size=vertex_size,
-                             edges=edges, limits=limits, title=title)
+            _qtg_plot_signal(G, signal=vertex_color, vertex_size=vertex_size, edges=edges, limits=limits, title=title)
     elif backend == 'matplotlib':
-        return _plt_plot_graph(G, vertex_color=vertex_color,
-                               vertex_size=vertex_size, highlight=highlight,
-                               edges=edges, indices=indices, colorbar=colorbar,
-                               edge_color=edge_color, edge_width=edge_width,
-                               limits=limits, ax=ax, title=title, cmap=cmap,
-                               alphan=alphan, alphav=alphav, edge_weights=edge_weights)
+        return _plt_plot_graph(G, vertex_color=vertex_color, vertex_size=vertex_size, highlight=highlight, edges=edges,
+                               indices=indices, colorbar=colorbar, edge_color=edge_color, edge_width=edge_width, limits=limits,
+                               ax=ax, title=title, cmap=cmap, alphan=alphan, alphav=alphav, edge_weights=edge_weights)
     else:
         raise ValueError('Unknown backend {}.'.format(backend))
 
 
 @_plt_handle_figure
-def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
-                    edges, edge_color, edge_width,
-                    indices, colorbar, limits, ax, cmap, alphan, alphav, edge_weights):
+def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge_width, indices, colorbar, limits, ax, cmap,
+                    alphan, alphav, edge_weights):
 
     mpl, plt, mplot3d = _import_plt()
     plt.set_cmap(cmap)
@@ -552,25 +532,20 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
             normalized_signal = edge_weights / np.max(edge_weights)
             colors = cmap(normalized_signal)
 
-            ax.add_collection(LineCollection(
-                edges,
-                linewidths=edge_width,
-                colors=colors,
-                linestyles=G.plotting['edge_style'],
-                zorder=1,
-                alpha=alphav,
-            ))
+            ax.add_collection(
+                LineCollection(
+                    edges,
+                    linewidths=edge_width,
+                    colors=colors,
+                    linestyles=G.plotting['edge_style'],
+                    zorder=1,
+                    alpha=alphav,
+                ))
 
         else:
-            ax.add_collection(LineCollection(
-                edges,
-                linewidths=edge_width,
-                colors=edge_color,
-                linestyles=G.plotting['edge_style'],
-                zorder=1,
-                alpha=alphav
-            ))
-
+            ax.add_collection(
+                LineCollection(edges, linewidths=edge_width, colors=edge_color, linestyles=G.plotting['edge_style'], zorder=1,
+                               alpha=alphav))
 
     try:
         iter(highlight)
@@ -582,27 +557,21 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
         ax.plot(G.coords, vertex_color, alpha=alphan)
         ax.set_ylim(limits)
         for coord_hl in coords_hl:
-            ax.axvline(x=coord_hl, color=G.plotting['highlight_color'],
-                       linewidth=2)
+            ax.axvline(x=coord_hl, color=G.plotting['highlight_color'], linewidth=2)
 
     else:
-        sc = ax.scatter(*G.coords.T,
-                        c=vertex_color, s=vertex_size,
-                        marker='o', linewidths=0, alpha=alphan, zorder=2,
+        sc = ax.scatter(*G.coords.T, c=vertex_color, s=vertex_size, marker='o', linewidths=0, alpha=alphan, zorder=2,
                         vmin=limits[0], vmax=limits[1])
         if np.isscalar(vertex_size):
             size_hl = vertex_size
         else:
             size_hl = vertex_size[highlight]
-        ax.scatter(*coords_hl.T,
-                   s=2*size_hl, zorder=3,
-                   marker='o', c='None',
-                   edgecolors=G.plotting['highlight_color'], linewidths=2)
+        ax.scatter(*coords_hl.T, s=2 * size_hl, zorder=3, marker='o', c='None', edgecolors=G.plotting['highlight_color'],
+                   linewidths=2)
 
         if G.coords.shape[1] == 3:
             try:
-                ax.view_init(elev=G.plotting['elevation'],
-                             azim=G.plotting['azimuth'])
+                ax.view_init(elev=G.plotting['elevation'], azim=G.plotting['azimuth'])
                 ax.dist = G.plotting['distance']
             except KeyError:
                 pass
@@ -612,11 +581,12 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight,
 
     if indices:
         for node in range(G.N):
-            ax.text(*tuple(G.coords[node]),  # accomodate 2D and 3D
-                    s=node,
-                    color='white',
-                    horizontalalignment='center',
-                    verticalalignment='center')
+            ax.text(
+                *tuple(G.coords[node]),  # accomodate 2D and 3D
+                s=node,
+                color='white',
+                horizontalalignment='center',
+                verticalalignment='center')
 
 
 def _qtg_plot_signal(G, signal, edges, vertex_size, limits, title):
@@ -638,35 +608,28 @@ def _qtg_plot_signal(G, signal, edges, vertex_size, limits, title):
         if G.coords.shape[1] == 2:
             adj = _get_coords(G, edge_list=True)
             pen = tuple(np.array(G.plotting['edge_color']) * 255)
-            g = qtg.GraphItem(pos=G.coords, adj=adj, symbolBrush=None,
-                              symbolPen=None, pen=pen)
+            g = qtg.GraphItem(pos=G.coords, adj=adj, symbolBrush=None, symbolPen=None, pen=pen)
             view.addItem(g)
 
         elif G.coords.shape[1] == 3:
             x, y, z = _get_coords(G)
             pos = np.stack((x, y, z), axis=1)
-            g = gl.GLLinePlotItem(pos=pos, mode='lines',
-                                  color=G.plotting['edge_color'])
+            g = gl.GLLinePlotItem(pos=pos, mode='lines', color=G.plotting['edge_color'])
             widget.addItem(g)
 
     pos = [1, 8, 24, 40, 56, 64]
-    color = np.array([[0, 0, 143, 255], [0, 0, 255, 255], [0, 255, 255, 255],
-                      [255, 255, 0, 255], [255, 0, 0, 255], [128, 0, 0, 255]])
+    color = np.array([[0, 0, 143, 255], [0, 0, 255, 255], [0, 255, 255, 255], [255, 255, 0, 255], [255, 0, 0, 255],
+                      [128, 0, 0, 255]])
     cmap = qtg.ColorMap(pos, color)
 
     signal = 1 + 63 * (signal - limits[0]) / limits[1] - limits[0]
 
     if G.coords.shape[1] == 2:
-        gp = qtg.ScatterPlotItem(G.coords[:, 0],
-                                 G.coords[:, 1],
-                                 size=vertex_size/10,
-                                 brush=cmap.map(signal, 'qcolor'))
+        gp = qtg.ScatterPlotItem(G.coords[:, 0], G.coords[:, 1], size=vertex_size / 10, brush=cmap.map(signal, 'qcolor'))
         view.addItem(gp)
 
     if G.coords.shape[1] == 3:
-        gp = gl.GLScatterPlotItem(pos=G.coords,
-                                  size=vertex_size/3,
-                                  color=cmap.map(signal, 'float'))
+        gp = gl.GLScatterPlotItem(pos=G.coords, size=vertex_size / 3, color=cmap.map(signal, 'float'))
         widget.addItem(gp)
 
     widget.setWindowTitle(title)
@@ -708,27 +671,22 @@ def _plot_spectrogram(G, node_idx):
     min_spec, max_spec = spectr.min(), spectr.max()
 
     pos = np.array([0., 0.25, 0.5, 0.75, 1.])
-    color = [[20, 133, 212, 255], [53, 42, 135, 255], [48, 174, 170, 255],
-             [210, 184, 87, 255], [249, 251, 14, 255]]
+    color = [[20, 133, 212, 255], [53, 42, 135, 255], [48, 174, 170, 255], [210, 184, 87, 255], [249, 251, 14, 255]]
     color = np.array(color, dtype=np.ubyte)
     cmap = qtg.ColorMap(pos, color)
 
     spectr = (spectr.astype(float) - min_spec) / (max_spec - min_spec)
 
     widget = qtg.GraphicsLayoutWidget()
-    label = 'frequencies {}:{:.2f}:{:.2f}'.format(0, G.lmax/M, G.lmax)
+    label = 'frequencies {}:{:.2f}:{:.2f}'.format(0, G.lmax / M, G.lmax)
     v = widget.addPlot(labels={'bottom': 'nodes', 'left': label})
     v.setAspectLocked()
 
-    spi = qtg.ScatterPlotItem(np.repeat(np.arange(G.N), M),
-                              np.ravel(np.tile(np.arange(M), (1, G.N))),
-                              pxMode=False,
-                              symbol='s',
-                              size=1,
-                              brush=cmap.map(spectr, 'qcolor'))
+    spi = qtg.ScatterPlotItem(np.repeat(np.arange(G.N), M), np.ravel(np.tile(np.arange(M), (1, G.N))), pxMode=False, symbol='s',
+                              size=1, brush=cmap.map(spectr, 'qcolor'))
     v.addItem(spi)
 
-    widget.setWindowTitle("Spectrogram of {}".format(G.__repr__(limit=4)))
+    widget.setWindowTitle('Spectrogram of {}'.format(G.__repr__(limit=4)))
     widget.show()
 
     global _qtg_widgets
@@ -742,8 +700,7 @@ def _get_coords(G, edge_list=False):
     if edge_list:
         return np.stack((sources, targets), axis=1)
 
-    coords = [np.stack((G.coords[sources, d], G.coords[targets, d]), axis=0)
-              for d in range(G.coords.shape[1])]
+    coords = [np.stack((G.coords[sources, d], G.coords[targets, d]), axis=0) for d in range(G.coords.shape[1])]
 
     if G.coords.shape[1] == 2:
         return coords

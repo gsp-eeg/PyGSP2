@@ -127,8 +127,7 @@ class IOMixIn(object):
 
         def nodes():
             for vertex in range(self.n_vertices):
-                signals = {name: convert(signal[vertex])
-                           for name, signal in self.signals.items()}
+                signals = {name: convert(signal[vertex]) for name, signal in self.signals.items()}
                 yield vertex, signals
 
         self._break_signals()
@@ -195,7 +194,6 @@ class IOMixIn(object):
         >>> _ = axes[1].plot(graph.e, graph.gft(graph.signals['betweenness']))
 
         """
-
         gt = _import_graphtool()
         graph = gt.Graph(directed=self.is_directed())
 
@@ -239,7 +237,6 @@ class IOMixIn(object):
 
         Notes
         -----
-
         The nodes are ordered according to :meth:`networkx.Graph.nodes`.
 
         In NetworkX, node attributes need not be set for every node.
@@ -320,7 +317,6 @@ class IOMixIn(object):
 
         Notes
         -----
-
         If the graph has multiple edge connecting the same two nodes, a sum
         over the edges is taken to merge them.
 
@@ -355,6 +351,7 @@ class IOMixIn(object):
         """
         gt = _import_graphtool()
         import graph_tool.spectral
+
         from .graph import Graph
 
         weight = graph.edge_properties.get(weight, None)
@@ -400,7 +397,6 @@ class IOMixIn(object):
 
         Notes
         -----
-
         A lossless round-trip is only guaranteed if the graph (and its signals)
         is saved and loaded with the same backend.
 
@@ -417,7 +413,6 @@ class IOMixIn(object):
         >>> os.remove('logo.graphml')
 
         """
-
         if fmt is None:
             fmt = os.path.splitext(path)[1][1:]
         if fmt not in ['graphml', 'gml', 'gexf']:
@@ -504,7 +499,6 @@ class IOMixIn(object):
 
         Notes
         -----
-
         A lossless round-trip is only guaranteed if the graph (and its signals)
         is saved and loaded with the same backend.
 
@@ -524,7 +518,6 @@ class IOMixIn(object):
         >>> os.remove('logo.graphml')
 
         """
-
         if fmt is None:
             fmt = os.path.splitext(path)[1][1:]
         if fmt not in ['graphml', 'gml', 'gexf']:

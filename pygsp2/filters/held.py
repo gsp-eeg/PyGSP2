@@ -32,7 +32,6 @@ class Held(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (ring graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -47,7 +46,7 @@ class Held(Filter):
 
     """
 
-    def __init__(self, G, a=2./3):
+    def __init__(self, G, a=2. / 3):
 
         self.a = a
 
@@ -61,7 +60,7 @@ class Held(Filter):
             r3ind = (x >= l2)
 
             def mu(x):
-                return -1 + 24*x - 144*x**2 + 256*x**3
+                return -1 + 24 * x - 144 * x**2 + 256 * x**3
 
             y[r1ind] = 1
             y[r2ind] = np.sin(2 * np.pi * mu(x[r2ind] / 8 / a))
@@ -69,7 +68,7 @@ class Held(Filter):
 
             return y
 
-        held = Filter(G, lambda x: kernel(x*2/G.lmax, a))
+        held = Filter(G, lambda x: kernel(x * 2 / G.lmax, a))
         complement = held.complement(frame_bound=1)
         kernels = held._kernels + complement._kernels
 

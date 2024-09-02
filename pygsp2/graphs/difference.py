@@ -7,7 +7,6 @@ from scipy import sparse
 
 from pygsp2 import utils
 
-
 logger = utils.build_logger(__name__)
 
 
@@ -91,7 +90,6 @@ class DifferenceMixIn(object):
 
         Examples
         --------
-
         The difference operator is an incidence matrix.
         Example with a undirected graph.
 
@@ -144,13 +142,12 @@ class DifferenceMixIn(object):
         True
 
         """
-
         sources, targets, weights = self.get_edge_list()
 
         n = self.n_edges
         rows = np.concatenate([sources, targets])
         columns = np.concatenate([np.arange(n), np.arange(n)])
-        values = np.empty(2*n)
+        values = np.empty(2 * n)
 
         if self.lap_type == 'combinatorial':
             values[:n] = -np.sqrt(weights)
@@ -164,8 +161,7 @@ class DifferenceMixIn(object):
         if self.is_directed():
             values /= np.sqrt(2)
 
-        self._D = sparse.csc_matrix((values, (rows, columns)),
-                                    shape=(self.n_vertices, self.n_edges))
+        self._D = sparse.csc_matrix((values, (rows, columns)), shape=(self.n_vertices, self.n_edges))
         self._D.eliminate_zeros()  # Self-loops introduce stored zeros.
 
     def grad(self, x):
@@ -213,7 +209,6 @@ class DifferenceMixIn(object):
 
         Examples
         --------
-
         Non-directed graph and combinatorial Laplacian:
 
         >>> graph = graphs.Path(4, directed=False, lap_type='combinatorial')
@@ -295,7 +290,6 @@ class DifferenceMixIn(object):
 
         Examples
         --------
-
         Non-directed graph and combinatorial Laplacian:
 
         >>> graph = graphs.Path(4, directed=False, lap_type='combinatorial')

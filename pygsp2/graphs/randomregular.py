@@ -4,6 +4,7 @@ import numpy as np
 from scipy import sparse
 
 from pygsp2 import utils
+
 from . import Graph  # prevent circular import in Python < 3.5
 
 
@@ -59,7 +60,7 @@ class RandomRegular(Graph):
 
         # continue until a proper graph is formed
         if (N * k) % 2 == 1:
-            raise ValueError("input error: N*d must be even!")
+            raise ValueError('input error: N*d must be even!')
 
         # a list of open half-edges
         U = np.kron(np.ones(k), np.arange(N))
@@ -74,8 +75,8 @@ class RandomRegular(Graph):
             edgesTested += 1
 
             if edgesTested % 5000 == 0:
-                self.logger.debug("createRandRegGraph() progress: edges= "
-                                  "{}/{}.".format(edgesTested, N*k/2))
+                self.logger.debug('createRandRegGraph() progress: edges= '
+                                  '{}/{}.'.format(edgesTested, N * k / 2))
 
             # chose at random 2 half edges
             i1 = rng.integers(0, U.shape[0])
@@ -86,7 +87,7 @@ class RandomRegular(Graph):
             # check that there are no loops nor parallel edges
             if v1 == v2 or A[v1, v2] == 1:
                 # restart process if needed
-                if edgesTested == N*k:
+                if edgesTested == N * k:
                     repetition = repetition + 1
                     edgesTested = 0
                     U = np.kron(np.ones(k), np.arange(N))
@@ -105,10 +106,7 @@ class RandomRegular(Graph):
         self.is_regular()
 
     def is_regular(self):
-        r"""
-        Troubleshoot a given regular graph.
-
-        """
+        r"""Troubleshoot a given regular graph."""
         warn = False
         msg = 'The given matrix'
 
