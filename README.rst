@@ -11,7 +11,7 @@ and development takes place on
 A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html>`_ exists.
 
 +----------------------------------------------------------+
-||doc|  |pypi|  |conda|  |pyversions|  |license|  |zenodo||
+||doc|  |pypi|  |conda|  |pyversions|  |license|  |zenodo| |
 +----------------------------------------------------------+
 ||release|  |testing|  |ruff|  |yapf|  |codespell|  |isort||
 +----------------------------------------------------------+
