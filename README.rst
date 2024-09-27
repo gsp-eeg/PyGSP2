@@ -10,11 +10,11 @@ and development takes place on
 `GitHub <https://github.com/gsp-eeg/pygsp2>`_.
 A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html>`_ exists.
 
-+--------------------------------------------------------------------+
-||doc|  |pypi|  |conda|  |pyversions|  |release|  |license|  |zenodo||
-+--------------------------------------------------------------------+
-||release|  |testing|  |ruff|  |yapf|  |codespell|  |isort|          |
-+--------------------------------------------------------------------+
++----------------------------------------------------------+
+||doc|  |pypi|  |conda|  |pyversions|  |license|  |zenodo||
++----------------------------------------------------------+
+||release|  |testing|  |ruff|  |yapf|  |codespell|  |isort||
++----------------------------------------------------------+
 
 .. |doc| image:: https://readthedocs.org/projects/pygsp2/badge/?version=latest
    :target: https://pygsp2.readthedocs.io
