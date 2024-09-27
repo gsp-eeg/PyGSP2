@@ -20,7 +20,7 @@ A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html
    :target: https://pygsp2.readthedocs.io
 .. |pypi| image:: https://img.shields.io/pypi/v/pygsp2.svg
    :target: https://pypi.org/project/PyGSP2
-.. |conda| image:: https://img.shields.io/conda/v/conda-forge/pygsp2
+.. |conda| image:: https://img.shields.io/conda/v/conda-forge/pygsp2?label=conda-forge
    :target: https://anaconda.org/conda-forge/pygsp2
    :alt: Conda Version
 .. |zenodo| image:: https://zenodo.org/badge/816842099.svg
