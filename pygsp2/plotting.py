@@ -445,12 +445,13 @@ def _plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge
 
     alphan = np.abs(alphan)
     alphav = np.abs(alphav)
-
+    
     if vertex_color is None:
         limits = [0, 0]
         colorbar = False
         if backend == 'matplotlib':
             vertex_color = (G.plotting['vertex_color'], )
+
     elif is_color(vertex_color):
         limits = [0, 0]
         colorbar = False
@@ -569,6 +570,24 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, 
             ax.axvline(x=coord_hl, color=G.plotting['highlight_color'], linewidth=2)
 
     else:
+        ########################################################################
+        # Prevent matplotlib warning when using cmap without a valid color signal.
+        # This ensures compatibility when vertex_color is None or a single color,
+        # and the colormapping logic (via limits and cmap) is active.
+        # Without this patch, the following warning may occur:
+        # "No data for colormapping provided via 'c'. Parameters 'vmin', 'vmax' will be ignored"
+        #
+        # Note: 'limits' is internally derived (not user-passed) and indicates
+        # that colormapping will be used. The patch acts only when truly needed.
+        ########################################################################
+        if (
+            (vertex_color is None or isinstance(vertex_color, str)) and
+            limits is not None and len(limits) == 2 and
+            cmap is not None
+        ):
+            vertex_color = np.full(G.N, 0.5)
+        ########################################################################
+
         if is_color(vertex_color):
             sc = ax.scatter(*G.coords.T, c=vertex_color, s=vertex_size, marker='o', linewidths=0, alpha=alphan, zorder=2)
         else:
