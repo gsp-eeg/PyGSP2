@@ -569,6 +569,11 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, 
             ax.axvline(x=coord_hl, color=G.plotting['highlight_color'], linewidth=2)
 
     else:
+        # Prevent matplotlib warning when using cmap without a valid color signal.
+        if ((vertex_color is None or isinstance(vertex_color, str)) and
+            limits is not None and len(limits) == 2 and
+            cmap is not None):
+            vertex_color = np.full(G.N, 0.5)
         if is_color(vertex_color):
             sc = ax.scatter(*G.coords.T, c=vertex_color, s=vertex_size, marker='o', linewidths=0, alpha=alphan, zorder=2)
         else:
