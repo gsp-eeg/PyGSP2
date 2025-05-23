@@ -509,10 +509,12 @@ def _plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge
 @_plt_handle_figure
 def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge_width, indices, colorbar, limits, ax, cmap,
                     alphan, alphav, edge_weights):
-
+    
     mpl, plt, mplot3d = _import_plt()
     plt.set_cmap(cmap)
     cmap = mpl.colormaps.get_cmap(cmap)
+
+    edge_percent = G.plotting.get('edge_percent', 100)
 
     def is_color(color):
         mpl, _, _ = _import_plt()
@@ -526,6 +528,15 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, 
     if edges and (G.coords.ndim != 1):  # No edges for 1D plots.
 
         sources, targets, _ = G.get_edge_list()
+        
+        if edge_percent < 100:
+            _, _, weights = G.get_edge_list()
+            weights = np.asarray(weights)
+            threshold = np.percentile(weights, 100 - edge_percent)
+            mask = weights >= threshold
+            sources = sources[mask]
+            targets = targets[mask]
+            
         edges = [
             G.coords[sources],
             G.coords[targets],
