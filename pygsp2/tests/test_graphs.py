@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Test suite for the graphs module of the pygsp2 package."""
-
-from __future__ import division
-
+"""
+Test suite for the graphs module of the pygsp2 package.
+"""
 import os
 import random
 import sys

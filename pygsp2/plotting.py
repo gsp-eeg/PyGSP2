@@ -20,9 +20,6 @@ Filters (from :mod:`pygsp2.filters`) are to be plotted with
     at generating figures to be included in papers or elsewhere.
 
 """
-
-from __future__ import division
-
 import functools
 
 import numpy as np
