@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from __future__ import division
-
 import os
 from collections import Counter
 
@@ -1028,7 +1025,7 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
                            vertex_size=vertex_size, highlight=highlight,
                            edges=edges, indices=indices, colorbar=colorbar,
                            edge_color=edge_color, edge_width=edge_width,
-                           limits=limits, ax=ax, title=title, backend=backend, 
+                           limits=limits, ax=ax, title=title, backend=backend,
                            cmap=cmap, alphan=alphan, alphav=alphav, edge_weights=edge_weights)
 
     def plot_signal(self, *args, **kwargs):

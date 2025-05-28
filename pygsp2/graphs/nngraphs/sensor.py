@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from __future__ import division
-
 import numpy as np
 
 from pygsp2.graphs import NNGraph  # prevent circular import in Python < 3.5
