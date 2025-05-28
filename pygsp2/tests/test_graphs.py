@@ -4,9 +4,6 @@
 Test suite for the graphs module of the pygsp2 package.
 
 """
-
-from __future__ import division
-
 import os
 import random
 import sys

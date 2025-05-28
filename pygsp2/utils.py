@@ -4,9 +4,6 @@ r"""
 The :mod:`pygsp2.utils` module implements some utility functions used throughout
 the package.
 """
-
-from __future__ import division
-
 import sys
 import logging
 import functools
@@ -347,11 +344,11 @@ def to_sparse(i, j, v, m, n):
     """
     Create and compressing a matrix that have many zeros
     Parameters:
-        i: 1-D array representing the index 1 values 
+        i: 1-D array representing the index 1 values
             Size n1
-        j: 1-D array representing the index 2 values 
+        j: 1-D array representing the index 2 values
             Size n1
-        v: 1-D array representing the values 
+        v: 1-D array representing the values
             Size n1
         m: integer representing x size of the matrix >= n1
         n: integer representing y size of the matrix >= n1
