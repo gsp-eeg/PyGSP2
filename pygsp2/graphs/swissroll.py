@@ -3,6 +3,7 @@
 import numpy as np
 
 from pygsp2 import utils
+
 from . import Graph  # prevent circular import in Python < 3.5
 
 
@@ -24,7 +25,7 @@ class SwissRoll(Graph):
     s : float
         sigma (default =  sqrt(2./N))
     noise : bool
-        Wether to add noise or not (default = False)
+        Whether to add noise or not (default = False)
     srtype : str
         Swiss roll Type, possible arguments are 'uniform' or 'classic'
         (default = 'uniform')
@@ -43,8 +44,7 @@ class SwissRoll(Graph):
 
     """
 
-    def __init__(self, N=400, a=1, b=4, dim=3, thresh=1e-6, s=None,
-                 noise=False, srtype='uniform', seed=None, **kwargs):
+    def __init__(self, N=400, a=1, b=4, dim=3, thresh=1e-6, s=None, noise=False, srtype='uniform', seed=None, **kwargs):
 
         if s is None:
             s = np.sqrt(2. / N)
@@ -93,16 +93,16 @@ class SwissRoll(Graph):
             'distance': 7,
         }
 
-        super(SwissRoll, self).__init__(W, coords=coords.T,
-                                        plotting=plotting,
-                                        **kwargs)
+        super(SwissRoll, self).__init__(W, coords=coords.T, plotting=plotting, **kwargs)
 
     def _get_extra_repr(self):
-        return {'a': self.a,
-                'b': self.b,
-                'dim': self.dim,
-                'thresh': '{:.0e}'.format(self.thresh),
-                's': '{:.2f}'.format(self.s),
-                'noise': self.noise,
-                'srtype': self.srtype,
-                'seed': self.seed}
+        return {
+            'a': self.a,
+            'b': self.b,
+            'dim': self.dim,
+            'thresh': '{:.0e}'.format(self.thresh),
+            's': '{:.2f}'.format(self.s),
+            'noise': self.noise,
+            'srtype': self.srtype,
+            'seed': self.seed
+        }

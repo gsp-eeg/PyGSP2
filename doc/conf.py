@@ -36,9 +36,7 @@ plot_include_source = True
 plot_html_show_source_link = False
 plot_html_show_formats = False
 plot_working_directory = '.'
-plot_rcparams = {
-    'figure.figsize': (10, 4)
-}
+plot_rcparams = {'figure.figsize': (10, 4)}
 plot_pre_code = """
 import numpy as np
 from pygsp2 import graphs, filters, utils, plotting
@@ -49,7 +47,9 @@ sphinx_gallery_conf = {
     'examples_dirs': '../examples',
     'gallery_dirs': 'examples',
     'filename_pattern': '/',
-    'reference_url': {'pygsp2': None},
+    'reference_url': {
+        'pygsp2': None
+    },
     'backreferences_dir': 'backrefs',
     'doc_module': 'pygsp2',
     'show_memory': True,
@@ -80,6 +80,5 @@ latex_elements = {
     'pointsize': '10pt',
 }
 latex_documents = [
-    ('index', 'pygsp2.tex', 'PyGSP2 documentation',
-     'EPFL LTS2', 'manual'),
+    ('index', 'pygsp2.tex', 'PyGSP2 documentation', 'EPFL LTS2', 'manual'),
 ]

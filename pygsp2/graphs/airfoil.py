@@ -4,6 +4,7 @@ import numpy as np
 from scipy import sparse
 
 from pygsp2 import utils
+
 from . import Graph  # prevent circular import in Python < 3.5
 
 
@@ -30,9 +31,6 @@ class Airfoil(Graph):
         A = sparse.coo_matrix((np.ones(12289), (i_inds, j_inds)), shape=(4253, 4253))
         W = (A + A.T) / 2.
 
-        plotting = {"vertex_size": 30,
-                    "limits": np.array([-1e-4, 1.01*data['x'].max(),
-                                        -1e-4, 1.01*data['y'].max()])}
+        plotting = {'vertex_size': 30, 'limits': np.array([-1e-4, 1.01 * data['x'].max(), -1e-4, 1.01 * data['y'].max()])}
 
-        super(Airfoil, self).__init__(W, coords=coords, plotting=plotting,
-                                      **kwargs)
+        super(Airfoil, self).__init__(W, coords=coords, plotting=plotting, **kwargs)

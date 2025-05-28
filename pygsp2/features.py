@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 r"""
 The :mod:`pygsp2.features` module implements different feature extraction
 techniques based on :mod:`pygsp2.graphs` and :mod:`pygsp2.filters`.
@@ -78,8 +77,8 @@ def compute_spectrogram(G, atom=None, M=100, **kwargs):
         Additional parameters to be passed to the
         :func:`pygsp2.filters.Filter.filter` method.
     """
-
     if not atom:
+
         def atom(x):
             return np.exp(-M * (x / G.lmax)**2)
 

@@ -5,10 +5,10 @@ from functools import partial
 import numpy as np
 
 from pygsp2 import utils
+
+from ..graphs import Graph
 # prevent circular import in Python < 3.5
 from . import approximations
-from ..graphs import Graph
-
 
 _logger = utils.build_logger(__name__)
 
@@ -208,7 +208,6 @@ class Filter(object):
 
         Examples
         --------
-
         Create a bunch of smooth signals by low-pass filtering white noise:
 
         >>> import matplotlib.pyplot as plt
@@ -315,14 +314,11 @@ class Filter(object):
 
             elif n_features_in == self.Nf:  # Synthesis.
                 s = s.swapaxes(1, 2)
-                s_in = s.reshape(
-                    (self.G.N * n_features_in, n_signals), order='F')
+                s_in = s.reshape((self.G.N * n_features_in, n_signals), order='F')
                 s = np.zeros((self.G.N, n_signals))
                 tmpN = np.arange(self.G.N, dtype=int)
                 for i in range(n_features_in):
-                    s += approximations.cheby_op(self.G,
-                                                 c[i],
-                                                 s_in[i * self.G.N + tmpN])
+                    s += approximations.cheby_op(self.G, c[i], s_in[i * self.G.N + tmpN])
                 s = np.expand_dims(s, 2)
 
         else:
@@ -345,8 +341,7 @@ class Filter(object):
         """
         if s.shape[-1] != self.Nf:
             raise ValueError('Last dimension (#features) should be the number '
-                             'of filters Nf = {}, got {}.'.format(self.Nf,
-                                                                  s.shape))
+                             'of filters Nf = {}, got {}.'.format(self.Nf, s.shape))
         return self.filter(s, method, order)
 
     def localize(self, i, **kwargs):
@@ -431,7 +426,6 @@ class Filter(object):
 
         Examples
         --------
-
         >>> from matplotlib import pyplot as plt
         >>> fig, axes = plt.subplots(2, 2, figsize=(10, 6))
         >>> G = graphs.Sensor(64, seed=42)
@@ -558,7 +552,6 @@ class Filter(object):
 
         Examples
         --------
-
         >>> G = graphs.Sensor(100, seed=42)
         >>> G.compute_fourier_basis()
 
@@ -735,7 +728,6 @@ class Filter(object):
         B(g)*A(h) = 1.994 * 0.501 = 1.000
 
         """
-
         A, _ = self.estimate_frame_bounds()
         if A == 0:
             _logger.warning('The filter bank is not invertible as it is not '
@@ -750,9 +742,7 @@ class Filter(object):
 
         return Filter(self.G, kernels)
 
-    def plot(self, n=500, eigenvalues=None, sum=None, labels=None, title=None,
-             ax=None, **kwargs):
+    def plot(self, n=500, eigenvalues=None, sum=None, labels=None, title=None, ax=None, **kwargs):
         r"""Docstring overloaded at import time."""
         from pygsp2.plotting import _plot_filter
-        return _plot_filter(self, n=n, eigenvalues=eigenvalues, sum=sum,
-                            labels=labels, title=title, ax=ax, **kwargs)
+        return _plot_filter(self, n=n, eigenvalues=eigenvalues, sum=sum, labels=labels, title=title, ax=ax, **kwargs)

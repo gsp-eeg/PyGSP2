@@ -75,7 +75,6 @@ class Modulation(Filter):
 
     Examples
     --------
-
     Vertex-frequency representations.
     Modulating first doesn't produce sufficiently localized filters.
 
@@ -133,8 +132,7 @@ class Modulation(Filter):
 
         if kernel.n_filters != 1:
             raise ValueError('A kernel must be one filter. The passed '
-                             'filter bank {} has {}.'.format(
-                                 kernel, kernel.n_filters))
+                             'filter bank {} has {}.'.format(kernel, kernel.n_filters))
         if kernel.G is not graph:
             raise ValueError('The graph passed to this filter bank must '
                              'be the one used to build the mother kernel.')
@@ -145,7 +143,6 @@ class Modulation(Filter):
 
     def evaluate(self, x):
         """TODO: will become _evaluate once polynomial filtering is merged."""
-
         if not hasattr(self, '_coefficients'):
             # Graph Fourier transform -> modulation -> inverse GFT.
             c = self.G.igft(self._kernels.evaluate(self.G.e).squeeze())
@@ -159,7 +156,7 @@ class Modulation(Filter):
             query = self._coefficients[x[i] == self.G.e]
             if len(query) != 0:
                 y[:, i] = query[0]
-        return y.reshape((self.n_features_out,) + shape)
+        return y.reshape((self.n_features_out, ) + shape)
 
     def filter(self, s, method='exact', order=None):
         """TODO: indirection will be removed when poly filtering is merged.

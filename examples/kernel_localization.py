@@ -1,5 +1,5 @@
 r"""
-Kernel localization
+Kernel localization.
 ===================
 
 In classical signal processing, a filter can be translated in the vertex
@@ -11,6 +11,7 @@ it changes when localized on irregular graphs.
 
 import numpy as np
 from matplotlib import pyplot as plt
+
 import pygsp2 as pg
 
 fig, axes = plt.subplots(2, 4, figsize=(10, 4))
@@ -33,8 +34,7 @@ for graph, axs in zip(graphs, axes):
         x = g.localize(loc)
         maximum = np.maximum(maximum, x.max())
     for loc, ax in zip(locations, axs[1:]):
-        graph.plot(g.localize(loc), limits=[0, maximum], highlight=loc, ax=ax,
-                   title=r'$g(L) \delta_{{{}}}$'.format(loc))
+        graph.plot(g.localize(loc), limits=[0, maximum], highlight=loc, ax=ax, title=r'$g(L) \delta_{{{}}}$'.format(loc))
         ax.set_axis_off()
 
 fig.tight_layout()

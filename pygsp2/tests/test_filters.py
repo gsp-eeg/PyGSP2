@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
+"""Test suite for the filters module of the pygsp2 package."""
 
-"""
-Test suite for the filters module of the pygsp2 package.
-
-"""
-
-import unittest
 import sys
+import unittest
 
 import numpy as np
 
-from pygsp2 import graphs, filters
+from pygsp2 import filters, graphs
 
 
 class TestCase(unittest.TestCase):
@@ -27,7 +23,7 @@ class TestCase(unittest.TestCase):
         pass
 
     def _generate_coefficients(self, N, Nf, vertex_delta=83):
-        S = np.zeros((N*Nf, Nf))
+        S = np.zeros((N * Nf, Nf))
         S[vertex_delta] = 1
         for i in range(Nf):
             S[vertex_delta + i * self._G.N, i] = 1
@@ -103,7 +99,7 @@ class TestCase(unittest.TestCase):
         s3 = g.filter(s1)
         s4 = g.filter(s2)
         s5 = g.synthesize(s1)
-        assert s3.shape == (self._G.N,)
+        assert s3.shape == (self._G.N, )
         np.testing.assert_allclose(s3, s4)
         np.testing.assert_allclose(s3, s5)
 
@@ -146,8 +142,10 @@ class TestCase(unittest.TestCase):
         g = filters.Heat(self._G, scale=[8, 9])
         gL1 = g.compute_frame(method='exact')
         gL2 = g.compute_frame(method='chebyshev', order=30)
+
         def get_frame(freq_response):
             return self._G.U.dot(np.diag(freq_response).dot(self._G.U.T))
+
         gL = np.concatenate([get_frame(gl) for gl in g.evaluate(self._G.e)])
         np.testing.assert_allclose(gL1, gL)
         np.testing.assert_allclose(gL2, gL, atol=1e-10)
@@ -190,8 +188,10 @@ class TestCase(unittest.TestCase):
         np.testing.assert_allclose(h(self._G.e), he, atol=1e-10)
 
     def test_custom_filter(self):
+
         def kernel(x):
             return x / (1. + x)
+
         f = filters.Filter(self._G, kernels=kernel)
         self.assertEqual(f.Nf, 1)
         self.assertIs(f._kernels[0], kernel)
@@ -304,8 +304,7 @@ class TestCase(unittest.TestCase):
         f = filters.Wave(self._G, time=[1, 2], speed=[1, 1.5])
         self._test_methods(f, tight=False)
         # Sequences of differing lengths.
-        self.assertRaises(ValueError, filters.Wave, self._G, time=[1, 2, 3],
-                          speed=[0, 1])
+        self.assertRaises(ValueError, filters.Wave, self._G, time=[1, 2, 3], speed=[0, 1])
         # Invalid speed.
         self.assertRaises(ValueError, filters.Wave, self._G, speed=2)
 

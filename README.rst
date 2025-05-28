@@ -10,22 +10,42 @@ and development takes place on
 `GitHub <https://github.com/gsp-eeg/pygsp2>`_.
 A (mostly unmaintained) `Matlab version <https://epfl-lts2.github.io/gspbox-html>`_ exists.
 
-+-----------------------------------+
-| |doc|  |pypi|                     |
-+-----------------------------------+
-| |zenodo|  |license|  |pyversions| |
-+-----------------------------------+
++-----------------------------------------------------+
+||doc| |pypi| |conda| |pyversions| |license| |zenodo| |
++-----------------------------------------------------+
+||release| |testing| |ruff| |yapf| |codespell| |isort||
++-----------------------------------------------------+
 
 .. |doc| image:: https://readthedocs.org/projects/pygsp2/badge/?version=latest
    :target: https://pygsp2.readthedocs.io
 .. |pypi| image:: https://img.shields.io/pypi/v/pygsp2.svg
    :target: https://pypi.org/project/PyGSP2
-.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1003157.svg
-   :target: https://doi.org/10.5281/zenodo.1003157
+.. |conda| image:: https://img.shields.io/conda/v/conda-forge/pygsp2?label=conda-forge
+   :target: https://anaconda.org/conda-forge/pygsp2
+   :alt: Conda Version
+.. |zenodo| image:: https://zenodo.org/badge/816842099.svg
+   :target: https://zenodo.org/doi/10.5281/zenodo.13122920
 .. |license| image:: https://img.shields.io/pypi/l/pygsp2.svg
    :target: https://github.com/gsp-eeg/pygsp2/blob/master/LICENSE.txt
 .. |pyversions| image:: https://img.shields.io/pypi/pyversions/pygsp2.svg
    :target: https://pypi.org/project/PyGSP2
+.. |release| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/release-pypi.yml?label=release
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+.. |testing| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/test-main.yml?label=testing
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Testing Status
+.. |ruff| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/ruff.yml?label=ruff
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Ruff Status
+.. |yapf| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/yapf.yml?label=yapf
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Yapf Status
+.. |codespell| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/codespell.yml?label=codespell
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Codespell Status
+.. |isort| image:: https://img.shields.io/github/actions/workflow/status/gsp-eeg/PyGSP2/isort.yml?label=isort
+   :target: https://github.com/gsp-eeg/PyGSP2/actions
+   :alt: GitHub Actions Workflow Isort Status
 
 The PyGSP2 facilitates a wide variety of operations on graphs, like computing
 their Fourier basis, filtering or interpolating signals, plotting graphs,
@@ -79,11 +99,11 @@ structure!
     :alt:
 
 You can
-`try it online <https://mybinder.org/v2/gh/epfl-lts2/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb>`_,
+`try it online <https://mybinder.org/v2/gh/gsp-eeg/pygsp2/master?urlpath=lab/tree/examples/playground.ipynb>`_,
 look at the
-`tutorials <https://pygsp2.readthedocs.io/en/stable/tutorials/index.html>`_
+`tutorials <https://pygsp2.readthedocs.io/en/latest/tutorials/index.html>`_
 to learn how to use it, or look at the
-`reference guide <https://pygsp2.readthedocs.io/en/stable/reference/index.html>`_
+`reference guide <https://pygsp2.readthedocs.io/en/latest/reference/index.html>`_
 for an exhaustive documentation of the API. Enjoy!
 
 Installation
@@ -94,7 +114,7 @@ The PyGSP2 is available on PyPI::
     $ pip install pygsp2
 
 The PyGSP2 is available on Conda Forge::
-   
+
     $ conda install conda-forge::pygsp2
 
 Contributing

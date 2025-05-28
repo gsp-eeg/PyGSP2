@@ -14,7 +14,10 @@ clean:
 	jupyter nbconvert --inplace --ClearOutputPreprocessor.enabled=True $(NB)
 
 lint:
-	flake8 --doctests --exclude=doc
+	isort .
+	ruff check .
+	yapf -ir .
+	codespell -w -S=skip.txt -D=dict.txt
 
 # Matplotlib doesn't print to screen. Also faster.
 export MPLBACKEND = agg

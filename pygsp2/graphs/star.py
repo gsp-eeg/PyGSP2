@@ -33,7 +33,7 @@ class Star(Comet):
     def __init__(self, N=10, **kwargs):
         plotting = dict(limits=[-1.1, 1.1, -1.1, 1.1])
         plotting.update(kwargs.get('plotting', {}))
-        super(Star, self).__init__(N, N-1, plotting=plotting, **kwargs)
+        super(Star, self).__init__(N, N - 1, plotting=plotting, **kwargs)
 
     def _get_extra_repr(self):
         return dict()  # Suppress Comet repr.

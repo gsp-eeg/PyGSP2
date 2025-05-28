@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from pygsp2 import utils
+
 from . import Filter  # prevent circular import in Python < 3.5
 
 
@@ -48,7 +49,6 @@ class Gabor(Filter):
 
     Examples
     --------
-
     Filter bank's representation in Fourier and time (path graph) domains.
 
     >>> import matplotlib.pyplot as plt
@@ -74,8 +74,7 @@ class Gabor(Filter):
 
         if kernel.n_filters != 1:
             raise ValueError('A kernel must be one filter. The passed '
-                             'filter bank {} has {}.'.format(
-                                 kernel, kernel.n_filters))
+                             'filter bank {} has {}.'.format(kernel, kernel.n_filters))
         if kernel.G is not graph:
             raise ValueError('The graph passed to this filter bank must '
                              'be the one used to build the mother kernel.')

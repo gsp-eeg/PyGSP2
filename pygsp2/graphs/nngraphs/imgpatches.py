@@ -62,7 +62,7 @@ class ImgPatches(NNGraph):
                 h, w = img.shape
                 d = 0
             except ValueError:
-                print("Image should be at least a 2D array.")
+                print('Image should be at least a 2D array.')
 
         try:
             r, c = patch_shape
@@ -70,8 +70,7 @@ class ImgPatches(NNGraph):
             r = patch_shape[0]
             c = r
 
-        pad_width = [(int((r - 0.5) / 2.), int((r + 0.5) / 2.)),
-                     (int((c - 0.5) / 2.), int((c + 0.5) / 2.))]
+        pad_width = [(int((r - 0.5) / 2.), int((r + 0.5) / 2.)), (int((c - 0.5) / 2.), int((c + 0.5) / 2.))]
 
         if d == 0:
             window_shape = (r, c)

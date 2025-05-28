@@ -34,13 +34,7 @@ class Sphere(NNGraph):
 
     """
 
-    def __init__(self,
-                 radius=1,
-                 nb_pts=300,
-                 nb_dim=3,
-                 sampling='random',
-                 seed=None,
-                 **kwargs):
+    def __init__(self, radius=1, nb_pts=300, nb_dim=3, sampling='random', seed=None, **kwargs):
 
         self.radius = radius
         self.nb_pts = nb_pts
@@ -64,15 +58,15 @@ class Sphere(NNGraph):
             'vertex_size': 80,
         }
 
-        super(Sphere, self).__init__(Xin=pts, k=10,
-                                     center=False, rescale=False,
-                                     plotting=plotting, **kwargs)
+        super(Sphere, self).__init__(Xin=pts, k=10, center=False, rescale=False, plotting=plotting, **kwargs)
 
     def _get_extra_repr(self):
-        attrs = {'radius': '{:.2f}'.format(self.radius),
-                 'nb_pts': self.nb_pts,
-                 'nb_dim': self.nb_dim,
-                 'sampling': self.sampling,
-                 'seed': self.seed}
+        attrs = {
+            'radius': '{:.2f}'.format(self.radius),
+            'nb_pts': self.nb_pts,
+            'nb_dim': self.nb_dim,
+            'sampling': self.sampling,
+            'seed': self.seed
+        }
         attrs.update(super(Sphere, self)._get_extra_repr())
         return attrs

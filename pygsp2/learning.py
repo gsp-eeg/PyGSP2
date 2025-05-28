@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 r"""
 The :mod:`pygsp2.learning` module provides functions to solve learning problems.
 
@@ -34,7 +33,7 @@ def _import_pyunlocbox():
 
 
 def _to_logits(x):
-    logits = np.zeros([len(x), np.max(x)+1])
+    logits = np.zeros([len(x), np.max(x) + 1])
     logits[range(len(x)), x] = 1
     return logits
 
@@ -107,16 +106,15 @@ def classification_tikhonov_simplex(G, y, M, tau=0.1, **kwargs):
     >>> _ = fig.tight_layout()
 
     """
-
     functions, solvers = _import_pyunlocbox()
 
     if tau <= 0:
         raise ValueError('Tau should be greater than 0.')
 
     y = y.copy()
-    y[M == False] = 0
+    y[M is False] = 0
     Y = _to_logits(y.astype(int))
-    Y[M == False, :] = 0
+    Y[M is False, :] = 0
 
     def proj_simplex(y):
         d = y.shape[1]
@@ -127,14 +125,14 @@ def classification_tikhonov_simplex(G, y, M, tau=0.1, **kwargs):
             return np.sum(y[idx[k:]] - y[idx[k]]) - 1
 
         def bisectsearch(idx, y):
-            idxL, idxH = 0, d-1
+            idxL, idxH = 0, d - 1
             L = evalpL(y, idxL, idx)
             H = evalpL(y, idxH, idx)
 
             if L < 0:
                 return idxL
 
-            while (idxH-idxL) > 1:
+            while (idxH - idxL) > 1:
                 iMid = int((idxL + idxH) / 2)
                 M = evalpL(y, iMid, idx)
 
@@ -248,7 +246,7 @@ def classification_tikhonov(G, y, M, tau=0):
 
     """
     y = y.copy()
-    y[M == False] = 0
+    y[M is False] = 0
     Y = _to_logits(y.astype(int))
     return regression_tikhonov(G, Y, M, tau)
 
@@ -316,10 +314,9 @@ def regression_tikhonov(G, y, M, tau=0):
     >>> _ = fig.tight_layout()
 
     """
-
     if tau > 0:
         y = y.copy()
-        y[M == False] = 0
+        y[M is False] = 0
 
         if sparse.issparse(G.L):
 
@@ -332,8 +329,7 @@ def regression_tikhonov(G, y, M, tau=0):
                 sol = np.empty(shape=y.shape)
                 res = np.empty(shape=y.shape[1])
                 for i in range(y.shape[1]):
-                    sol[:, i], res[i] = sparse.linalg.cg(
-                        LinearOp, y[:, i])
+                    sol[:, i], res[i] = sparse.linalg.cg(LinearOp, y[:, i])
             else:
                 sol, res = sparse.linalg.cg(LinearOp, y)
 
@@ -345,19 +341,19 @@ def regression_tikhonov(G, y, M, tau=0):
             # Creating this matrix may be problematic in term of memory.
             # Consider using an operator instead...
             if type(G.L).__module__ == np.__name__:
-                LinearOp = np.diag(M*1) + tau * G.L
+                LinearOp = np.diag(M * 1) + tau * G.L
             return np.linalg.solve(LinearOp, M * y)
 
     else:
 
         if np.prod(M.shape) != G.n_vertices:
-            raise ValueError("M should be of size [G.n_vertices,]")
+            raise ValueError('M should be of size [G.n_vertices,]')
 
         indl = M
-        indu = (M == False)
+        indu = (M is False)
 
         Luu = G.L[indu, :][:, indu]
-        Wul = - G.L[indu, :][:, indl]
+        Wul = -G.L[indu, :][:, indl]
 
         if sparse.issparse(G.L):
             sol_part = sparse.linalg.spsolve(Luu, Wul.dot(y[indl]))

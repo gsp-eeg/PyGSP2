@@ -1,0 +1,7 @@
+*.edf
+*.js
+*.css
+doc
+Makefile
+examples/datasets
+__init__.py

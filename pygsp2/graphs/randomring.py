@@ -4,6 +4,7 @@ import numpy as np
 from scipy import sparse
 
 from pygsp2 import utils
+
 from . import Graph  # prevent circular import in Python < 3.5
 
 
@@ -37,12 +38,12 @@ class RandomRing(Graph):
 
         if angles is None:
             rng = np.random.default_rng(seed)
-            angles = np.sort(rng.uniform(0, 2*np.pi, size=N), axis=0)
+            angles = np.sort(rng.uniform(0, 2 * np.pi, size=N), axis=0)
         else:
             angles = np.asanyarray(angles)
             angles.sort()  # Need to be sorted to take the difference.
             N = len(angles)
-            if np.any(angles < 0) or np.any(angles >= 2*np.pi):
+            if np.any(angles < 0) or np.any(angles >= 2 * np.pi):
                 raise ValueError('Angles should be in [0, 2 pi]')
         self.angles = angles
 
@@ -50,14 +51,14 @@ class RandomRing(Graph):
             # Asymmetric graph needed for 2 as 2 distances connect them.
             raise ValueError('There should be at least 3 vertices.')
 
-        rows = range(0, N-1)
+        rows = range(0, N - 1)
         cols = range(1, N)
         weights = np.diff(angles)
 
         # Close the loop.
         rows = np.concatenate((rows, [0]))
-        cols = np.concatenate((cols, [N-1]))
-        weights = np.concatenate((weights, [2*np.pi + angles[0] - angles[-1]]))
+        cols = np.concatenate((cols, [N - 1]))
+        weights = np.concatenate((weights, [2 * np.pi + angles[0] - angles[-1]]))
 
         W = sparse.coo_matrix((weights, (rows, cols)), shape=(N, N))
         W = utils.symmetrize(W, method='triu')
@@ -74,8 +75,7 @@ class RandomRing(Graph):
         plotting = {'limits': np.array([-1, 1, -1, 1])}
 
         # TODO: save angle and 2D position as graph signals
-        super(RandomRing, self).__init__(W, coords=coords, plotting=plotting,
-                                         **kwargs)
+        super(RandomRing, self).__init__(W, coords=coords, plotting=plotting, **kwargs)
 
     def _get_extra_repr(self):
         return dict(seed=self.seed)

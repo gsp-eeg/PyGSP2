@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 r"""
 The :mod:`pygsp2.graphs` module implements the graph class hierarchy. A graph
 object is either constructed from an adjacency matrix, or by instantiating one
@@ -14,7 +13,6 @@ classes then allows to instantiate various standard graph models.
 
 Attributes
 ----------
-
 **Matrix operators**
 
 .. autosummary::

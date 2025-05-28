@@ -3,7 +3,6 @@
 
 from setuptools import setup
 
-
 setup(
     name='pygsp2',
     version='2.0.3',
@@ -38,7 +37,10 @@ setup(
         'matplotlib',
         'unidecode',
         'utm',
-        'pyxlsb'
+        'pyxlsb',
+        'charset-normalizer',
+        'requests',
+        'hatchling',
     ],
     extras_require={
         # Optional dependencies for development. Some bring additional
@@ -79,9 +81,17 @@ setup(
             # Build and upload packages.
             'wheel',
             'twine',
+            'requests',
+            'hatchling',
+            'ruff',
+            'codespell',
+            'tomli',
+            'isort',
+            'toml',
+            'yapf',
         ],
     },
-    license="BSD",
+    license='BSD',
     keywords='graph signal processing',
     platforms='any',
     classifiers=[

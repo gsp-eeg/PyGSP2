@@ -1,5 +1,5 @@
 r"""
-Random walks
+Random walks.
 ============
 
 Probability of a random walker to be on any given vertex after a given number
@@ -9,8 +9,9 @@ of steps starting from a given distribution.
 # sphinx_gallery_thumbnail_number = 2
 
 import numpy as np
-from scipy import sparse
 from matplotlib import pyplot as plt
+from scipy import sparse
+
 import pygsp2 as pg
 
 N = 7
@@ -18,7 +19,7 @@ steps = [0, 1, 2, 3]
 
 graph = pg.graphs.Grid2d(N)
 delta = np.zeros(graph.N)
-delta[N//2*N + N//2] = 1
+delta[N // 2 * N + N // 2] = 1
 
 probability = sparse.diags(graph.dw**(-1)).dot(graph.W)
 
@@ -49,11 +50,11 @@ for graph, ax in zip(graphs, axes):
 
     P = sparse.diags(graph.dw**(-1)).dot(graph.W)
 
-#    e, u = np.linalg.eig(P.T.toarray())
-#    np.testing.assert_allclose(np.linalg.inv(u.T) @ np.diag(e) @ u.T,
-#                               P.toarray(), atol=1e-10)
-#    np.testing.assert_allclose(np.abs(e[0]), 1)
-#    stationary = np.abs(u.T[0])
+    #    e, u = np.linalg.eig(P.T.toarray())
+    #    np.testing.assert_allclose(np.linalg.inv(u.T) @ np.diag(e) @ u.T,
+    #                               P.toarray(), atol=1e-10)
+    #    np.testing.assert_allclose(np.abs(e[0]), 1)
+    #    stationary = np.abs(u.T[0])
 
     e, u = sparse.linalg.eigs(P.T, k=1, which='LR')
     np.testing.assert_allclose(e, 1)

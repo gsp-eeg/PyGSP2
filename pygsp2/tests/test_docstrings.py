@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
+"""Test suite for the docstrings of the pygsp2 package."""
 
-"""
-Test suite for the docstrings of the pygsp2 package.
-
-"""
-
+import doctest
 import os
 import unittest
-import doctest
 
 
 def gen_recursive_file(root, ext):
@@ -19,12 +15,12 @@ def gen_recursive_file(root, ext):
 
 def test_docstrings(root, ext, setup=None):
     files = list(gen_recursive_file(root, ext))
-    return doctest.DocFileSuite(*files, setUp=setup, tearDown=teardown,
-                                module_relative=False)
+    return doctest.DocFileSuite(*files, setUp=setup, tearDown=teardown, module_relative=False)
 
 
 def setup(doctest):
     import numpy
+
     import pygsp2
     doctest.globs = {
         'graphs': pygsp2.graphs,

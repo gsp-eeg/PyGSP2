@@ -92,10 +92,8 @@ class NNGraph(Graph):
         irregular domains. IEEE signal processing magazine, 30(3), 83-98.
     """
 
-    def __init__(self, Xin, NNtype='knn', use_flann=False, center=True,
-                 rescale=True, k=10, sigma=None, epsilon=0.01,
-                 plotting={}, symmetrize_type='average', dist_type='euclidean',
-                 order=0, **kwargs):
+    def __init__(self, Xin, NNtype='knn', use_flann=False, center=True, rescale=True, k=10, sigma=None, epsilon=0.01, plotting={},
+                 symmetrize_type='average', dist_type='euclidean', order=0, **kwargs):
 
         self.Xin = Xin
         self.NNtype = NNtype
@@ -117,21 +115,15 @@ class NNGraph(Graph):
                              'than the number of nodes ({}).'.format(k, N))
 
         if self.center:
-            Xout = self.Xin - np.kron(np.ones((N, 1)),
-                                      np.mean(self.Xin, axis=0))
+            Xout = self.Xin - np.kron(np.ones((N, 1)), np.mean(self.Xin, axis=0))
 
         if self.rescale:
-            bounding_radius = 0.5 * np.linalg.norm(np.amax(Xout, axis=0) -
-                                                   np.amin(Xout, axis=0), 2)
+            bounding_radius = 0.5 * np.linalg.norm(np.amax(Xout, axis=0) - np.amin(Xout, axis=0), 2)
             scale = np.power(N, 1. / float(min(d, 3))) / 10.
             Xout *= scale / bounding_radius
 
         # Translate distance type string to corresponding Minkowski order.
-        dist_translation = {"euclidean": 2,
-                            "manhattan": 1,
-                            "max_dist": np.inf,
-                            "minkowski": order
-                            }
+        dist_translation = {'euclidean': 2, 'manhattan': 1, 'max_dist': np.inf, 'minkowski': order}
 
         if self.NNtype == 'knn':
             spi = np.zeros((N * k))
@@ -146,13 +138,11 @@ class NNGraph(Graph):
                 # Default FLANN parameters (I tried changing the algorithm and
                 # testing performance on huge matrices, but the default one
                 # seems to work best).
-                NN, D = flann.nn(Xout, Xout, num_neighbors=(k + 1),
-                                 algorithm='kdtree')
+                NN, D = flann.nn(Xout, Xout, num_neighbors=(k + 1), algorithm='kdtree')
 
             else:
                 kdt = spatial.KDTree(Xout)
-                D, NN = kdt.query(Xout, k=(k + 1),
-                                  p=dist_translation[dist_type])
+                D, NN = kdt.query(Xout, k=(k + 1), p=dist_translation[dist_type])
 
             if self.sigma is None:
                 self.sigma = np.mean(D[:, 1:])  # Discard distance to self.
@@ -160,14 +150,12 @@ class NNGraph(Graph):
             for i in range(N):
                 spi[i * k:(i + 1) * k] = np.kron(np.ones((k)), i)
                 spj[i * k:(i + 1) * k] = NN[i, 1:]
-                spv[i * k:(i + 1) * k] = np.exp(-np.square(D[i, 1:]) /
-                                                (2.*np.square(self.sigma)))
+                spv[i * k:(i + 1) * k] = np.exp(-np.square(D[i, 1:]) / (2. * np.square(self.sigma)))
 
         elif self.NNtype == 'radius':
 
             kdt = spatial.KDTree(Xout)
-            D, NN = kdt.query(Xout, k=len(Xout), distance_upper_bound=epsilon,
-                              p=dist_translation[dist_type])
+            D, NN = kdt.query(Xout, k=len(Xout), distance_upper_bound=epsilon, p=dist_translation[dist_type])
             # Added to keep legacy functionality
             D2 = []
             NN2 = []
@@ -195,8 +183,7 @@ class NNGraph(Graph):
                 leng = len(NN[i]) - 1
                 spi[start:start + leng] = np.kron(np.ones((leng)), i)
                 spj[start:start + leng] = NN[i][1:]
-                spv[start:start + leng] = np.exp(-np.square(D[i, 1:]) /
-                                                 (2.*np.square(self.sigma)))
+                spv[start:start + leng] = np.exp(-np.square(D[i, 1:]) / (2. * np.square(self.sigma)))
                 start = start + leng
 
         else:
@@ -212,17 +199,18 @@ class NNGraph(Graph):
         # np.abs(W - W.T).sum() is as costly as the symmetrization itself.
         W = utils.symmetrize(W, method=symmetrize_type)
 
-        super(NNGraph, self).__init__(W, plotting=plotting,
-                                      coords=Xout, **kwargs)
+        super(NNGraph, self).__init__(W, plotting=plotting, coords=Xout, **kwargs)
 
     def _get_extra_repr(self):
-        return {'NNtype': self.NNtype,
-                'use_flann': self.use_flann,
-                'center': self.center,
-                'rescale': self.rescale,
-                'k': self.k,
-                'sigma': '{:.2f}'.format(self.sigma),
-                'epsilon': '{:.2f}'.format(self.epsilon),
-                'symmetrize_type': self.symmetrize_type,
-                'dist_type': self.dist_type,
-                'order': self.order}
+        return {
+            'NNtype': self.NNtype,
+            'use_flann': self.use_flann,
+            'center': self.center,
+            'rescale': self.rescale,
+            'k': self.k,
+            'sigma': '{:.2f}'.format(self.sigma),
+            'epsilon': '{:.2f}'.format(self.epsilon),
+            'symmetrize_type': self.symmetrize_type,
+            'dist_type': self.dist_type,
+            'order': self.order
+        }
