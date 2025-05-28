@@ -20,9 +20,6 @@ Filters (from :mod:`pygsp2.filters`) are to be plotted with
     at generating figures to be included in papers or elsewhere.
 
 """
-
-from __future__ import division
-
 import functools
 
 import numpy as np
@@ -509,7 +506,7 @@ def _plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge
 @_plt_handle_figure
 def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge_width, indices, colorbar, limits, ax, cmap,
                     alphan, alphav, edge_weights):
-    
+
     mpl, plt, mplot3d = _import_plt()
     plt.set_cmap(cmap)
     cmap = mpl.colormaps.get_cmap(cmap)
@@ -528,7 +525,7 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, 
     if edges and (G.coords.ndim != 1):  # No edges for 1D plots.
 
         sources, targets, _ = G.get_edge_list()
-        
+
         if edge_percent < 100:
             _, _, weights = G.get_edge_list()
             weights = np.asarray(weights)
@@ -536,7 +533,7 @@ def _plt_plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, 
             mask = weights >= threshold
             sources = sources[mask]
             targets = targets[mask]
-            
+
         edges = [
             G.coords[sources],
             G.coords[targets],
