@@ -284,8 +284,10 @@ def _plt_plot_filter(filters, n, eigenvalues, sum, labels, ax, **kwargs):
     ax.set_ylabel(r'filter response $g(\lambda)$')
 
 
-def _plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge_width, indices, colorbar, limits, ax, title,
-                backend, cmap, alphan, alphav, edge_weights):
+def _plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color,
+                edge_width, indices, colorbar, limits, ax, title,
+                backend, cmap, alphan, alphav, edge_weights,
+                edge_percent=100):
     r"""Plot a graph with signals as color or vertex size.
 
     Parameters
@@ -464,6 +466,21 @@ def _plot_graph(G, vertex_color, vertex_size, highlight, edges, edge_color, edge
 
     if edges is None:
         edges = G.Ne < 10e3
+
+    if edge_percent < 100:
+        W = G.W.toarray()
+        threshold = np.percentile(W[W > 0], 100 - edge_percent)
+        W_filtered = np.where(W >= threshold, W, 0)
+        G = G.__class__(W_filtered, coords=G.coords, plotting=G.plotting)
+
+    # Recompute edge_width if a previous edge array is provided
+    if isinstance(edge_width, np.ndarray) and len(edge_width) == G.Ne:
+        edge_width = edge_width
+    elif isinstance(edge_width, np.ndarray):
+        # If edge_width comes from the original (unfiltered) adjacency,
+        # adapt it to the filtered graph using the non-zero entries of W_filtered
+        W_arr = W_filtered[W_filtered > 0]
+        edge_width = G.plotting['edge_width'] * 2 * normalize(W_arr)
 
     if edge_color is None:
         edge_color = (G.plotting['edge_color'], )
