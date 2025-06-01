@@ -998,13 +998,16 @@ class Graph(FourierMixIn, DifferenceMixIn, IOMixIn, LayoutMixIn):
         assert self.n_edges == sources.size == targets.size == weights.size
         return sources, targets, weights
 
-    def plot(self, vertex_color=None, vertex_size=None, highlight=[], edges=None, edge_color=None, edge_width=None, indices=False,
-             colorbar=True, limits=None, ax=None, title=None, backend=None, cmap=None, alphan=1, alphav=1, edge_weights=None):
+    def plot(self, vertex_color=None, vertex_size=None, highlight=[], edges=None,
+         edge_color=None, edge_width=None, indices=False, colorbar=True,
+         limits=None, ax=None, title=None, backend=None, cmap=None,
+         alphan=1, alphav=1, edge_weights=None, edge_percent=100):
         r"""Docstring overloaded at import time."""
         from pygsp2.plotting import _plot_graph
         return _plot_graph(self, vertex_color=vertex_color, vertex_size=vertex_size, highlight=highlight, edges=edges,
-                           indices=indices, colorbar=colorbar, edge_color=edge_color, edge_width=edge_width, limits=limits, ax=ax,
-                           title=title, backend=backend, cmap=cmap, alphan=alphan, alphav=alphav, edge_weights=edge_weights)
+                   indices=indices, colorbar=colorbar, edge_color=edge_color, edge_width=edge_width, limits=limits, ax=ax,
+                   title=title, backend=backend, cmap=cmap, alphan=alphan, alphav=alphav, edge_weights=edge_weights,
+                   edge_percent=edge_percent)
 
 
     def plot_signal(self, *args, **kwargs):
